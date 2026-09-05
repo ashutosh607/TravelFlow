@@ -8,6 +8,42 @@ import {
 
 const TravelContext = createContext(null);
 
+const INITIAL_SAVED_TRIPS = [
+  {
+    id: "trip-jaipur-udaipur",
+    optionId: "opt-1",
+    tag: "ACTIVE TRIP",
+    theme: "BALANCED",
+    badge: "Balanced Pacing & Heritage",
+    title: "Jaipur + Udaipur",
+    route: "Mumbai → Jaipur → Udaipur → Mumbai",
+    duration: "5 Days",
+    price: "₹37,000",
+    rawPrice: 37000,
+    aiMatch: 94,
+    description: "A harmonious fusion of grand royal palaces, lakeside romance, and cultural immersion.",
+    image: "/destinations/amber_fort.jpg",
+    tags: ["Royal Forts", "Lake Pichola", "Boutique Stays", "Fine Dining"],
+    travelGroup: "Couple",
+    startDate: "2026-10-15",
+    endDate: "2026-10-20",
+    budgetBreakdown: INITIAL_RECOMMENDATIONS[0].budgetBreakdown,
+    highlights: INITIAL_RECOMMENDATIONS[0].highlights,
+    dayWisePlan: INITIAL_RECOMMENDATIONS[0].dayWisePlan,
+    status: "Active Journey",
+    healthScore: 94,
+    createdAt: "Today",
+    chatMessages: [
+      {
+        id: "msg-init-1",
+        sender: "ai",
+        text: "Namaste! I am your dedicated AI Travel Concierge for **Jaipur + Udaipur**.\n\nI have pre-arranged your heritage haveli bookings, monument fast-tracks, and sunset reservations. You can ask me to adjust timings, add dinner spots, swap activities, or clarify local travel tips. How can I assist you today?",
+        timestamp: "10:00 AM"
+      }
+    ]
+  }
+];
+
 export const TravelProvider = ({ children }) => {
   const [tripData, setTripData] = useState(INITIAL_TRIP_STATE);
   const [recommendations, setRecommendations] = useState(INITIAL_RECOMMENDATIONS);
@@ -16,6 +52,11 @@ export const TravelProvider = ({ children }) => {
   const [expandedOption, setExpandedOption] = useState(INITIAL_RECOMMENDATIONS[0]);
   const [activeView, setActiveView] = useState("landing"); // 'landing' | 'planner' | 'agent' | 'liveTrip'
   const [isPlannerOpen, setIsPlannerOpen] = useState(false);
+
+  // Multi-Trip Management & Flow State
+  const [savedTrips, setSavedTrips] = useState(INITIAL_SAVED_TRIPS);
+  const [activeTripId, setActiveTripId] = useState(null); // null = show horizontal list in My Trips
+  const [isTripChatThinking, setIsTripChatThinking] = useState(false);
 
   // AI Agent Chat State
   const [chatMessages, setChatMessages] = useState([
@@ -27,6 +68,7 @@ export const TravelProvider = ({ children }) => {
     }
   ]);
   const [isThinking, setIsThinking] = useState(false);
+  const [isGeneratingRecs, setIsGeneratingRecs] = useState(false);
   const [thinkingStep, setThinkingStep] = useState("");
 
   // What-If Simulation
@@ -57,17 +99,19 @@ export const TravelProvider = ({ children }) => {
     setTripData(combined);
     setIsPlannerOpen(false);
     
-    // Switch to AI Travel Agent view
+    // Switch to AI Travel Agent view with active generation mode
+    setIsGeneratingRecs(true);
     setIsThinking(true);
-    setThinkingStep("Understanding your preferences...");
+    setThinkingStep("Analyzing your travel group & preferences...");
     setActiveView("agent");
 
     setTimeout(() => {
-      setThinkingStep("Optimizing your journey...");
+      setThinkingStep("Optimizing transit routes & boutique stays...");
       setTimeout(() => {
-        setThinkingStep("Finding the best options...");
+        setThinkingStep("Curating your 3 tailored journeys...");
         setTimeout(() => {
           setIsThinking(false);
+          setIsGeneratingRecs(false);
           setThinkingStep("");
           // Tailor recommendations based on preferences
           const customRecs = INITIAL_RECOMMENDATIONS.map(rec => ({
@@ -82,7 +126,7 @@ export const TravelProvider = ({ children }) => {
             {
               id: `m-${Date.now()}`,
               sender: "ai",
-              text: `I have tailored 3 specialized options for your ${combined.travelGroup} trip from ${combined.startingLocation} to ${combined.destination} with a budget of ${combined.budgetRange}. Click any floating journey to inspect its details or give me natural prompts to tweak anything!`,
+              text: `I have tailored 3 specialized options for your ${combined.travelGroup} trip from ${combined.startingLocation} to ${combined.destination} with a budget of ${combined.budgetRange}. Click any journey to inspect its details or give me natural prompts below to tweak anything!`,
               timestamp: "Just now"
             }
           ]);
@@ -265,12 +309,164 @@ export const TravelProvider = ({ children }) => {
     ]);
   };
 
-  // Transition from Planning to Live Trip Management
-  const startJourney = () => {
+  // Select a trip to view its rich details
+  const selectTrip = (tripId) => {
+    setActiveTripId(tripId);
+  };
+
+  // Return to the horizontal cards list
+  const backToMyTrips = () => {
+    setActiveTripId(null);
+  };
+
+  // Transition from Planning/Recommendations to My Trips
+  const startJourney = (optionToStart) => {
+    const opt = optionToStart || expandedOption || recommendations[0];
+    const tripId = `trip-${opt.id || "custom"}-${Date.now()}`;
+    
+    const newTrip = {
+      id: tripId,
+      optionId: opt.id,
+      tag: "ACTIVE TRIP",
+      theme: opt.theme || "BALANCED",
+      badge: opt.badge || "Curated Journey",
+      title: opt.title,
+      route: opt.route || `${tripData.startingLocation} → ${tripData.destination} → ${tripData.startingLocation}`,
+      duration: opt.duration || "5 Days",
+      price: opt.price || "₹37,000",
+      rawPrice: opt.rawPrice || 37000,
+      aiMatch: opt.aiMatch || 94,
+      description: opt.description || "A custom planned journey by TravelFlow AI.",
+      image: opt.image || "/destinations/amber_fort.jpg",
+      tags: opt.tags || ["Royal Forts", "Lake Pichola", "Boutique Stays"],
+      travelGroup: tripData.travelGroup || "Couple",
+      startDate: tripData.startDate || "2026-10-15",
+      endDate: tripData.endDate || "2026-10-20",
+      budgetBreakdown: opt.budgetBreakdown || INITIAL_RECOMMENDATIONS[0].budgetBreakdown,
+      highlights: opt.highlights || INITIAL_RECOMMENDATIONS[0].highlights,
+      dayWisePlan: opt.dayWisePlan && opt.dayWisePlan.length > 0 
+        ? JSON.parse(JSON.stringify(opt.dayWisePlan)) 
+        : JSON.parse(JSON.stringify(INITIAL_RECOMMENDATIONS[0].dayWisePlan)),
+      status: "Active Journey",
+      healthScore: 94,
+      createdAt: "Just now",
+      chatMessages: [
+        {
+          id: `msg-${Date.now()}`,
+          sender: "ai",
+          text: `Welcome to **${opt.title}**! 🌟\n\nI am your dedicated AI Travel Concierge. Your journey has been registered to **My Trips**. You can chat with me here anytime to customize your schedule, add boutique dining, or ask for local insights.\n\nWhat would you like to explore or adjust first?`,
+          timestamp: "Just now"
+        }
+      ]
+    };
+
+    // Add new trip to the beginning of savedTrips (avoiding duplicates)
+    setSavedTrips(prev => [newTrip, ...prev.filter(t => t.id !== newTrip.id)]);
     setIsCardExpanded(false);
+    setActiveTripId(null); // Show horizontal cards list in My Trips as requested!
     setActiveView("liveTrip");
     setDisruptionState("none");
     setTripHealthScore(94);
+  };
+
+  // Dedicated Per-Trip Gemini-Style AI Chat with Live Itinerary Updates
+  const sendTripChatMessage = (tripId, userPrompt) => {
+    if (!userPrompt || !userPrompt.trim()) return;
+
+    const userMsg = {
+      id: `u-${Date.now()}`,
+      sender: "user",
+      text: userPrompt.trim(),
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    // Immediately append user message to this specific trip
+    setSavedTrips(prev => prev.map(trip => {
+      if (trip.id === tripId) {
+        return {
+          ...trip,
+          chatMessages: [...trip.chatMessages, userMsg]
+        };
+      }
+      return trip;
+    }));
+
+    setIsTripChatThinking(true);
+
+    // AI Concierge Reasoning & Itinerary Modification
+    setTimeout(() => {
+      const lower = userPrompt.toLowerCase();
+      let aiText = "";
+      let activityToAdd = null;
+      let targetDay = 2;
+
+      if (lower.includes("dinner") || lower.includes("restaurant") || lower.includes("food") || lower.includes("rooftop") || lower.includes("eat")) {
+        activityToAdd = {
+          time: "08:15 PM",
+          title: "Lake-facing Sunset Dinner at Upré / 1559 AD",
+          cost: "₹2,200",
+          duration: "2h",
+          travelTime: "15m",
+          transit: "Private Cab",
+          availability: "Reserved Window Seat",
+          status: "ai_added",
+          isAiAdded: true,
+          desc: "Curated romantic dinner with panoramic views of illuminated City Palace and live sitar melody."
+        };
+        targetDay = lower.includes("day 1") ? 1 : lower.includes("day 3") ? 3 : lower.includes("day 4") ? 4 : 2;
+        aiText = `✨ I've added a **Lake-facing Sunset Dinner at Upré / 1559 AD** to your Day ${targetDay} schedule! Table with water view is pre-reserved for you, and cab transit has been synchronized with zero scheduling clashes.`;
+      } else if (lower.includes("boat") || lower.includes("cruise") || lower.includes("lake")) {
+        activityToAdd = {
+          time: "05:15 PM",
+          title: "Private Solar Sunset Boat Cruise on Lake Pichola",
+          cost: "₹1,400",
+          duration: "1h 30m",
+          travelTime: "Walk",
+          transit: "Private Boat",
+          availability: "Exclusive Slot",
+          status: "ai_added",
+          isAiAdded: true,
+          desc: "Golden-hour private cruise past Jag Niwas and bathing ghats with royal mocktails."
+        };
+        targetDay = 3;
+        aiText = `🚤 Added a **Private Solar Sunset Boat Cruise** to Day ${targetDay} at 05:15 PM. You'll catch the breathtaking reflection of the sunset on the marble walls of Taj Lake Palace!`;
+      } else if (lower.includes("pack") || lower.includes("clothes") || lower.includes("weather") || lower.includes("wear")) {
+        aiText = `🎒 **Recommended Packing for Rajasthan:**\n\n• **Clothing:** Breathable linen and light cotton for sunny daytime fort walks; a light jacket/pashmina shawl for cool desert and lakeside evenings.\n• **Footwear:** Comfortable slip-on walking shoes for cobbled fort paths and palace steps.\n• **Sun & Photography:** Polarized sunglasses, broad-spectrum sunscreen (SPF 50+), wide-brim hat, and extra camera battery for high dynamic range sunset shots.\n• **Temple Etiquette:** Modest clothing covering shoulders and knees when visiting Jagdish Temple and Gangaur Ghat.`;
+      } else if (lower.includes("upgrade") || lower.includes("hotel") || lower.includes("suite") || lower.includes("stay")) {
+        aiText = `👑 Upgraded your stay profile to **Heritage Grand Lake-View Suite** with guaranteed early check-in and complimentary royal high-tea service in the courtyard.`;
+      } else {
+        aiText = `I've analyzed your instruction: "${userPrompt}". Your travel pacing, driver buffers, and local concierge reservations have been updated to reflect this. Feel free to ask any other questions or adjust the days anytime!`;
+      }
+
+      const aiMsg = {
+        id: `ai-${Date.now()}`,
+        sender: "ai",
+        text: aiText,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+
+      setSavedTrips(prev => prev.map(trip => {
+        if (trip.id === tripId) {
+          let updatedPlan = [...trip.dayWisePlan];
+          if (activityToAdd && updatedPlan.length >= targetDay) {
+            const dayIndex = targetDay - 1;
+            const updatedDay = {
+              ...updatedPlan[dayIndex],
+              activities: [...updatedPlan[dayIndex].activities, activityToAdd]
+            };
+            updatedPlan[dayIndex] = updatedDay;
+          }
+          return {
+            ...trip,
+            dayWisePlan: updatedPlan,
+            chatMessages: [...trip.chatMessages, aiMsg]
+          };
+        }
+        return trip;
+      }));
+
+      setIsTripChatThinking(false);
+    }, 750);
   };
 
   // Disruption Simulation Triggers
@@ -338,11 +534,20 @@ export const TravelProvider = ({ children }) => {
         submitTripPlan,
         chatMessages,
         isThinking,
+        isGeneratingRecs,
         thinkingStep,
         sendAgentMessage,
         activeWhatIf,
         setActiveWhatIf,
         startJourney,
+        // Multi-Trip Management & Flow
+        savedTrips,
+        activeTripId,
+        selectTrip,
+        backToMyTrips,
+        sendTripChatMessage,
+        isTripChatThinking,
+        // Real-Time Disruption
         disruptionState,
         tripHealthScore,
         disruptionData,

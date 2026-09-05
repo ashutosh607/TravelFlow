@@ -13,7 +13,8 @@ import { IntroPreloader } from "./components/landing/IntroPreloader";
 gsap.registerPlugin(ScrollTrigger);
 
 function MainAppContent() {
-  const { activeView } = useTravel();
+  const { activeView, isPlannerOpen, isCardExpanded } = useTravel();
+  const lenisRef = React.useRef(null);
 
   // Initialize Lenis Smooth Scroll with GSAP ScrollTrigger Synchronization
   useEffect(() => {
@@ -24,6 +25,7 @@ function MainAppContent() {
       wheelMultiplier: 1.0,
       touchMultiplier: 2.0
     });
+    lenisRef.current = lenis;
 
     lenis.on("scroll", () => {
       ScrollTrigger.update();
@@ -39,8 +41,27 @@ function MainAppContent() {
     return () => {
       gsap.ticker.remove(updateTicker);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
+
+  // When activeView changes, reset scroll to top immediately
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    }
+    window.scrollTo(0, 0);
+    ScrollTrigger.refresh();
+  }, [activeView]);
+
+  // Pause Lenis when a modal is open so wheel events inside modals are 100% native
+  useEffect(() => {
+    if (isPlannerOpen || isCardExpanded) {
+      lenisRef.current?.stop();
+    } else {
+      lenisRef.current?.start();
+    }
+  }, [isPlannerOpen, isCardExpanded]);
 
   return (
     <div className="min-h-screen bg-[#181411] text-[#f5f2eb] font-sans overflow-x-hidden selection:bg-[#f5f2eb] selection:text-[#181411]">

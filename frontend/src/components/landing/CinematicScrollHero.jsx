@@ -37,6 +37,29 @@ export const CinematicScrollHero = () => {
             gsap.set(logoRef.current, { y: 0, scale: 1 });
             gsap.set(secondSectionRef.current, { opacity: 0, y: 80, filter: "blur(12px)" });
 
+            // Subtle cinematic entrance/reveal for Hero elements: blur(8px) + opacity 0 + translateY(30px) -> blur(0) + opacity 1 + translateY(0)
+            const heroEntranceTl = gsap.timeline({ delay: 0.15 });
+            heroEntranceTl
+                .fromTo(".hero-line-left",
+                    { y: 30, opacity: 0, filter: "blur(8px)" },
+                    { y: 0, opacity: 1, filter: "blur(0px)", duration: 1.1, stagger: 0.18, ease: "power2.out" }
+                )
+                .fromTo(".hero-line-right",
+                    { y: 30, opacity: 0, filter: "blur(8px)" },
+                    { y: 0, opacity: 1, filter: "blur(0px)", duration: 1.1, stagger: 0.18, ease: "power2.out" },
+                    "-=0.9"
+                )
+                .fromTo(".hero-sub-left",
+                    { y: 20, opacity: 0, filter: "blur(6px)" },
+                    { y: 0, opacity: 1, filter: "blur(0px)", duration: 1.0, ease: "power2.out" },
+                    "-=0.7"
+                )
+                .fromTo(".scroll-indicator",
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.9, ease: "power2.out" },
+                    "-=0.5"
+                );
+
             // Slow, peaceful horizontal cloud drift behind the airplane window
             gsap.to(cloudRef.current, {
                 xPercent: -50,
@@ -288,9 +311,10 @@ export const CinematicScrollHero = () => {
                         {/* Left Editorial Column */}
                         <div className="hero-text-left max-w-md pointer-events-auto will-change-transform">
                             <h1 className="text-4xl md:text-5xl lg:text-[66px] leading-[1.05] tracking-tight font-bold -mt-40 sm:-mt-24 lg:-mt-0 lg:pt-10 font-sans">
-                                Your journey,<br />managed by AI.
+                                <span className="hero-line-left block">Your journey,</span>
+                                <span className="hero-line-left block">managed by AI.</span>
                             </h1>
-                            <div className="mt-16 sm:mt-20 space-y-4 lg:block hidden">
+                            <div className="hero-sub-left mt-16 sm:mt-20 space-y-4 lg:block hidden">
                                 <h2 className="text-base sm:text-lg leading-5 font-medium font-sans">
                                     Personalized planning.<br />Real-time adaptation.
                                 </h2>
@@ -304,7 +328,8 @@ export const CinematicScrollHero = () => {
                         {/* Right Editorial Column */}
                         <div className="hero-text-right max-w-md flex flex-col items-end pointer-events-auto will-change-transform">
                             <h1 className="text-4xl md:text-5xl lg:text-[60px] font-bold leading-[1.05] text-right mt-72 sm:mt-0 md:pt-60 lg:pt-20 font-sans">
-                                We adapt<br />as you travel.
+                                <span className="hero-line-right block">We adapt</span>
+                                <span className="hero-line-right block">as you travel.</span>
                             </h1>
                         </div>
                     </div>

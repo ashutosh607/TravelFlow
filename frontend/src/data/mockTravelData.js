@@ -112,7 +112,7 @@ export const INITIAL_RECOMMENDATIONS = [
     rawPrice: 37000,
     aiMatch: 94,
     description: "A harmonious fusion of grand royal palaces, lakeside romance, and cultural immersion.",
-    image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1200&q=80",
+    image: "/destinations/amber_fort.jpg",
     tags: ["Royal Forts", "Lake Pichola", "Boutique Stays", "Fine Dining"],
     budgetBreakdown: {
       travel: 12000,
@@ -207,7 +207,7 @@ export const INITIAL_RECOMMENDATIONS = [
     rawPrice: 34000,
     aiMatch: 91,
     description: "Adrenaline-fueled desert excursions, mountain cycling, Dilwara carvings, and Nakki Lake kayaking.",
-    image: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=1200&q=80",
+    image: "/destinations/thar_desert.jpg",
     tags: ["Hot Air Balloon", "Hill Station", "Trekking", "Budget Optimized"],
     budgetBreakdown: {
       travel: 11000,
@@ -237,7 +237,7 @@ export const INITIAL_RECOMMENDATIONS = [
     rawPrice: 40000,
     aiMatch: 96,
     description: "Opulent royal palaces, blue city rooftop lounges, private butler service, and private lake yacht.",
-    image: "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=80",
+    image: "/destinations/jodhpur_bluecity.jpg",
     tags: ["Royal Palaces", "Blue City", "Private Yacht", "Fine Dining"],
     budgetBreakdown: {
       travel: 13500,
