@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X, Sparkles, Bell } from "lucide-react";
 import { useTravel } from "../context/TravelContext";
 
 const NavItem = ({ text, onClick, active, icon }) => {
@@ -33,7 +33,14 @@ const NavItem = ({ text, onClick, active, icon }) => {
 };
 
 export const Navbar = () => {
-  const { activeView, setActiveView, setIsPlannerOpen, isCardExpanded } = useTravel();
+  const { 
+    activeView, 
+    setActiveView, 
+    setIsPlannerOpen, 
+    isCardExpanded,
+    unreadNotificationCount,
+    setIsNotificationDrawerOpen 
+  } = useTravel();
   const [isOpen, setIsOpen] = useState(false);
 
   // Prevent scrolling when sidebar is open
@@ -75,13 +82,28 @@ export const Navbar = () => {
         {/* Empty space in middle for the animated TRAVELFLOW logo to land */}
         <div className="w-[180px] hidden lg:block" />
 
-        {/* Desktop Right - Concierge contacts */}
-        <div className="hidden lg:flex items-center gap-6 tracking-tight pointer-events-auto text-[#d8d2c8]">
-          <span className="text-[10px] text-[#a89f91]">+91 98 200 45000</span>
-          <span className="text-[10px] text-[#a89f91] lowercase">concierge@travelflow.com</span>
+        {/* Desktop Right - Notifications Bell */}
+        <div className="hidden lg:flex items-center justify-end gap-4 tracking-tight pointer-events-auto">
+          <button
+            type="button"
+            onClick={() => setIsNotificationDrawerOpen(true)}
+            className="relative p-2.5 rounded-full bg-white/[0.06] hover:bg-white/15 border border-white/15 hover:border-[rgba(201,168,106,0.35)] text-[#d8d2c8] hover:text-white transition-all cursor-pointer group flex items-center justify-center shadow-md hover:scale-105 active:scale-95"
+            title="Notifications & AI Alerts"
+            aria-label="View notifications"
+          >
+            <Bell className="w-4 h-4 text-[#e5dec9] group-hover:text-white transition-colors" />
+            
+            {/* Unread Badge / Terracotta Pulse */}
+            {unreadNotificationCount > 0 && (
+              <span className="absolute -top-1 -right-1 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-[#B86F52] text-white text-[9px] font-bold font-mono shadow-md">
+                {unreadNotificationCount}
+                <span className="absolute -inset-0.5 rounded-full bg-[#B86F52] animate-ping opacity-60 pointer-events-none" />
+              </span>
+            )}
+          </button>
         </div>
 
-        {/* Mobile: Logo & Menu button */}
+        {/* Mobile: Logo, Notifications & Menu button */}
         <div className="lg:hidden flex w-full justify-between items-center pointer-events-auto">
           <span 
             onClick={() => setActiveView("landing")}
@@ -89,12 +111,27 @@ export const Navbar = () => {
           >
             TRAVELFLOW
           </span>
-          <button
-            onClick={() => setIsOpen(true)}
-            className="text-white p-2 hover:bg-white/10 rounded-sm transition-all duration-300 cursor-pointer"
-          >
-            <Menu size={20} strokeWidth={1.5} />
-          </button>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setIsNotificationDrawerOpen(true)}
+              className="relative p-2 text-white hover:bg-white/10 rounded-full cursor-pointer transition-colors"
+              aria-label="Notifications"
+            >
+              <Bell size={18} />
+              {unreadNotificationCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#B86F52]" />
+              )}
+            </button>
+
+            <button
+              onClick={() => setIsOpen(true)}
+              className="text-white p-2 hover:bg-white/10 rounded-sm transition-all duration-300 cursor-pointer"
+            >
+              <Menu size={20} strokeWidth={1.5} />
+            </button>
+          </div>
         </div>
       </nav>
 

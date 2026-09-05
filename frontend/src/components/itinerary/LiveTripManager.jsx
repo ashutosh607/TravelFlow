@@ -173,6 +173,7 @@ export const LiveTripManager = () => {
     backToMyTrips,
     sendTripChatMessage,
     isTripChatThinking,
+    tripChatThinkingStep,
     deleteTrip,
     markTripCompleted,
     submitTripReview,
@@ -197,11 +198,40 @@ export const LiveTripManager = () => {
   const [chatInput, setChatInput] = useState("");
   const [isChatPanelOpen, setIsChatPanelOpen] = useState(true);
   const chatMessagesEndRef = useRef(null);
+  const chatPanelRef = useRef(null);
+  const [isChatSpotlight, setIsChatSpotlight] = useState(false);
+
+  // Trigger disruption simulation and smoothly focus on the AI Concierge on the right
+  const handleTriggerSimulation = () => {
+    setIsChatPanelOpen(true);
+    setIsChatSpotlight(true);
+    triggerDisruption();
+
+    setTimeout(() => {
+      if (chatPanelRef.current) {
+        chatPanelRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 120);
+
+    setTimeout(() => {
+      setIsChatSpotlight(false);
+    }, 3800);
+  };
 
   // Review modal local state
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewComment, setReviewComment] = useState("");
   const [selectedTags, setSelectedTags] = useState(["Breathtaking Sunsets", "Paced Just Right"]);
+
+  // Custom Trip Removal Alert Modal state
+  const [tripToDelete, setTripToDelete] = useState(null);
+
+  const confirmDeleteTrip = () => {
+    if (!tripToDelete) return;
+    const idToDelete = tripToDelete.id;
+    setTripToDelete(null);
+    deleteTrip(idToDelete);
+  };
 
   // Scroll to bottom of chat when new message arrives
   useEffect(() => {
@@ -251,7 +281,8 @@ export const LiveTripManager = () => {
   // VIEW 1: MY TRIPS HUB (Horizontal Cards List - activeTripId === null)
   // =========================================================================
   return (
-    <AnimatePresence mode="wait">
+    <>
+      <AnimatePresence mode="wait">
       {!activeTripId ? (
         <motion.div
           key="my-trips-hub"
@@ -355,20 +386,28 @@ export const LiveTripManager = () => {
               </div>
             ) : (
               <div className="space-y-6">
-                {savedTrips.map((trip, idx) => {
-                  const lastMessage = trip.chatMessages?.[trip.chatMessages.length - 1];
-                  const isCompleted = trip.status === "Completed";
-                  
-                  return (
-                    <motion.div
-                      key={trip.id}
-                      onClick={() => selectTrip(trip.id)}
-                      initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                      transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                      whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                      className="group cursor-pointer rounded-3xl bg-[#1a1512] hover:bg-[#1f1a15] border border-white/10 hover:border-[rgba(201,168,106,0.35)] transition-colors duration-300 p-6 sm:p-7 shadow-2xl flex flex-col lg:flex-row gap-7 items-stretch select-none"
-                    >
+                <AnimatePresence mode="popLayout">
+                  {savedTrips.map((trip, idx) => {
+                    const lastMessage = trip.chatMessages?.[trip.chatMessages.length - 1];
+                    const isCompleted = trip.status === "Completed";
+                    
+                    return (
+                      <motion.div
+                        key={trip.id}
+                        layout
+                        onClick={() => selectTrip(trip.id)}
+                        initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        exit={{
+                          opacity: 0,
+                          scale: 0.9,
+                          x: -80,
+                          filter: "blur(14px)",
+                          transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
+                        }}
+                        whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                        className="group cursor-pointer rounded-3xl bg-[#1a1512] hover:bg-[#1f1a15] border border-white/10 hover:border-[rgba(201,168,106,0.35)] transition-colors duration-300 p-6 sm:p-7 shadow-2xl flex flex-col lg:flex-row gap-7 items-stretch select-none"
+                      >
                       {/* Left: Thumbnail Image */}
                       <div className="relative w-full lg:w-84 h-56 lg:h-auto rounded-2xl overflow-hidden shrink-0 bg-[#14100d]">
                         <img
@@ -530,11 +569,9 @@ export const LiveTripManager = () => {
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (window.confirm(`Are you sure you want to remove "${trip.title}" from My Trips?`)) {
-                                deleteTrip(trip.id);
-                              }
+                              setTripToDelete(trip);
                             }}
-                            className="w-full py-2 px-3 rounded-xl text-[11px] font-mono text-[#a89f91] hover:text-red-400 hover:bg-red-500/10 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                            className="w-full py-2 px-3 rounded-xl text-[11px] font-mono text-[#a89f91] hover:text-[#B86F52] hover:bg-[rgba(184,111,82,0.12)] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                           >
                             <Trash2 className="w-3 h-3" />
                             <span>Remove Journey</span>
@@ -547,7 +584,8 @@ export const LiveTripManager = () => {
                     </motion.div>
                   );
                 })}
-              </div>
+              </AnimatePresence>
+            </div>
             )}
           </div>
 
@@ -741,6 +779,15 @@ export const LiveTripManager = () => {
               <span className="w-2 h-2 rounded-full bg-[#C9A86A]" />
               Sentinel Active
             </span>
+
+            <button
+              onClick={() => setTripToDelete(activeTrip)}
+              className="p-2 rounded-full text-[#a89f91] hover:text-[#B86F52] hover:bg-[rgba(184,111,82,0.12)] border border-white/10 hover:border-[rgba(184,111,82,0.35)] transition-all cursor-pointer"
+              title="Remove Journey"
+              aria-label="Remove Journey"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+            </button>
           </div>
 
         </div>
@@ -782,18 +829,22 @@ export const LiveTripManager = () => {
                   <span className="text-xl font-mono font-bold text-white">{tripHealthScore}/100</span>
                 </div>
                 
-                {/* Fixed Spacious Badge for OPTIMAL (No overflowing!) */}
-                <div className="px-4 py-2 rounded-xl bg-[rgba(201,168,106,0.15)] border border-[rgba(201,168,106,0.35)] flex items-center justify-center font-mono font-bold text-xs text-[#C9A86A] tracking-wider whitespace-nowrap">
+                {/* Health Badge: Champagne Gold for OPTIMAL, Terracotta #B86F52 for RISK */}
+                <div className={`px-4 py-2 rounded-xl flex items-center justify-center font-mono font-bold text-xs tracking-wider whitespace-nowrap ${
+                  tripHealthScore >= 80
+                    ? "bg-[rgba(201,168,106,0.15)] border border-[rgba(201,168,106,0.35)] text-[#C9A86A]"
+                    : "bg-[rgba(184,111,82,0.15)] border border-[rgba(184,111,82,0.35)] text-[#B86F52]"
+                }`}>
                   {tripHealthScore >= 80 ? "OPTIMAL" : "RISK"}
                 </div>
               </div>
 
               {disruptionState === "none" && (
                 <button
-                  onClick={() => triggerDisruption()}
-                  className="px-5 py-3 rounded-2xl font-bold text-xs bg-white text-[#181411] hover:bg-[#eae5d9] transition-all flex items-center gap-2 shadow-md uppercase tracking-wider cursor-pointer"
+                  onClick={handleTriggerSimulation}
+                  className="px-5 py-3 rounded-2xl font-bold text-xs bg-white text-[#181411] hover:bg-[#eae5d9] transition-all flex items-center gap-2 shadow-md uppercase tracking-wider cursor-pointer hover:scale-105 active:scale-95"
                 >
-                  <Zap className="w-4 h-4 fill-current" />
+                  <Zap className="w-4 h-4 fill-current text-[#C9A86A]" />
                   <span>Simulate Delay (+3h)</span>
                 </button>
               )}
@@ -814,11 +865,11 @@ export const LiveTripManager = () => {
 
         {/* Disruption Alert Banner */}
         {isDisrupted && (
-          <div className="rounded-3xl bg-[#2a1b18] border border-white/20 p-7 backdrop-blur-xl animate-fade-in shadow-2xl space-y-4">
+          <div className="rounded-3xl bg-[#231713] border border-[rgba(184,111,82,0.35)] p-7 backdrop-blur-xl animate-fade-in shadow-2xl space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white">
-                  <AlertTriangle className="w-5 h-5 text-[#C9A86A]" />
+                <div className="w-10 h-10 rounded-xl bg-[rgba(184,111,82,0.15)] border border-[rgba(184,111,82,0.35)] flex items-center justify-center text-[#B86F52]">
+                  <AlertTriangle className="w-5 h-5 text-[#B86F52]" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white font-sans">{disruptionData.title}</h3>
@@ -985,6 +1036,13 @@ export const LiveTripManager = () => {
                             {act.time}
                           </span>
                           
+                          {act.status === "delayed" && (
+                            <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded-full bg-[rgba(184,111,82,0.15)] border border-[rgba(184,111,82,0.35)] text-[#B86F52] flex items-center gap-1 shadow-sm">
+                              <AlertTriangle className="w-3 h-3" />
+                              DELAYED +3H
+                            </span>
+                          )}
+
                           {act.isAiAdded && (
                             <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded-full bg-[rgba(201,168,106,0.15)] border border-[rgba(201,168,106,0.35)] text-[#C9A86A] flex items-center gap-1 shadow-sm">
                               <Sparkles className="w-3 h-3 fill-current" />
@@ -1039,7 +1097,14 @@ export const LiveTripManager = () => {
 
           {/* RIGHT 5 COLS: TRAVELFLOW AI CONCIERGE CHAT PANEL */}
           <div className={`lg:col-span-5 ${isChatPanelOpen ? "block" : "hidden lg:block"}`}>
-            <div className="sticky top-24 rounded-3xl bg-[#14100d] border border-white/20 p-6 shadow-2xl flex flex-col h-[780px] justify-between">
+            <div 
+              ref={chatPanelRef}
+              className={`sticky top-24 rounded-3xl bg-[#14100d] border transition-all duration-500 p-6 shadow-2xl flex flex-col h-[780px] justify-between ${
+                isChatSpotlight 
+                  ? "border-[#C9A86A] ring-2 ring-[#C9A86A]/50 shadow-[0_0_50px_rgba(201,168,106,0.3)]" 
+                  : "border-white/20"
+              }`}
+            >
               
               {/* Chat Header */}
               <div className="pb-4 border-b border-white/10 space-y-2 shrink-0">
@@ -1083,30 +1148,148 @@ export const LiveTripManager = () => {
                           <span className="text-[10px] font-mono text-[#736a5e] uppercase">You · {msg.timestamp}</span>
                         ) : (
                           <span className="text-[10px] font-mono text-[#e5dec9] uppercase font-bold flex items-center gap-1">
-                            <Sparkles className="w-3 h-3" />
+                            <Sparkles className="w-3 h-3 text-[#C9A86A]" />
                             AI Concierge · {msg.timestamp}
                           </span>
                         )}
                       </div>
 
-                      <div
-                        className={`p-4 rounded-2xl text-xs sm:text-sm leading-relaxed max-w-[92%] sm:max-w-[88%] whitespace-pre-wrap ${
-                          isUser
-                            ? "bg-white text-[#181411] font-sans font-medium rounded-tr-sm shadow-md"
-                            : "bg-[#1f1a15] border border-white/15 text-[#f5f2eb] rounded-tl-sm shadow-inner"
-                        }`}
-                      >
-                        {msg.text}
-                      </div>
+                      {msg.isDisruptionProposal ? (
+                        <div className="p-5 rounded-2xl bg-[#1c1612] border border-[rgba(201,168,106,0.35)] shadow-xl space-y-4 max-w-[96%] sm:max-w-[92%]">
+                          {/* Alert Header */}
+                          <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-3">
+                            <div className="flex items-center gap-2.5">
+                              <div className="w-8 h-8 rounded-xl bg-[rgba(184,111,82,0.15)] border border-[rgba(184,111,82,0.35)] flex items-center justify-center">
+                                <AlertTriangle className="w-4 h-4 text-[#B86F52]" />
+                              </div>
+                              <div>
+                                <span className="text-xs font-bold text-white block">Flight Delay Detected ({msg.flightNumber || "6E-204"})</span>
+                                <span className="text-[11px] font-mono text-[#a89f91]">Arrival: {msg.originalArrival || "10:00 AM"} ➔ {msg.newArrival || "01:00 PM"} (+3 Hours)</span>
+                              </div>
+                            </div>
+                            <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-[rgba(184,111,82,0.15)] text-[#B86F52] border border-[rgba(184,111,82,0.35)] font-bold shrink-0">
+                              PROPOSED REROUTE
+                            </span>
+                          </div>
+
+                          {/* Structured Explanation Sections */}
+                          <div className="space-y-3 text-xs sm:text-sm">
+                            {/* Proposed Changes Section */}
+                            <div className="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-2">
+                              <span className="text-[11px] font-mono uppercase tracking-wider text-[#C9A86A] font-bold block flex items-center gap-1.5">
+                                <RotateCcw className="w-3.5 h-3.5" />
+                                Proposed Schedule Adjustments
+                              </span>
+                              <ul className="space-y-2 text-xs text-[#e5dec9] leading-relaxed">
+                                <li className="flex items-start gap-2">
+                                  <span className="text-[#C9A86A] font-bold mt-0.5">•</span>
+                                  <span><strong>Rescheduled:</strong> City Palace & Jantar Mantar moved to <strong>Day 2 at 09:30 AM</strong> with VIP Fast-Track Pass.</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="text-[#C9A86A] font-bold mt-0.5">•</span>
+                                  <span><strong>Adjusted:</strong> Lunch shifted to <strong>02:00 PM</strong> inside Alsisar Haveli Courtyard to avoid rushed midday city transit.</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="text-[#C9A86A] font-bold mt-0.5">•</span>
+                                  <span><strong>Preserved:</strong> Golden hour sunset at Hawa Mahal (06:30 PM) and candlelit courtyard dinner (08:30 PM) stay 100% on schedule.</span>
+                                </li>
+                              </ul>
+                            </div>
+
+                            {/* Why Explanation Section */}
+                            <div className="p-3.5 rounded-xl bg-[#14100d] border border-white/5 space-y-1.5">
+                              <span className="text-[11px] font-mono uppercase tracking-wider text-[#a89f91] font-bold block flex items-center gap-1.5">
+                                <HelpCircle className="w-3.5 h-3.5 text-[#C9A86A]" />
+                                Why This Recovery Is Recommended
+                              </span>
+                              <p className="text-xs text-[#c4bcaa] leading-relaxed">
+                                Landing at 01:00 PM leaves under 45 minutes before City Palace ticket counters close at 04:30 PM, causing high stress and rushed traffic. Shifting it to Day 2 morning guarantees 2.5 unhurried hours in optimal morning lighting while preserving your evening dining flawlessly. Total extra cost: <strong>₹0</strong>.
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Proactive Ask & Action CTAs */}
+                          <div className="pt-2 border-t border-white/10 space-y-3">
+                            <p className="text-xs font-semibold text-white">
+                              Would you like me to apply this re-optimized plan to your itinerary?
+                            </p>
+
+                            {disruptionState !== "recovered" ? (
+                              <div className="flex items-center gap-2.5 flex-wrap">
+                                <button
+                                  type="button"
+                                  onClick={applyDisruptionRecovery}
+                                  className="px-4 py-2.5 rounded-xl bg-white text-[#181411] hover:bg-[#eae5d9] text-xs font-bold transition-all flex items-center gap-1.5 shadow-lg cursor-pointer hover:scale-105 active:scale-95"
+                                >
+                                  <Sparkles className="w-3.5 h-3.5 text-[#C9A86A]" />
+                                  <span>✓ Auto-Replan Now</span>
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    sendTripChatMessage(activeTrip.id, "Keep original schedule for now, I will manage transit manually.");
+                                  }}
+                                  className="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-[#a89f91] hover:text-white transition-all cursor-pointer font-mono"
+                                >
+                                  Keep Original Schedule
+                                </button>
+                              </div>
+                            ) : (
+                              <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[rgba(201,168,106,0.15)] border border-[rgba(201,168,106,0.35)] text-xs text-[#C9A86A] font-bold font-mono">
+                                <CheckCircle2 className="w-4 h-4" />
+                                <span>✓ Applied & Synchronized with Itinerary</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ) : msg.isRecoveryConfirmation ? (
+                        <div className="p-4 rounded-2xl bg-[#17221a] border border-[rgba(201,168,106,0.35)] text-[#f5f2eb] rounded-tl-sm shadow-xl space-y-2 max-w-[92%] sm:max-w-[88%]">
+                          <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#C9A86A]">
+                            <CheckCircle2 className="w-4 h-4" />
+                            <span>Itinerary Successfully Re-Optimized</span>
+                          </div>
+                          <p className="text-xs sm:text-sm text-[#d8d2c8] leading-relaxed whitespace-pre-wrap">
+                            {msg.text}
+                          </p>
+                          <div className="pt-2">
+                            <button
+                              type="button"
+                              onClick={() => setSelectedDay(2)}
+                              className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-mono text-white flex items-center gap-1.5 transition-all cursor-pointer"
+                            >
+                              <span>Inspect Day 2 Schedule →</span>
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div
+                          className={`p-4 rounded-2xl text-xs sm:text-sm leading-relaxed max-w-[92%] sm:max-w-[88%] whitespace-pre-wrap ${
+                            isUser
+                              ? "bg-white text-[#181411] font-sans font-medium rounded-tr-sm shadow-md"
+                              : "bg-[#1f1a15] border border-white/15 text-[#f5f2eb] rounded-tl-sm shadow-inner"
+                          }`}
+                        >
+                          {msg.text}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
 
-                {/* Thinking Indicator */}
+                {/* Dynamic Thinking / Searching Indicator */}
                 {isTripChatThinking && (
-                  <div className="flex items-center gap-2.5 p-3.5 rounded-2xl bg-[#1c1713] border border-white/10 text-xs font-mono text-[#e5dec9] w-fit animate-pulse shadow-md">
-                    <RefreshCw className="w-4 h-4 animate-spin" />
-                    <span>TravelFlow AI is adjusting your itinerary...</span>
+                  <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#1c1713] border border-[rgba(201,168,106,0.35)] text-xs font-mono text-[#e5dec9] w-fit shadow-xl animate-pulse">
+                    <div className="w-7 h-7 rounded-full bg-[rgba(201,168,106,0.15)] flex items-center justify-center shrink-0">
+                      <RefreshCw className="w-4 h-4 text-[#C9A86A] animate-spin" />
+                    </div>
+                    <div className="space-y-0.5">
+                      <span className="text-[10px] uppercase tracking-wider text-[#C9A86A] font-bold block">
+                        TravelFlow Real-Time Agent
+                      </span>
+                      <span className="text-xs text-white">
+                        {tripChatThinkingStep || "Searching alternative routes & schedule buffers..."}
+                      </span>
+                    </div>
                   </div>
                 )}
 
@@ -1313,5 +1496,105 @@ export const LiveTripManager = () => {
         </motion.div>
       )}
     </AnimatePresence>
+
+    {/* ============================================================ */}
+    {/* CUSTOM LUXURY ALERT: TRIP REMOVAL CONFIRMATION MODAL         */}
+    {/* ============================================================ */}
+    <AnimatePresence>
+      {tripToDelete && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-[350] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setTripToDelete(null);
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, filter: "blur(10px)", y: 20 }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)", y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, filter: "blur(10px)", y: 20 }}
+            transition={{ type: "spring", damping: 26, stiffness: 350 }}
+            className="relative w-full max-w-md bg-[#181411] border border-white/20 rounded-3xl p-7 sm:p-8 shadow-[0_25px_80px_rgba(0,0,0,0.95)] text-[#f5f2eb] space-y-6 overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Subtle Champagne Gold Ambient Corner Glow */}
+            <div className="absolute top-0 right-0 w-36 h-36 bg-[rgba(201,168,106,0.08)] rounded-full blur-3xl pointer-events-none" />
+
+            {/* Modal Header: Icon & Close */}
+            <div className="flex items-start justify-between relative z-10">
+              <div className="flex items-center gap-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-[rgba(184,111,82,0.15)] border border-[rgba(184,111,82,0.35)] flex items-center justify-center text-[#B86F52] shadow-inner">
+                  <Trash2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#B86F52] font-bold block">
+                    REMOVE JOURNEY
+                  </span>
+                  <h3 className="text-xl font-serif text-white font-bold leading-tight">
+                    Remove from My Trips?
+                  </h3>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setTripToDelete(null)}
+                className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-[#a89f91] hover:text-white transition-all cursor-pointer"
+                aria-label="Close"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Trip Preview Pill */}
+            <div className="p-4 rounded-2xl bg-[#14100d] border border-white/10 flex items-center gap-3.5 relative z-10">
+              <img
+                src={tripToDelete.image}
+                alt={tripToDelete.title}
+                className="w-14 h-14 rounded-xl object-cover shrink-0 border border-white/10"
+              />
+              <div className="space-y-0.5 min-w-0 flex-1">
+                <h4 className="text-sm font-serif font-bold text-white truncate">
+                  {tripToDelete.title}
+                </h4>
+                <p className="text-xs font-sans text-[#a89f91] truncate">
+                  {tripToDelete.route} · {tripToDelete.duration}
+                </p>
+                <span className="text-[11px] font-mono font-bold text-[#C9A86A] block">
+                  {tripToDelete.price}
+                </span>
+              </div>
+            </div>
+
+            {/* Informative Note */}
+            <p className="text-xs text-[#a89f91] font-sans leading-relaxed relative z-10">
+              This will permanently remove this itinerary, live AI Sentinel radar telemetry, and your concierge conversation history. You can plan another trip anytime.
+            </p>
+
+            {/* Actions */}
+            <div className="flex items-center justify-end gap-3 pt-2 relative z-10">
+              <button
+                type="button"
+                onClick={() => setTripToDelete(null)}
+                className="px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider text-[#d8d2c8] hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all cursor-pointer"
+              >
+                Keep Journey
+              </button>
+              <button
+                type="button"
+                onClick={confirmDeleteTrip}
+                className="px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[rgba(184,111,82,0.2)] hover:bg-[rgba(184,111,82,0.3)] border border-[rgba(184,111,82,0.45)] text-[#B86F52] hover:text-[#d48e72] transition-all cursor-pointer shadow-lg hover:scale-105 flex items-center gap-2"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Confirm Removal</span>
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </>
   );
 };

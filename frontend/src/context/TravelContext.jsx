@@ -57,7 +57,48 @@ export const TravelProvider = ({ children }) => {
   const [savedTrips, setSavedTrips] = useState(INITIAL_SAVED_TRIPS);
   const [activeTripId, setActiveTripId] = useState(null); // null = show horizontal list in My Trips
   const [isTripChatThinking, setIsTripChatThinking] = useState(false);
+  const [tripChatThinkingStep, setTripChatThinkingStep] = useState("");
   const [reviewingTripId, setReviewingTripId] = useState(null);
+
+  // Live Notifications & Slidebar Drawer State
+  const [notifications, setNotifications] = useState([
+    {
+      id: "notif-init-1",
+      type: "info",
+      category: "telemetry",
+      title: "Flight 6E-204 Radar Telemetry Locked",
+      message: "Real-time radar connection active between Mumbai (BOM) and Jaipur (JAI). Scheduled arrival 10:00 AM.",
+      timestamp: "12m ago",
+      read: true,
+      tripId: "trip-jaipur-udaipur"
+    },
+    {
+      id: "notif-init-2",
+      type: "update",
+      category: "booking",
+      title: "Alsisar Haveli Pre-Check-in Confirmed",
+      message: "Heritage courtyard room prepared with complimentary royal high-tea service upon arrival.",
+      timestamp: "25m ago",
+      read: true,
+      tripId: "trip-jaipur-udaipur"
+    }
+  ]);
+  const [isNotificationDrawerOpen, setIsNotificationDrawerOpen] = useState(false);
+
+  // Notification Action Helpers
+  const markNotificationRead = (id) => {
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+  };
+
+  const markAllNotificationsRead = () => {
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+  };
+
+  const clearNotifications = () => {
+    setNotifications([]);
+  };
+
+  const unreadNotificationCount = notifications.filter(n => !n.read).length;
 
   // AI Agent Chat State
   const [chatMessages, setChatMessages] = useState([
@@ -526,13 +567,78 @@ export const TravelProvider = ({ children }) => {
   const triggerDisruption = (scenarioKey = "flight_delay") => {
     setDisruptionState("detected");
     setTripHealthScore(61);
+    setIsTripChatThinking(true);
+    setTripChatThinkingStep("🔍 AI Sentinel: Searching flight 6E-204 telemetry & radar tracking...");
+
+    // Immediately push urgent notification to the notification stream
+    const targetTripId = activeTripId || savedTrips[0]?.id;
+    const delayNotif = {
+      id: `notif-delay-${Date.now()}`,
+      type: "alert",
+      category: "flight",
+      severity: "critical",
+      title: "Flight Delay Alert: 6E-204 (+3 Hours)",
+      message: "IndiGo 6E-204 arrival delayed to 01:00 PM. TravelFlow AI detected City Palace conflict and formulated a conflict-free re-route plan.",
+      timestamp: "Just now",
+      read: false,
+      tripId: targetTripId,
+      actionType: "replan",
+      actionLabel: "Review AI Reroute Plan →"
+    };
+    setNotifications(prev => [delayNotif, ...prev]);
+
+    // Stage 2 analysis
+    setTimeout(() => {
+      setTripChatThinkingStep("⚡ Pacing Impact: Analyzing City Palace closing cutoff & evening dinner buffers...");
+      
+      // Stage 3 synthesis
+      setTimeout(() => {
+        setTripChatThinkingStep("✨ Plan Synthesis: Formulating conflict-free re-route plan...");
+
+        // Stage 4 finalize & post proactive proposal
+        setTimeout(() => {
+          setIsTripChatThinking(false);
+          setTripChatThinkingStep("");
+
+          if (!targetTripId) return;
+
+          const disruptionAiMsg = {
+            id: `ai-disruption-${Date.now()}`,
+            sender: "ai",
+            isDisruptionProposal: true,
+            flightNumber: "6E-204",
+            delayHours: 3,
+            originalArrival: "10:00 AM",
+            newArrival: "01:00 PM",
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            text: `⚠️ **Flight Delay Detected (6E-204 · +3h)**\n\nYour flight from Mumbai (BOM) to Jaipur (JAI) is now touching down at **01:00 PM** instead of 10:00 AM.\n\n### 🔄 Proposed Itinerary Changes:\n• **City Palace & Jantar Mantar:** Rescheduled from Day 1 (03:30 PM) to **Day 2 Morning (09:30 AM)** with VIP Fast-Track Pass.\n• **Courtyard Lunch at Haveli:** Pushed from 01:00 PM to **02:00 PM** inside Alsisar Haveli to avoid rushed city transit.\n• **Preserved On Schedule:** Hawa Mahal Golden-Hour Sunset (06:30 PM) and Candlelit Courtyard Dinner (08:30 PM) remain completely intact.\n\n### 💡 Why this is recommended:\nArriving at 01:00 PM and checking in leaves less than 45 minutes before City Palace ticket counters close at 04:30 PM, creating stressful traffic rush. Shifting it to tomorrow morning guarantees **2.5 unhurried hours** in optimal morning light and cooler temperatures, while protecting your romantic evening without any change fees (Extra cost: **₹0**).\n\n👉 **Would you like me to apply this re-optimized plan to your itinerary?**`
+          };
+
+          setSavedTrips(prev => prev.map(trip => {
+            if (trip.id === targetTripId) {
+              return {
+                ...trip,
+                chatMessages: [...trip.chatMessages, disruptionAiMsg]
+              };
+            }
+            return trip;
+          }));
+
+        }, 750);
+      }, 750);
+    }, 750);
   };
 
   const applyDisruptionRecovery = () => {
     setDisruptionState("analyzing");
+    setIsTripChatThinking(true);
+    setTripChatThinkingStep("Applying verified re-routing to your itinerary...");
+
     setTimeout(() => {
       setDisruptionState("recovered");
       setTripHealthScore(84);
+      setIsTripChatThinking(false);
+      setTripChatThinkingStep("");
       
       // Update itinerary to recovered version
       const recoveredPlan = JSON.parse(JSON.stringify(INITIAL_RECOMMENDATIONS[0].dayWisePlan));
@@ -558,7 +664,45 @@ export const TravelProvider = ({ children }) => {
         });
       }
       setCurrentItinerary(recoveredPlan);
-    }, 1200);
+
+      const targetTripId = activeTripId || savedTrips[0]?.id;
+
+      const confirmAiMsg = {
+        id: `ai-recovery-confirm-${Date.now()}`,
+        sender: "ai",
+        isRecoveryConfirmation: true,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        text: `✅ **Itinerary Successfully Re-Optimized!**\n\nI have updated your schedule:\n• **City Palace & Jantar Mantar** is now scheduled for **Day 2 at 09:30 AM** with VIP fast-track entry.\n• Airport private cab pickup synchronized for **01:15 PM** exit.\n• Evening sunset at Hawa Mahal and candlelit courtyard dinner are preserved.\n\nYour Trip Health has been restored to **84/100**. Click **Day 2** in the itinerary tab to view your rescheduled tour!`
+      };
+
+      // Push recovery notification
+      const recoveryNotif = {
+        id: `notif-recovery-${Date.now()}`,
+        type: "recovery",
+        category: "itinerary",
+        title: "Itinerary Successfully Re-Optimized",
+        message: "City Palace moved to Day 2 morning (09:30 AM). Sunset at Hawa Mahal & candlelit dinner preserved with ₹0 change fees.",
+        timestamp: "Just now",
+        read: false,
+        tripId: targetTripId,
+        actionType: "view_day_2",
+        actionLabel: "Inspect Day 2 Schedule →"
+      };
+      setNotifications(prev => [recoveryNotif, ...prev]);
+
+      // Update savedTrips dayWisePlan and chatMessages
+      setSavedTrips(prev => prev.map(trip => {
+        if (trip.id === targetTripId || trip.optionId === "opt-1") {
+          return {
+            ...trip,
+            dayWisePlan: recoveredPlan,
+            healthScore: 84,
+            chatMessages: [...trip.chatMessages, confirmAiMsg]
+          };
+        }
+        return trip;
+      }));
+    }, 1000);
   };
 
   const resetDisruption = () => {
@@ -566,6 +710,40 @@ export const TravelProvider = ({ children }) => {
     setTripHealthScore(94);
     setCurrentItinerary(INITIAL_RECOMMENDATIONS[0].dayWisePlan);
     setShowWhyExplanation(false);
+    setIsTripChatThinking(false);
+    setTripChatThinkingStep("");
+
+    const targetTripId = activeTripId || savedTrips[0]?.id;
+    const resetAiMsg = {
+      id: `ai-reset-${Date.now()}`,
+      sender: "ai",
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      text: `🔄 **Simulation Reset**: Your itinerary has been restored to the original on-time schedule (Trip Health: 94/100).`
+    };
+
+    const resetNotif = {
+      id: `notif-reset-${Date.now()}`,
+      type: "info",
+      category: "system",
+      title: "Simulation Reset to On-Time Schedule",
+      message: "Itinerary and Trip Health restored to 94/100 baseline.",
+      timestamp: "Just now",
+      read: true,
+      tripId: targetTripId
+    };
+    setNotifications(prev => [resetNotif, ...prev]);
+
+    setSavedTrips(prev => prev.map(trip => {
+      if (trip.id === targetTripId || trip.optionId === "opt-1") {
+        return {
+          ...trip,
+          dayWisePlan: INITIAL_RECOMMENDATIONS[0].dayWisePlan,
+          healthScore: 94,
+          chatMessages: [...trip.chatMessages, resetAiMsg]
+        };
+      }
+      return trip;
+    }));
   };
 
   return (
@@ -600,11 +778,20 @@ export const TravelProvider = ({ children }) => {
         backToMyTrips,
         sendTripChatMessage,
         isTripChatThinking,
+        tripChatThinkingStep,
         deleteTrip,
         markTripCompleted,
         submitTripReview,
         reviewingTripId,
         setReviewingTripId,
+        // Notifications & Slidebar Drawer
+        notifications,
+        isNotificationDrawerOpen,
+        setIsNotificationDrawerOpen,
+        markNotificationRead,
+        markAllNotificationsRead,
+        clearNotifications,
+        unreadNotificationCount,
         // Real-Time Disruption
         disruptionState,
         tripHealthScore,

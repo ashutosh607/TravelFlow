@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
 import { TravelProvider, useTravel } from "./context/TravelContext";
 import { Navbar } from "./components/Navbar";
+import { NotificationSidebar } from "./components/notifications/NotificationSidebar";
 import { LandingPage } from "./components/landing/LandingPage";
 import { TripPlanningModal } from "./components/planner/TripPlanningModal";
 import { ExpandedRecommendationModal } from "./components/agent/ExpandedRecommendationModal";
@@ -51,7 +52,7 @@ const pageVariants = {
 };
 
 function MainAppContent() {
-  const { activeView, isPlannerOpen, isCardExpanded } = useTravel();
+  const { activeView, isPlannerOpen, isCardExpanded, isNotificationDrawerOpen } = useTravel();
   const lenisRef = useRef(null);
   const [direction, setDirection] = useState(1);
   const prevViewRef = useRef(activeView);
@@ -104,14 +105,14 @@ function MainAppContent() {
     ScrollTrigger.refresh();
   }, [activeView]);
 
-  // Pause Lenis when a modal is open so wheel events inside modals are 100% native
+  // Pause Lenis when a modal or notification drawer is open so wheel events inside are 100% native
   useEffect(() => {
-    if (isPlannerOpen || isCardExpanded) {
+    if (isPlannerOpen || isCardExpanded || isNotificationDrawerOpen) {
       lenisRef.current?.stop();
     } else {
       lenisRef.current?.start();
     }
-  }, [isPlannerOpen, isCardExpanded]);
+  }, [isPlannerOpen, isCardExpanded, isNotificationDrawerOpen]);
 
   return (
     <div className="min-h-screen bg-[#181411] text-[#f5f2eb] font-sans overflow-x-hidden selection:bg-[#f5f2eb] selection:text-[#181411]">
@@ -121,6 +122,9 @@ function MainAppContent() {
 
       {/* Universal Minimal Luxury Navbar */}
       <Navbar />
+
+      {/* Live AI Sentinel Notification Slidebar (Right Drawer) */}
+      <NotificationSidebar />
 
       {/* Global Multi-Step Trip Planner Modal */}
       <TripPlanningModal />

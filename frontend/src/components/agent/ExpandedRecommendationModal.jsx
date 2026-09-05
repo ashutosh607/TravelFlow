@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   X, 
   Sparkles, 
@@ -36,6 +37,17 @@ export const ExpandedRecommendationModal = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
+  // Close modal on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && isCardExpanded) {
+        collapseOption();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isCardExpanded, collapseOption]);
+
   // Scroll listener to update the active day indicator
   useEffect(() => {
     if (!isCardExpanded) return;
@@ -61,8 +73,6 @@ export const ExpandedRecommendationModal = () => {
     }
   }, [isCardExpanded]);
 
-  if (!isCardExpanded || !expandedOption) return null;
-
   const scrollToDay = (dayNum) => {
     setActiveDay(dayNum);
     const el = document.getElementById(`journey-day-${dayNum}`);
@@ -78,110 +88,140 @@ export const ExpandedRecommendationModal = () => {
   };
 
   return (
-    <div 
-      id="unfold-journey-scroll-container"
-      data-lenis-prevent="true"
-      className="fixed inset-0 z-[300] bg-[#14100d] text-[#f5f2eb] overflow-y-auto overflow-x-hidden custom-scrollbar scroll-smooth selection:bg-[#f5f2eb] selection:text-[#181411]"
-      style={{ overscrollBehavior: "contain", WebkitOverflowScrolling: "touch" }}
-      onWheel={(e) => e.stopPropagation()}
-      onTouchMove={(e) => e.stopPropagation()}
-    >
-      
-      {/* ============================================================ */}
-      {/* 1. STICKY TOP APP HEADER                                    */}
-      {/* ============================================================ */}
-      <header className="sticky top-0 h-16 px-4 sm:px-8 border-b border-white/10 bg-[#181411]/95 backdrop-blur-xl flex items-center justify-between z-50 shrink-0">
-        
-        {/* Back Button */}
-        <button
-          onClick={collapseOption}
-          className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#a89f91] hover:text-white transition-colors cursor-pointer"
+    <AnimatePresence>
+      {isCardExpanded && expandedOption && (
+        <motion.div 
+          key={`unfold-journey-${expandedOption.id || "option"}`}
+          id="unfold-journey-scroll-container"
+          data-lenis-prevent="true"
+          initial={{ opacity: 0, scale: 0.94, y: 55, filter: "blur(18px)" }}
+          animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, scale: 0.95, y: 45, filter: "blur(14px)" }}
+          transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed inset-0 z-[300] bg-[#14100d] text-[#f5f2eb] overflow-y-auto overflow-x-hidden custom-scrollbar scroll-smooth selection:bg-[#f5f2eb] selection:text-[#181411]"
+          style={{ overscrollBehavior: "contain", WebkitOverflowScrolling: "touch" }}
+          onWheel={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span className="hidden sm:inline">Back to All Options</span>
-          <span className="sm:hidden">Back</span>
-        </button>
-
-        {/* Center Title & Day Pill Navigation */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          {[1, 2, 3, 4, 5].map((d) => (
-            <button
-              key={d}
-              onClick={() => scrollToDay(d)}
-              className={`px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-mono transition-all cursor-pointer ${
-                activeDay === d
-                  ? "bg-white text-[#181411] font-bold shadow-md scale-105"
-                  : "bg-white/5 hover:bg-white/15 text-[#a89f91] hover:text-white"
-              }`}
-            >
-              DAY 0{d}
-            </button>
-          ))}
-        </div>
-
-        {/* Right Actions: Save, Share, Start CTA */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <button
-            onClick={() => setIsSaved(!isSaved)}
-            className={`p-2 rounded-full border transition-all cursor-pointer ${
-              isSaved
-                ? "bg-[rgba(201,168,106,0.15)] border-[rgba(201,168,106,0.35)] text-[#C9A86A]"
-                : "bg-white/5 hover:bg-white/15 border-white/10 text-[#a89f91] hover:text-white"
-            }`}
-            title="Save trip"
+          
+          {/* ============================================================ */}
+          {/* 1. STICKY TOP APP HEADER                                    */}
+          {/* ============================================================ */}
+          <motion.header 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="sticky top-0 h-16 px-4 sm:px-8 border-b border-white/10 bg-[#181411]/95 backdrop-blur-xl flex items-center justify-between z-50 shrink-0"
           >
-            <Heart className={`w-4 h-4 ${isSaved ? "fill-current" : ""}`} />
-          </button>
-
-          <button
-            onClick={handleShare}
-            className="p-2 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-[#a89f91] hover:text-white transition-all cursor-pointer relative"
-            title="Share trip"
-          >
-            <Share2 className="w-4 h-4" />
-            {isCopied && (
-              <span className="absolute -bottom-8 right-0 text-[10px] font-mono whitespace-nowrap bg-black px-2 py-1 rounded border border-white/20 text-white animate-fade-in">
-                Link copied!
-              </span>
-            )}
-          </button>
-
-          <button
-            onClick={() => startJourney(expandedOption)}
-            className="hidden md:flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#181411] hover:bg-[#eae5d9] transition-all hover:scale-105 cursor-pointer shadow-lg"
-          >
-            <span>Start Journey</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </header>
-
-      {/* ============================================================ */}
-      {/* HERO BANNER (58–62vh Editorial Presentation)                */}
-      {/* ============================================================ */}
-        <section className="relative h-[60vh] min-h-[480px] max-h-[620px] w-full overflow-hidden flex flex-col justify-end p-6 sm:p-12 lg:p-16">
-          <img
-            src={expandedOption.image}
-            alt={expandedOption.title}
-            className="absolute inset-0 w-full h-full object-cover object-center scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#14100d] via-[#14100d]/55 to-black/60" />
-
-          {/* Hero Content Overlay */}
-          <div className="relative z-10 max-w-5xl space-y-4">
             
-            {/* Badges */}
-            <div className="flex items-center gap-2.5 flex-wrap">
-              <span className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white font-semibold">
-                {expandedOption.tag}
-              </span>
-              <span className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 rounded-full bg-[#26201a]/90 backdrop-blur-md border border-white/20 text-[#e5dec9] font-bold">
-                {expandedOption.aiMatch}% AI MATCH
-              </span>
-              <span className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white">
-                {expandedOption.theme}
-              </span>
+            {/* Back Button */}
+            <button
+              onClick={collapseOption}
+              className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#a89f91] hover:text-white transition-colors cursor-pointer group"
+            >
+              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+              <span className="hidden sm:inline">Back to All Options</span>
+              <span className="sm:hidden">Back</span>
+            </button>
+
+            {/* Center Title & Day Pill Navigation */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              {[1, 2, 3, 4, 5].map((d) => (
+                <button
+                  key={d}
+                  onClick={() => scrollToDay(d)}
+                  className={`px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-mono transition-all cursor-pointer ${
+                    activeDay === d
+                      ? "bg-white text-[#181411] font-bold shadow-md scale-105"
+                      : "bg-white/5 hover:bg-white/15 text-[#a89f91] hover:text-white"
+                  }`}
+                >
+                  DAY 0{d}
+                </button>
+              ))}
             </div>
+
+            {/* Right Actions: Save, Share, Start CTA, Close X */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              <button
+                onClick={() => setIsSaved(!isSaved)}
+                className={`p-2 rounded-full border transition-all cursor-pointer ${
+                  isSaved
+                    ? "bg-[rgba(201,168,106,0.15)] border-[rgba(201,168,106,0.35)] text-[#C9A86A]"
+                    : "bg-white/5 hover:bg-white/15 border-white/10 text-[#a89f91] hover:text-white"
+                }`}
+                title="Save trip"
+              >
+                <Heart className={`w-4 h-4 ${isSaved ? "fill-current" : ""}`} />
+              </button>
+
+              <button
+                onClick={handleShare}
+                className="p-2 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-[#a89f91] hover:text-white transition-all cursor-pointer relative"
+                title="Share trip"
+              >
+                <Share2 className="w-4 h-4" />
+                {isCopied && (
+                  <span className="absolute -bottom-8 right-0 text-[10px] font-mono whitespace-nowrap bg-black px-2 py-1 rounded border border-white/20 text-white animate-fade-in">
+                    Link copied!
+                  </span>
+                )}
+              </button>
+
+              <button
+                onClick={() => startJourney(expandedOption)}
+                className="hidden md:flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#181411] hover:bg-[#eae5d9] transition-all hover:scale-105 cursor-pointer shadow-lg"
+              >
+                <span>Start Journey</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+
+              {/* Explicit Close Button */}
+              <button
+                onClick={collapseOption}
+                className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-[#a89f91] hover:text-white transition-all cursor-pointer shrink-0"
+                title="Close (Esc)"
+                aria-label="Close"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.header>
+
+          {/* ============================================================ */}
+          {/* HERO BANNER (58–62vh Editorial Presentation)                */}
+          {/* ============================================================ */}
+          <section className="relative h-[60vh] min-h-[480px] max-h-[620px] w-full overflow-hidden flex flex-col justify-end p-6 sm:p-12 lg:p-16">
+            <motion.img
+              initial={{ scale: 1.15, opacity: 0 }}
+              animate={{ scale: 1.05, opacity: 1 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              src={expandedOption.image}
+              alt={expandedOption.title}
+              className="absolute inset-0 w-full h-full object-cover object-center scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#14100d] via-[#14100d]/55 to-black/60" />
+
+            {/* Hero Content Overlay */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="relative z-10 max-w-5xl space-y-4"
+            >
+              
+              {/* Badges */}
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <span className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white font-semibold">
+                  {expandedOption.tag}
+                </span>
+                <span className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 rounded-full bg-[#26201a]/90 backdrop-blur-md border border-white/20 text-[#e5dec9] font-bold">
+                  {expandedOption.aiMatch}% AI MATCH
+                </span>
+                <span className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white">
+                  {expandedOption.theme}
+                </span>
+              </div>
 
             {/* Big Serif Destination Title */}
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif text-white tracking-tight leading-[1.05] drop-shadow-lg">
@@ -222,7 +262,7 @@ export const ExpandedRecommendationModal = () => {
               </button>
             </div>
 
-          </div>
+          </motion.div>
         </section>
 
         {/* ============================================================ */}
@@ -871,6 +911,8 @@ export const ExpandedRecommendationModal = () => {
 
         </div>
 
-    </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
   );
 };

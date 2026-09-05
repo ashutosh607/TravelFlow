@@ -279,8 +279,10 @@ export const AITravelAgentView = () => {
                           <ArrowRight className="w-3.5 h-3.5" />
                         </button>
 
-                        <button 
+                        <motion.button 
                           type="button"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.96 }}
                           onClick={(e) => {
                             e.stopPropagation();
                             expandOption(item.id);
@@ -288,8 +290,8 @@ export const AITravelAgentView = () => {
                           className="w-full py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-[rgba(201,168,106,0.35)] text-[11px] font-semibold text-[#d8d2c8] hover:text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                         >
                           <span>Click to Unfold Journey</span>
-                          <ArrowUpRight className="w-3.5 h-3.5" />
-                        </button>
+                          <ArrowUpRight className="w-3.5 h-3.5 text-[#C9A86A]" />
+                        </motion.button>
                       </div>
                     </div>
 
