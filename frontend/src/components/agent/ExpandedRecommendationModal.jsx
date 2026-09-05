@@ -81,7 +81,7 @@ export const ExpandedRecommendationModal = () => {
     <div 
       id="unfold-journey-scroll-container"
       data-lenis-prevent="true"
-      className="fixed inset-0 z-[200] bg-[#14100d] text-[#f5f2eb] overflow-y-auto overflow-x-hidden custom-scrollbar scroll-smooth selection:bg-[#f5f2eb] selection:text-[#181411]"
+      className="fixed inset-0 z-[300] bg-[#14100d] text-[#f5f2eb] overflow-y-auto overflow-x-hidden custom-scrollbar scroll-smooth selection:bg-[#f5f2eb] selection:text-[#181411]"
       style={{ overscrollBehavior: "contain", WebkitOverflowScrolling: "touch" }}
       onWheel={(e) => e.stopPropagation()}
       onTouchMove={(e) => e.stopPropagation()}
@@ -125,7 +125,7 @@ export const ExpandedRecommendationModal = () => {
             onClick={() => setIsSaved(!isSaved)}
             className={`p-2 rounded-full border transition-all cursor-pointer ${
               isSaved
-                ? "bg-red-500/20 border-red-500/40 text-red-400"
+                ? "bg-[rgba(201,168,106,0.15)] border-[rgba(201,168,106,0.35)] text-[#C9A86A]"
                 : "bg-white/5 hover:bg-white/15 border-white/10 text-[#a89f91] hover:text-white"
             }`}
             title="Save trip"
@@ -217,7 +217,7 @@ export const ExpandedRecommendationModal = () => {
                 onClick={() => setIsSaved(!isSaved)}
                 className="px-5 py-3 rounded-full text-xs font-mono text-white bg-black/60 hover:bg-black/90 border border-white/20 backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer"
               >
-                <Heart className={`w-3.5 h-3.5 ${isSaved ? "fill-red-400 text-red-400" : ""}`} />
+                <Heart className={`w-3.5 h-3.5 ${isSaved ? "fill-[#C9A86A] text-[#C9A86A]" : ""}`} />
                 <span>{isSaved ? "Saved" : "Save trip"}</span>
               </button>
             </div>

@@ -57,6 +57,7 @@ export const TravelProvider = ({ children }) => {
   const [savedTrips, setSavedTrips] = useState(INITIAL_SAVED_TRIPS);
   const [activeTripId, setActiveTripId] = useState(null); // null = show horizontal list in My Trips
   const [isTripChatThinking, setIsTripChatThinking] = useState(false);
+  const [reviewingTripId, setReviewingTripId] = useState(null);
 
   // AI Agent Chat State
   const [chatMessages, setChatMessages] = useState([
@@ -113,13 +114,21 @@ export const TravelProvider = ({ children }) => {
           setIsThinking(false);
           setIsGeneratingRecs(false);
           setThinkingStep("");
-          // Tailor recommendations based on preferences
-          const customRecs = INITIAL_RECOMMENDATIONS.map(rec => ({
-            ...rec,
-            title: combined.destination.includes("Udaipur") ? rec.title : `${combined.destination} Tour`,
-            route: `${combined.startingLocation} → ${combined.destination} → ${combined.startingLocation}`,
-            aiMatch: rec.id === "opt-3" && combined.travelGroup === "Couple" ? 98 : rec.aiMatch
-          }));
+          // Tailor recommendations based on preferences with distinctly unique titles
+          const customRecs = INITIAL_RECOMMENDATIONS.map((rec, idx) => {
+            let uniqueTitle = rec.title;
+            if (!combined.destination.includes("Jaipur") && !combined.destination.includes("Udaipur")) {
+              if (idx === 0) uniqueTitle = `${combined.destination} · Heritage & Palaces`;
+              else if (idx === 1) uniqueTitle = `${combined.destination} · Scenic & Adventure`;
+              else uniqueTitle = `${combined.destination} · Royal Romance & Luxury`;
+            }
+            return {
+              ...rec,
+              title: uniqueTitle,
+              route: `${combined.startingLocation} → ${combined.destination} → ${combined.startingLocation}`,
+              aiMatch: rec.id === "opt-3" && combined.travelGroup === "Couple" ? 98 : rec.aiMatch
+            };
+          });
           setRecommendations(customRecs);
           setChatMessages(prev => [
             ...prev,
@@ -360,8 +369,11 @@ export const TravelProvider = ({ children }) => {
       ]
     };
 
-    // Add new trip to the beginning of savedTrips (avoiding duplicates)
-    setSavedTrips(prev => [newTrip, ...prev.filter(t => t.id !== newTrip.id)]);
+    // Add new trip to the beginning of savedTrips (strict deduplication by optionId & title)
+    setSavedTrips(prev => {
+      const filtered = prev.filter(t => t.optionId !== opt.id && t.title.toLowerCase() !== opt.title.toLowerCase());
+      return [newTrip, ...filtered];
+    });
     setIsCardExpanded(false);
     setActiveTripId(null); // Show horizontal cards list in My Trips as requested!
     setActiveView("liveTrip");
@@ -369,7 +381,48 @@ export const TravelProvider = ({ children }) => {
     setTripHealthScore(94);
   };
 
-  // Dedicated Per-Trip Gemini-Style AI Chat with Live Itinerary Updates
+  // Remove / Delete a trip from My Trips
+  const deleteTrip = (tripId) => {
+    setSavedTrips(prev => prev.filter(t => t.id !== tripId));
+    if (activeTripId === tripId) {
+      setActiveTripId(null);
+    }
+  };
+
+  // Mark a trip as Completed / Journey Done
+  const markTripCompleted = (tripId) => {
+    setSavedTrips(prev => prev.map(t => {
+      if (t.id === tripId) {
+        return { 
+          ...t, 
+          status: "Completed", 
+          completedAt: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) 
+        };
+      }
+      return t;
+    }));
+    setReviewingTripId(tripId);
+  };
+
+  // Submit traveler review for a completed journey
+  const submitTripReview = (tripId, reviewData) => {
+    setSavedTrips(prev => prev.map(t => {
+      if (t.id === tripId) {
+        return { 
+          ...t, 
+          status: "Completed",
+          review: {
+            ...reviewData,
+            date: "Just now"
+          }
+        };
+      }
+      return t;
+    }));
+    setReviewingTripId(null);
+  };
+
+  // Dedicated Per-Trip TravelFlow AI Chat with Live Itinerary Updates
   const sendTripChatMessage = (tripId, userPrompt) => {
     if (!userPrompt || !userPrompt.trim()) return;
 
@@ -547,6 +600,11 @@ export const TravelProvider = ({ children }) => {
         backToMyTrips,
         sendTripChatMessage,
         isTripChatThinking,
+        deleteTrip,
+        markTripCompleted,
+        submitTripReview,
+        reviewingTripId,
+        setReviewingTripId,
         // Real-Time Disruption
         disruptionState,
         tripHealthScore,

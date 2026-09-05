@@ -1,20 +1,70 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion, AnimatePresence } from "framer-motion";
 import { TravelProvider, useTravel } from "./context/TravelContext";
 import { Navbar } from "./components/Navbar";
 import { LandingPage } from "./components/landing/LandingPage";
 import { TripPlanningModal } from "./components/planner/TripPlanningModal";
+import { ExpandedRecommendationModal } from "./components/agent/ExpandedRecommendationModal";
 import { AITravelAgentView } from "./components/agent/AITravelAgentView";
 import { LiveTripManager } from "./components/itinerary/LiveTripManager";
 import { IntroPreloader } from "./components/landing/IntroPreloader";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Numerical ordering for directional page-turning transitions
+const VIEW_INDEX = {
+  landing: 0,
+  liveTrip: 1,
+  agent: 2
+};
+
+const pageVariants = {
+  enter: (direction) => ({
+    x: direction > 0 ? 80 : -80,
+    opacity: 0,
+    filter: "blur(14px)",
+    scale: 0.985
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    filter: "blur(0px)",
+    scale: 1,
+    transition: {
+      duration: 0.55,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  },
+  exit: (direction) => ({
+    x: direction > 0 ? -80 : 80,
+    opacity: 0,
+    filter: "blur(14px)",
+    scale: 0.985,
+    transition: {
+      duration: 0.4,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  })
+};
+
 function MainAppContent() {
   const { activeView, isPlannerOpen, isCardExpanded } = useTravel();
-  const lenisRef = React.useRef(null);
+  const lenisRef = useRef(null);
+  const [direction, setDirection] = useState(1);
+  const prevViewRef = useRef(activeView);
+
+  // Track page turn direction (forward vs backward across Explore, My Trips, AI Agent)
+  useEffect(() => {
+    const prevIdx = VIEW_INDEX[prevViewRef.current] ?? 0;
+    const nextIdx = VIEW_INDEX[activeView] ?? 0;
+    if (nextIdx !== prevIdx) {
+      setDirection(nextIdx > prevIdx ? 1 : -1);
+      prevViewRef.current = activeView;
+    }
+  }, [activeView]);
 
   // Initialize Lenis Smooth Scroll with GSAP ScrollTrigger Synchronization
   useEffect(() => {
@@ -75,11 +125,42 @@ function MainAppContent() {
       {/* Global Multi-Step Trip Planner Modal */}
       <TripPlanningModal />
 
+      {/* Global Unfold Journey Modal (Full-Screen Immersive View) */}
+      <ExpandedRecommendationModal />
+
       {/* Dynamic View Router */}
       <main>
         {activeView === "landing" && <LandingPage />}
-        {activeView === "agent" && <AITravelAgentView />}
-        {activeView === "liveTrip" && <LiveTripManager />}
+
+        <AnimatePresence mode="wait" custom={direction}>
+          {activeView === "liveTrip" && (
+            <motion.div
+              key="liveTrip"
+              custom={direction}
+              variants={pageVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="will-change-[transform,filter,opacity]"
+            >
+              <LiveTripManager />
+            </motion.div>
+          )}
+
+          {activeView === "agent" && (
+            <motion.div
+              key="agent"
+              custom={direction}
+              variants={pageVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="will-change-[transform,filter,opacity]"
+            >
+              <AITravelAgentView />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
 
       {/* Global Minimal Footer */}

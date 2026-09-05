@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import { 
   Sparkles, 
   Send, 
@@ -9,7 +10,7 @@ import {
   Check
 } from "lucide-react";
 import { useTravel } from "../../context/TravelContext";
-import { ExpandedRecommendationModal } from "./ExpandedRecommendationModal";
+import { BlurTextReveal } from "../ui/BlurTextReveal";
 
 // Suggestion prompt pills matching the user's design
 const MOCK_PROMPT_PILLS = [
@@ -50,24 +51,36 @@ export const AITravelAgentView = () => {
   return (
     <div className="relative min-h-screen pt-28 pb-20 px-4 sm:px-6 lg:px-8 text-[#f5f2eb] bg-[#181411] selection:bg-[#f5f2eb] selection:text-[#181411] flex flex-col justify-between">
       
-      {/* Expanded Journey Modal Overlay */}
-      <ExpandedRecommendationModal />
-
       <div className="w-full max-w-6xl mx-auto flex-1 flex flex-col justify-start">
         
         {/* ============================================================ */}
         {/* 1. EDITORIAL HEADER (Serif Typography & Spacious Layout)    */}
         {/* ============================================================ */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-10 sm:mb-12">
-          <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] text-[#a89f91] uppercase font-semibold block">
+          <motion.span 
+            initial={{ opacity: 0, filter: "blur(8px)", y: -8 }}
+            animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] text-[#C9A86A] uppercase font-semibold block"
+          >
             CURATED FOR YOU
-          </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-serif font-normal text-white tracking-tight leading-[1.1]">
-            Tell me how you want to travel.
-          </h1>
-          <p className="text-xs sm:text-sm text-[#a89f91] font-sans">
+          </motion.span>
+          <BlurTextReveal
+            text="Tell me how you want to travel."
+            as="h1"
+            animateBy="words"
+            delay={0.12}
+            stagger={0.06}
+            className="text-4xl sm:text-5xl lg:text-[54px] font-serif font-normal text-white tracking-tight leading-[1.1]"
+          />
+          <motion.p 
+            initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+            animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="text-xs sm:text-sm text-[#a89f91] font-sans"
+          >
             A customized space for a {tripData.travelGroup || "Couple"} — {tripData.startingLocation || "Mumbai"} to {tripData.destination || "Rajasthan (Jaipur & Udaipur)"}
-          </p>
+          </motion.p>
         </div>
 
         {/* ============================================================ */}
@@ -109,14 +122,14 @@ export const AITravelAgentView = () => {
                   {/* Glowing Rotating AI Badge */}
                   <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
                     <div className="absolute inset-0 rounded-full border border-white/20 animate-spin-slow" />
-                    <div className="absolute inset-1 rounded-full border border-[#e5dec9]/30 border-t-transparent animate-spin" />
+                    <div className="absolute inset-1 rounded-full border border-[#C9A86A]/40 border-t-transparent animate-spin" />
                     <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white backdrop-blur-md shadow-inner">
-                      <Sparkles className="w-5 h-5 text-[#e5dec9]" />
+                      <Sparkles className="w-5 h-5 text-[#C9A86A]" />
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <span className="text-[10px] font-mono tracking-[0.25em] text-[#e5dec9] uppercase font-bold block">
+                    <span className="text-[10px] font-mono tracking-[0.25em] text-[#C9A86A] uppercase font-bold block">
                       AI TRAVEL CONCIERGE
                     </span>
                     <h3 className="text-xl font-bold font-sans text-white">
@@ -129,7 +142,7 @@ export const AITravelAgentView = () => {
 
                   {/* Live Current Thinking Step */}
                   <div className="px-4 py-2.5 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center gap-2.5">
-                    <RefreshCw className="w-3.5 h-3.5 text-[#e5dec9] animate-spin" />
+                    <RefreshCw className="w-3.5 h-3.5 text-[#C9A86A] animate-spin" />
                     <span className="text-xs font-mono text-white font-medium">
                       {thinkingStep || "Analyzing your preferences..."}
                     </span>
@@ -137,7 +150,7 @@ export const AITravelAgentView = () => {
 
                   {/* Dynamic Progress Indicator */}
                   <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-[#e5dec9] to-white rounded-full w-3/4 animate-pulse" />
+                    <div className="h-full bg-gradient-to-r from-[#C9A86A] to-white rounded-full w-3/4 animate-pulse" />
                   </div>
 
                 </div>
@@ -151,105 +164,152 @@ export const AITravelAgentView = () => {
           /* -------------------------------------------------------- */
           /* 3 RECOMMENDATION CARDS (Shown after loading completes)    */
           /* -------------------------------------------------------- */
-          <div className="w-full max-w-6xl mx-auto mb-10 sm:mb-12 animate-fade-in">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {recommendations.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => expandOption(item.id)}
-                  className="group cursor-pointer rounded-[24px] bg-[#1a1512] border border-white/10 hover:border-white/30 transition-all duration-300 flex flex-col justify-between overflow-hidden p-4 sm:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:-translate-y-1.5 select-none"
-                >
-                  {/* Card Image with Badges */}
-                  <div>
-                    <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden mb-4 bg-[#14100d]">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+          <div className="w-full max-w-6xl mx-auto mb-10 sm:mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-start">
+              {recommendations.map((item, idx) => (
+                <div key={item.id} className="relative flex flex-col items-center">
+                  {/* Floating Card */}
+                  <motion.div
+                    onClick={() => expandOption(item.id)}
+                    initial={{ opacity: 0, y: 50, filter: "blur(14px)" }}
+                    animate={{
+                      opacity: 1,
+                      filter: "blur(0px)",
+                      y: idx === 0 ? [-8, 8, -8] : idx === 1 ? [8, -8, 8] : [-7, 7, -7],
+                      rotate: idx === 0 ? [-0.35, 0.35, -0.35] : idx === 1 ? [0.35, -0.35, 0.35] : [-0.3, 0.3, -0.3]
+                    }}
+                    transition={{
+                      opacity: { duration: 0.7, delay: idx * 0.15, ease: [0.22, 1, 0.36, 1] },
+                      filter: { duration: 0.7, delay: idx * 0.15, ease: [0.22, 1, 0.36, 1] },
+                      y: {
+                        repeat: Infinity,
+                        duration: 5.2 + idx * 0.8,
+                        ease: "easeInOut",
+                        delay: idx * 0.3
+                      },
+                      rotate: {
+                        repeat: Infinity,
+                        duration: 5.8 + idx * 0.7,
+                        ease: "easeInOut",
+                        delay: idx * 0.3
+                      }
+                    }}
+                    whileHover={{
+                      y: -18,
+                      scale: 1.03,
+                      rotate: 0,
+                      transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] }
+                    }}
+                    className="w-full group cursor-pointer rounded-[24px] bg-[#1a1512] border border-white/10 hover:border-[rgba(201,168,106,0.45)] transition-colors duration-300 flex flex-col justify-between overflow-hidden p-4 sm:p-5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] hover:shadow-[0_40px_80px_-20px_rgba(201,168,106,0.25)] select-none will-change-[transform,filter]"
+                  >
+                    {/* Card Image with Badges */}
+                    <div>
+                      <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden mb-4 bg-[#14100d]">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
 
-                      {/* Top Badges */}
-                      <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-                        <span className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white/90 font-semibold">
-                          {item.tag}
-                        </span>
-                        <span className="text-[10px] font-mono font-medium px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white/90">
-                          {item.aiMatch}% Match
-                        </span>
+                        {/* Top Badges */}
+                        <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                          <span className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white/90 font-semibold">
+                            {item.tag}
+                          </span>
+                          <span className="text-[10px] font-mono font-medium px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-[rgba(201,168,106,0.35)] text-[#C9A86A]">
+                            {item.aiMatch}% Match
+                          </span>
+                        </div>
+
+                        {/* Bottom Image Tag */}
+                        <div className="absolute bottom-3 left-3 pointer-events-none">
+                          <span className="text-[9px] font-mono font-bold tracking-wider uppercase px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md border border-white/15 text-white">
+                            {item.theme}
+                          </span>
+                        </div>
                       </div>
 
-                      {/* Bottom Image Tag */}
-                      <div className="absolute bottom-3 left-3 pointer-events-none">
-                        <span className="text-[9px] font-mono font-bold tracking-wider uppercase px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md border border-white/15 text-white">
-                          {item.theme}
-                        </span>
+                      {/* Title + Slanted Arrow */}
+                      <div className="flex items-start justify-between gap-2 mb-1">
+                        <h3 className="text-xl sm:text-2xl font-serif text-white group-hover:text-[#C9A86A] transition-colors leading-snug">
+                          {item.title}
+                        </h3>
+                        <ArrowUpRight className="w-4 h-4 text-[#a89f91] group-hover:text-[#C9A86A] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0 mt-1" />
+                      </div>
+
+                      {/* Route Subtitle */}
+                      <p className="text-xs font-sans text-[#a89f91] mb-5">
+                        {item.route}
+                      </p>
+                    </div>
+
+                    {/* Duration & Investment + Action Button */}
+                    <div>
+                      <div className="flex items-center justify-between py-3 border-t border-white/10 mb-4">
+                        <div>
+                          <span className="text-[9px] font-mono tracking-widest uppercase text-[#736a5e] block mb-0.5">
+                            DURATION
+                          </span>
+                          <span className="text-sm sm:text-base font-bold text-white font-sans">
+                            {item.duration}
+                          </span>
+                        </div>
+
+                        <div className="text-right">
+                          <span className="text-[9px] font-mono tracking-widest uppercase text-[#736a5e] block mb-0.5">
+                            INVESTMENT
+                          </span>
+                          <span className="text-sm sm:text-base font-bold text-white font-sans">
+                            {item.price}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <button 
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            startJourney(item);
+                          }}
+                          className="w-full py-2.5 rounded-xl bg-white hover:bg-[#eae5d9] text-[#181411] text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md hover:scale-[1.02]"
+                        >
+                          <span>Start This Journey</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+
+                        <button 
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            expandOption(item.id);
+                          }}
+                          className="w-full py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-[rgba(201,168,106,0.35)] text-[11px] font-semibold text-[#d8d2c8] hover:text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                        >
+                          <span>Click to Unfold Journey</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </button>
                       </div>
                     </div>
 
-                    {/* Title + Slanted Arrow */}
-                    <div className="flex items-start justify-between gap-2 mb-1">
-                      <h3 className="text-xl sm:text-2xl font-serif text-white group-hover:text-[#e5dec9] transition-colors leading-snug">
-                        {item.title}
-                      </h3>
-                      <ArrowUpRight className="w-4 h-4 text-[#a89f91] group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0 mt-1" />
-                    </div>
+                  </motion.div>
 
-                    {/* Route Subtitle */}
-                    <p className="text-xs font-sans text-[#a89f91] mb-5">
-                      {item.route}
-                    </p>
-                  </div>
-
-                  {/* Duration & Investment + Action Button */}
-                  <div>
-                    <div className="flex items-center justify-between py-3 border-t border-white/10 mb-4">
-                      <div>
-                        <span className="text-[9px] font-mono tracking-widest uppercase text-[#736a5e] block mb-0.5">
-                          DURATION
-                        </span>
-                        <span className="text-sm sm:text-base font-bold text-white font-sans">
-                          {item.duration}
-                        </span>
-                      </div>
-
-                      <div className="text-right">
-                        <span className="text-[9px] font-mono tracking-widest uppercase text-[#736a5e] block mb-0.5">
-                          INVESTMENT
-                        </span>
-                        <span className="text-sm sm:text-base font-bold text-white font-sans">
-                          {item.price}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <button 
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          startJourney(item);
-                        }}
-                        className="w-full py-2.5 rounded-xl bg-white hover:bg-[#eae5d9] text-[#181411] text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md hover:scale-[1.02]"
-                      >
-                        <span>Start This Journey</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-
-                      <button 
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          expandOption(item.id);
-                        }}
-                        className="w-full py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-[11px] font-semibold text-[#d8d2c8] hover:text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                      >
-                        <span>Click to Unfold Journey</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-
+                  {/* Ambient Realistic Ground Shadow Pill reacting inversely to float */}
+                  <motion.div
+                    animate={{
+                      scaleX: idx === 0 ? [0.88, 1.08, 0.88] : idx === 1 ? [1.08, 0.88, 1.08] : [0.9, 1.05, 0.9],
+                      scaleY: idx === 0 ? [0.8, 1.2, 0.8] : idx === 1 ? [1.2, 0.8, 1.2] : [0.85, 1.15, 0.85],
+                      opacity: idx === 0 ? [0.35, 0.65, 0.35] : idx === 1 ? [0.65, 0.35, 0.65] : [0.4, 0.6, 0.4]
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 5.2 + idx * 0.8,
+                      ease: "easeInOut",
+                      delay: idx * 0.3
+                    }}
+                    className="w-3/4 h-5 mt-2 rounded-full bg-black/90 blur-lg pointer-events-none"
+                  />
                 </div>
               ))}
             </div>
@@ -304,8 +364,8 @@ export const AITravelAgentView = () => {
 
         {/* Live Chat Thinking Indicator (When user types a prompt in chat) */}
         {isThinking && !isGeneratingRecs && (
-          <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-full bg-[#1c1713] border border-white/15 text-xs font-mono text-[#e5dec9] w-fit mx-auto mb-4 animate-fade-in shadow-lg">
-            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+          <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-full bg-[#1c1713] border border-[rgba(201,168,106,0.35)] text-xs font-mono text-[#C9A86A] w-fit mx-auto mb-4 animate-fade-in shadow-lg">
+            <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#C9A86A]" />
             <span>{thinkingStep || "Refining journeys with AI..."}</span>
           </div>
         )}

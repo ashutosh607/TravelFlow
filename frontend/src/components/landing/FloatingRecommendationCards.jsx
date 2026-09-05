@@ -11,15 +11,13 @@ export const FloatingRecommendationCards = () => {
   };
 
   const getThemeIcon = (theme) => {
-    if (theme.includes("ROMANTIC")) return <Heart className="w-3.5 h-3.5 text-rose-400" />;
-    if (theme.includes("ADVENTURE")) return <Compass className="w-3.5 h-3.5 text-amber-400" />;
-    return <Sparkles className="w-3.5 h-3.5 text-sky-400" />;
+    if (theme.includes("ROMANTIC")) return <Heart className="w-3.5 h-3.5 text-[#C9A86A]" />;
+    if (theme.includes("ADVENTURE")) return <Compass className="w-3.5 h-3.5 text-[#C9A86A]" />;
+    return <Sparkles className="w-3.5 h-3.5 text-[#C9A86A]" />;
   };
 
   const getBadgeStyle = (theme) => {
-    if (theme.includes("ROMANTIC")) return "border-rose-500/30 text-rose-300 bg-rose-500/10";
-    if (theme.includes("ADVENTURE")) return "border-amber-500/30 text-amber-300 bg-amber-500/10";
-    return "border-sky-500/30 text-sky-300 bg-sky-500/10";
+    return "border-[rgba(201,168,106,0.35)] text-[#C9A86A] bg-[rgba(201,168,106,0.15)]";
   };
 
   return (
@@ -41,7 +39,7 @@ export const FloatingRecommendationCards = () => {
               onClick={() => handleCardClick(item.id)}
               className={`group cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.03] ${floatDelayClass} ${transformStyle}`}
             >
-              <div className="relative rounded-2xl bg-neutral-900/80 backdrop-blur-xl border border-white/10 hover:border-white/30 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] group-hover:shadow-[0_25px_60px_rgba(56,189,248,0.15)] transition-all">
+              <div className="relative rounded-2xl bg-neutral-900/80 backdrop-blur-xl border border-white/10 hover:border-white/30 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] group-hover:shadow-[0_25px_60px_rgba(201,168,106,0.12)] transition-all">
                 {/* Destination Preview Image with Dark Gradient Vignette */}
                 <div className="relative h-44 w-full overflow-hidden">
                   <img
@@ -56,8 +54,8 @@ export const FloatingRecommendationCards = () => {
                     <span className="text-[11px] font-mono tracking-widest uppercase px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-neutral-300">
                       {item.tag}
                     </span>
-                    <span className="flex items-center gap-1.5 text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-sky-950/80 backdrop-blur-md border border-sky-400/30 text-sky-300 shadow-[0_0_15px_rgba(56,189,248,0.25)]">
-                      <Sparkles className="w-3 h-3 text-sky-400 animate-pulse" />
+                    <span className="flex items-center gap-1.5 text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-[rgba(201,168,106,0.15)] backdrop-blur-md border border-[rgba(201,168,106,0.35)] text-[#C9A86A]">
+                      <Sparkles className="w-3 h-3 text-[#C9A86A]" />
                       {item.aiMatch}% AI Match
                     </span>
                   </div>
@@ -74,9 +72,9 @@ export const FloatingRecommendationCards = () => {
                 {/* Content */}
                 <div className="p-5 space-y-4">
                   <div>
-                    <h3 className="text-xl font-semibold tracking-tight text-white group-hover:text-sky-300 transition-colors flex items-center justify-between">
+                    <h3 className="text-xl font-semibold tracking-tight text-white group-hover:text-[#C9A86A] transition-colors flex items-center justify-between">
                       {item.title}
-                      <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-[#C9A86A] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </h3>
                     <p className="text-xs text-neutral-400 font-mono mt-1 tracking-wide">
                       {item.route}
@@ -98,7 +96,7 @@ export const FloatingRecommendationCards = () => {
                       <span className="text-[11px] uppercase tracking-wider text-neutral-400 block font-mono">
                         Est. Investment
                       </span>
-                      <span className="text-base font-semibold text-emerald-400">
+                      <span className="text-base font-semibold text-[#C9A86A]">
                         {item.price}
                       </span>
                     </div>
@@ -118,7 +116,7 @@ export const FloatingRecommendationCards = () => {
                 </div>
 
                 {/* Subtle bottom glow highlight */}
-                <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-sky-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-[#C9A86A]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             </div>
           );
