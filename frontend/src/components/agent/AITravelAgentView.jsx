@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { 
-  Sparkles, 
-  Send, 
-  ArrowUpRight, 
-  RefreshCw, 
+import {
+  Sparkles,
+  Send,
+  ArrowUpRight,
+  RefreshCw,
   ArrowRight,
   AlertCircle,
   Check
@@ -22,16 +22,16 @@ const MOCK_PROMPT_PILLS = [
 ];
 
 export const AITravelAgentView = () => {
-  const { 
-    recommendations, 
-    expandOption, 
-    isThinking, 
+  const {
+    recommendations,
+    expandOption,
+    isThinking,
     isGeneratingRecs,
-    thinkingStep, 
+    thinkingStep,
     sendAgentMessage,
     activeWhatIf,
     tripData,
-    startJourney 
+    startJourney
   } = useTravel();
 
   const [inputVal, setInputVal] = useState("");
@@ -50,14 +50,14 @@ export const AITravelAgentView = () => {
 
   return (
     <div className="relative min-h-screen pt-28 pb-20 px-4 sm:px-6 lg:px-8 text-[#f5f2eb] bg-[#181411] selection:bg-[#f5f2eb] selection:text-[#181411] flex flex-col justify-between">
-      
+
       <div className="w-full max-w-6xl mx-auto flex-1 flex flex-col justify-start">
-        
+
         {/* ============================================================ */}
         {/* 1. EDITORIAL HEADER (Serif Typography & Spacious Layout)    */}
         {/* ============================================================ */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-10 sm:mb-12">
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0, filter: "blur(8px)", y: -8 }}
             animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
@@ -73,7 +73,7 @@ export const AITravelAgentView = () => {
             stagger={0.06}
             className="text-4xl sm:text-5xl lg:text-[54px] font-serif font-normal text-white tracking-tight leading-[1.1]"
           />
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
             animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
             transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
@@ -87,17 +87,17 @@ export const AITravelAgentView = () => {
         {/* 2. MAIN CONTENT: Loading State OR 3 Recommendation Cards    */}
         {/* ============================================================ */}
         {isGeneratingRecs ? (
-          
+
           /* -------------------------------------------------------- */
           /* AI CONCIERGE GENERATION STATE (Shown during form submit) */
           /* -------------------------------------------------------- */
           <div className="w-full max-w-6xl mx-auto mb-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-              
+
               {/* Shimmering Placeholder Card Outlines */}
               {[1, 2, 3].map((idx) => (
-                <div 
-                  key={idx} 
+                <div
+                  key={idx}
                   className="rounded-[24px] bg-[#1a1512]/60 border border-white/10 p-4 sm:p-5 flex flex-col justify-between h-[480px] overflow-hidden relative shadow-lg"
                 >
                   <div className="w-full h-48 rounded-2xl bg-white/[0.04] animate-pulse relative overflow-hidden">
@@ -118,7 +118,7 @@ export const AITravelAgentView = () => {
               {/* Central Floating AI Concierge Intelligence Hub */}
               <div className="absolute inset-0 flex items-center justify-center p-4">
                 <div className="max-w-md w-full p-8 rounded-3xl bg-[#14100d]/95 border border-white/20 backdrop-blur-2xl shadow-[0_25px_80px_rgba(0,0,0,0.9)] text-center space-y-5 animate-scale-up">
-                  
+
                   {/* Glowing Rotating AI Badge */}
                   <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
                     <div className="absolute inset-0 rounded-full border border-white/20 animate-spin-slow" />
@@ -267,7 +267,7 @@ export const AITravelAgentView = () => {
                       </div>
 
                       <div className="space-y-2">
-                        <button 
+                        <button
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation();
@@ -279,7 +279,7 @@ export const AITravelAgentView = () => {
                           <ArrowRight className="w-3.5 h-3.5" />
                         </button>
 
-                        <motion.button 
+                        <motion.button
                           type="button"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.96 }}
@@ -376,7 +376,7 @@ export const AITravelAgentView = () => {
         {/* 4. BOTTOM CONSOLE: TRY ASKING + INPUT + FOOTER ROW          */}
         {/* ============================================================ */}
         <div className="w-full max-w-4xl mx-auto rounded-[24px] bg-[#14100d] border border-white/10 p-6 sm:p-7 space-y-4 sm:space-y-5 shadow-2xl mt-4">
-          
+
           {/* Row 1: Try Asking Suggestion Pills */}
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-[10px] font-mono tracking-[0.2em] font-bold text-white uppercase shrink-0 mr-1">

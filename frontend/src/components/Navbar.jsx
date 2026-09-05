@@ -5,7 +5,7 @@ import { useTravel } from "../context/TravelContext";
 
 const NavItem = ({ text, onClick, active, icon }) => {
   return (
-    <button 
+    <button
       type="button"
       onClick={onClick}
       className="relative px-3.5 py-1.5 rounded-full cursor-pointer group flex items-center justify-center select-none gap-1.5 transition-colors text-[11px] font-mono tracking-wider uppercase"
@@ -33,13 +33,13 @@ const NavItem = ({ text, onClick, active, icon }) => {
 };
 
 export const Navbar = () => {
-  const { 
-    activeView, 
-    setActiveView, 
-    setIsPlannerOpen, 
+  const {
+    activeView,
+    setActiveView,
+    setIsPlannerOpen,
     isCardExpanded,
     unreadNotificationCount,
-    setIsNotificationDrawerOpen 
+    setIsNotificationDrawerOpen
   } = useTravel();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -58,23 +58,23 @@ export const Navbar = () => {
   return (
     <>
       <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-6 sm:px-10 lg:px-20 py-8 text-[11px] font-mono tracking-wider uppercase z-[100] pointer-events-none">
-        
+
         {/* Desktop Left - Explore, My Trips, AI Agent */}
         <div className="hidden lg:flex items-center gap-4 tracking-tight pointer-events-auto">
-          <NavItem 
-            text="Explore" 
-            active={activeView === "landing"} 
-            onClick={() => setActiveView("landing")} 
+          <NavItem
+            text="Explore"
+            active={activeView === "landing"}
+            onClick={() => setActiveView("landing")}
           />
-          <NavItem 
-            text="My Trips" 
-            active={activeView === "liveTrip"} 
-            onClick={() => setActiveView("liveTrip")} 
+          <NavItem
+            text="My Trips"
+            active={activeView === "liveTrip"}
+            onClick={() => setActiveView("liveTrip")}
           />
-          <NavItem 
-            text="AI Agent" 
-            active={activeView === "agent"} 
-            onClick={() => setActiveView("agent")} 
+          <NavItem
+            text="AI Agent"
+            active={activeView === "agent"}
+            onClick={() => setActiveView("agent")}
             icon={<Sparkles className="w-3 h-3 text-[#C9A86A]" />}
           />
         </div>
@@ -92,7 +92,7 @@ export const Navbar = () => {
             aria-label="View notifications"
           >
             <Bell className="w-4 h-4 text-[#e5dec9] group-hover:text-white transition-colors" />
-            
+
             {/* Unread Badge / Terracotta Pulse */}
             {unreadNotificationCount > 0 && (
               <span className="absolute -top-1 -right-1 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-[#B86F52] text-white text-[9px] font-bold font-mono shadow-md">
@@ -105,7 +105,7 @@ export const Navbar = () => {
 
         {/* Mobile: Logo, Notifications & Menu button */}
         <div className="lg:hidden flex w-full justify-between items-center pointer-events-auto">
-          <span 
+          <span
             onClick={() => setActiveView("landing")}
             className="text-xs font-bold font-sans tracking-widest text-white uppercase cursor-pointer"
           >
@@ -137,16 +137,14 @@ export const Navbar = () => {
 
       {/* Mobile Sidebar Overlay */}
       <div
-        className={`fixed inset-0 z-[300] transition-all duration-500 ${
-          isOpen ? "opacity-100 pointer-events-auto backdrop-blur-sm" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-[300] transition-all duration-500 ${isOpen ? "opacity-100 pointer-events-auto backdrop-blur-sm" : "opacity-0 pointer-events-none"
+          }`}
         onClick={() => setIsOpen(false)}
       >
         <div className="absolute inset-0 bg-black/70" />
         <div
-          className={`absolute right-0 top-0 h-screen w-3/4 sm:w-1/2 bg-[#14100d] border-l border-white/10 transition-transform duration-500 ease-in-out flex flex-col px-6 pt-8 pb-10 ${
-            isOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`absolute right-0 top-0 h-screen w-3/4 sm:w-1/2 bg-[#14100d] border-l border-white/10 transition-transform duration-500 ease-in-out flex flex-col px-6 pt-8 pb-10 ${isOpen ? "translate-x-0" : "translate-x-full"
+            }`}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between mb-12">

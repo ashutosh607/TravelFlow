@@ -89,30 +89,30 @@ export const CinematicScrollHero = () => {
                 duration: 12,
                 ease: "power1.inOut"
             }, 0)
-            // 2. Left headline exits gently to the left with blur
-            .to(".hero-text-left", {
-                x: -240,
-                filter: "blur(16px)",
-                opacity: 0,
-                scale: 1.04,
-                duration: 8,
-                ease: "power1.inOut"
-            }, 0)
-            // 3. Right headline exits gently to the right with blur
-            .to(".hero-text-right", {
-                x: 240,
-                filter: "blur(16px)",
-                opacity: 0,
-                scale: 1.04,
-                duration: 8,
-                ease: "power1.inOut"
-            }, 0)
-            // 4. Scroll indicator fades
-            .to(".scroll-indicator", {
-                opacity: 0,
-                duration: 2.5,
-                ease: "power1.out"
-            }, 0);
+                // 2. Left headline exits gently to the left with blur
+                .to(".hero-text-left", {
+                    x: -240,
+                    filter: "blur(16px)",
+                    opacity: 0,
+                    scale: 1.04,
+                    duration: 8,
+                    ease: "power1.inOut"
+                }, 0)
+                // 3. Right headline exits gently to the right with blur
+                .to(".hero-text-right", {
+                    x: 240,
+                    filter: "blur(16px)",
+                    opacity: 0,
+                    scale: 1.04,
+                    duration: 8,
+                    ease: "power1.inOut"
+                }, 0)
+                // 4. Scroll indicator fades
+                .to(".scroll-indicator", {
+                    opacity: 0,
+                    duration: 2.5,
+                    ease: "power1.out"
+                }, 0);
 
             // 5. Center Logo moves up into top navbar smoothly
             const logoMoveFactor = window.innerWidth < 1024 ? 0.43 : 0.44;
@@ -141,58 +141,58 @@ export const CinematicScrollHero = () => {
                 },
                 7.5
             )
-            // 7. Card 1 enters from left with blur
-            .fromTo(".sky-card-1",
-                {
-                    x: -160,
-                    opacity: 0,
-                    filter: "blur(16px)",
-                    rotation: -6
-                },
-                {
-                    x: 0,
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    rotation: -2,
-                    duration: 7,
-                    ease: "power1.out"
-                },
-                8.0
-            )
-            // 8. Card 2 enters from bottom with blur
-            .fromTo(".sky-card-2",
-                {
-                    y: 130,
-                    opacity: 0,
-                    filter: "blur(16px)"
-                },
-                {
-                    y: 0,
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    duration: 7,
-                    ease: "power1.out"
-                },
-                8.3
-            )
-            // 9. Card 3 enters from right with blur
-            .fromTo(".sky-card-3",
-                {
-                    x: 160,
-                    opacity: 0,
-                    filter: "blur(16px)",
-                    rotation: 6
-                },
-                {
-                    x: 0,
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    rotation: 2,
-                    duration: 7,
-                    ease: "power1.out"
-                },
-                8.6
-            );
+                // 7. Card 1 enters from left with blur
+                .fromTo(".sky-card-1",
+                    {
+                        x: -160,
+                        opacity: 0,
+                        filter: "blur(16px)",
+                        rotation: -6
+                    },
+                    {
+                        x: 0,
+                        opacity: 1,
+                        filter: "blur(0px)",
+                        rotation: -2,
+                        duration: 7,
+                        ease: "power1.out"
+                    },
+                    8.0
+                )
+                // 8. Card 2 enters from bottom with blur
+                .fromTo(".sky-card-2",
+                    {
+                        y: 130,
+                        opacity: 0,
+                        filter: "blur(16px)"
+                    },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        filter: "blur(0px)",
+                        duration: 7,
+                        ease: "power1.out"
+                    },
+                    8.3
+                )
+                // 9. Card 3 enters from right with blur
+                .fromTo(".sky-card-3",
+                    {
+                        x: 160,
+                        opacity: 0,
+                        filter: "blur(16px)",
+                        rotation: 6
+                    },
+                    {
+                        x: 0,
+                        opacity: 1,
+                        filter: "blur(0px)",
+                        rotation: 2,
+                        duration: 7,
+                        ease: "power1.out"
+                    },
+                    8.6
+                );
 
         }, scopeRef);
 
@@ -201,13 +201,13 @@ export const CinematicScrollHero = () => {
 
     return (
         <div ref={scopeRef} className="relative w-full">
-            
+
             {/* ============================================================ */}
             {/* 1. ANIMATED CENTER LOGO (Flies to navbar on scroll) */}
             {/* ============================================================ */}
             <div className="fixed inset-0 flex items-center justify-center z-[120] pointer-events-none">
-                <div 
-                    ref={logoRef} 
+                <div
+                    ref={logoRef}
                     onClick={() => setActiveView("landing")}
                     className="flex flex-col items-center justify-center pointer-events-auto cursor-pointer select-none will-change-transform"
                 >
@@ -224,10 +224,10 @@ export const CinematicScrollHero = () => {
             {/* 2. MAIN HERO VIEWPORT CANVAS */}
             {/* ============================================================ */}
             <div ref={revealRef} className="relative w-full">
-                
+
                 {/* Pinned Viewport Container */}
                 <div ref={mainContainer} className="relative w-full h-screen overflow-hidden">
-                    
+
                     {/* ======================================================== */}
                     {/* SKY LAYER: Fullscreen bright blue sky */}
                     {/* ======================================================== */}
@@ -267,9 +267,9 @@ export const CinematicScrollHero = () => {
                     {/* ======================================================== */}
                     {/* AIRPLANE WINDOW: Scales up gradually on scroll */}
                     {/* ======================================================== */}
-                    <div 
-                        ref={windowRef} 
-                        className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none will-change-transform" 
+                    <div
+                        ref={windowRef}
+                        className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none will-change-transform"
                         style={{ perspective: '1000px', backfaceVisibility: 'hidden' }}
                     >
                         <div className="relative w-full h-full" style={{ transformStyle: 'preserve-3d' }}>
@@ -292,10 +292,10 @@ export const CinematicScrollHero = () => {
                                 style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                             />
                             <div className="absolute top-[22.5%] left-[50%] md:top-[12%] md:left-[50%] -translate-x-1/2 w-[50%] md:w-[24%] h-auto z-40 pointer-events-none select-none">
-                                <img 
-                                    src={aboveImage} 
-                                    alt="above fixture" 
-                                    className="w-full h-auto object-contain" 
+                                <img
+                                    src={aboveImage}
+                                    alt="above fixture"
+                                    className="w-full h-auto object-contain"
                                 />
                             </div>
                         </div>
@@ -304,8 +304,8 @@ export const CinematicScrollHero = () => {
                     {/* ======================================================== */}
                     {/* EDITORIAL CONTENT (Left & Right - Pure GSAP for 100% Reverse Scroll Recovery) */}
                     {/* ======================================================== */}
-                    <div 
-                        ref={contentRef} 
+                    <div
+                        ref={contentRef}
                         className="absolute inset-0 z-20 flex items-center justify-between px-6 sm:px-12 lg:px-20 text-white pointer-events-none"
                     >
                         {/* Left Editorial Column */}
@@ -356,8 +356,8 @@ export const CinematicScrollHero = () => {
                     {/* SECOND SECTION: IN-SKY STORY & 3 FLOATING CARDS */}
                     {/* Slow, gentle emergence inside the open blue sky */}
                     {/* ======================================================== */}
-                    <div 
-                        ref={secondSectionRef} 
+                    <div
+                        ref={secondSectionRef}
                         className="absolute inset-0 z-30 flex flex-col items-center justify-between text-white px-4 sm:px-8 md:px-12 py-16 sm:py-20 pointer-events-none will-change-transform"
                     >
                         {/* Open Sky Headline */}
@@ -375,9 +375,9 @@ export const CinematicScrollHero = () => {
 
                         {/* 3 Floating Recommendation Cards Surfacing in the Open Sky */}
                         <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-6 pointer-events-auto pb-4 sm:pb-8">
-                            
+
                             {/* Option 01: Balanced (Enters smoothly from LEFT) */}
-                            <div 
+                            <div
                                 onClick={() => {
                                     setActiveView("agent");
                                     expandOption("opt-1");
@@ -412,7 +412,7 @@ export const CinematicScrollHero = () => {
                             </div>
 
                             {/* Option 02: Adventure (Enters smoothly from BOTTOM) */}
-                            <div 
+                            <div
                                 onClick={() => {
                                     setActiveView("agent");
                                     expandOption("opt-2");
@@ -447,7 +447,7 @@ export const CinematicScrollHero = () => {
                             </div>
 
                             {/* Option 03: Romantic (Enters smoothly from RIGHT) */}
-                            <div 
+                            <div
                                 onClick={() => {
                                     setActiveView("agent");
                                     expandOption("opt-3");
@@ -491,13 +491,13 @@ export const CinematicScrollHero = () => {
                 {/* ============================================================ */}
                 <div className="w-full flex justify-center fixed bottom-4 sm:bottom-8 z-[100] pointer-events-none">
                     <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-2 py-1 rounded-full pointer-events-auto border border-white/20 shadow-2xl">
-                        <button 
+                        <button
                             onClick={() => setIsPlannerOpen(true)}
                             className="text-[11px] font-bold tracking-wider uppercase bg-white text-black px-4 sm:px-5 py-2.5 rounded-full cursor-pointer hover:bg-[#eae5d9] transition-all hover:scale-105 active:scale-95"
                         >
                             Start Planning
                         </button>
-                        <div 
+                        <div
                             onClick={() => setIsPlannerOpen(true)}
                             className='w-9 h-9 bg-white rounded-full text-black flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition-transform'
                         >

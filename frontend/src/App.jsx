@@ -116,7 +116,7 @@ function MainAppContent() {
 
   return (
     <div className="min-h-screen bg-[#181411] text-[#f5f2eb] font-sans overflow-x-hidden selection:bg-[#f5f2eb] selection:text-[#181411]">
-      
+
       {/* Cinematic Intro Preloader */}
       <IntroPreloader />
 

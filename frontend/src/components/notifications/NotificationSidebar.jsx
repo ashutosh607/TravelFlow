@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Bell, 
-  X, 
-  AlertTriangle, 
-  Sparkles, 
-  Plane, 
-  CheckCircle2, 
-  CheckCheck, 
-  Trash2, 
-  ChevronRight, 
-  Shield, 
+import {
+  Bell,
+  X,
+  AlertTriangle,
+  Sparkles,
+  Plane,
+  CheckCircle2,
+  CheckCheck,
+  Trash2,
+  ChevronRight,
+  Shield,
   Info,
   Clock,
   Compass
@@ -18,9 +18,9 @@ import {
 import { useTravel } from "../../context/TravelContext";
 
 export const NotificationSidebar = () => {
-  const { 
-    notifications, 
-    isNotificationDrawerOpen, 
+  const {
+    notifications,
+    isNotificationDrawerOpen,
     setIsNotificationDrawerOpen,
     markNotificationRead,
     markAllNotificationsRead,
@@ -55,7 +55,7 @@ export const NotificationSidebar = () => {
     <AnimatePresence>
       {isNotificationDrawerOpen && (
         <div className="fixed inset-0 z-[350] overflow-hidden">
-          
+
           {/* Ambient Dark Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -119,22 +119,20 @@ export const NotificationSidebar = () => {
                   <button
                     type="button"
                     onClick={() => setActiveFilter("all")}
-                    className={`px-3 py-1 rounded-lg text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${
-                      activeFilter === "all"
+                    className={`px-3 py-1 rounded-lg text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${activeFilter === "all"
                         ? "bg-white text-[#181411] font-bold shadow-sm"
                         : "text-[#a89f91] hover:text-white"
-                    }`}
+                      }`}
                   >
                     All ({notifications.length})
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveFilter("alert")}
-                    className={`px-3 py-1 rounded-lg text-xs font-mono uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 ${
-                      activeFilter === "alert"
+                    className={`px-3 py-1 rounded-lg text-xs font-mono uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 ${activeFilter === "alert"
                         ? "bg-[#B86F52] text-white font-bold shadow-sm"
                         : "text-[#a89f91] hover:text-white"
-                    }`}
+                      }`}
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-[#B86F52]" />
                     Alerts
@@ -142,11 +140,10 @@ export const NotificationSidebar = () => {
                   <button
                     type="button"
                     onClick={() => setActiveFilter("update")}
-                    className={`px-3 py-1 rounded-lg text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${
-                      activeFilter === "update"
+                    className={`px-3 py-1 rounded-lg text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${activeFilter === "update"
                         ? "bg-white text-[#181411] font-bold shadow-sm"
                         : "text-[#a89f91] hover:text-white"
-                    }`}
+                      }`}
                   >
                     Updates
                   </button>
@@ -187,27 +184,24 @@ export const NotificationSidebar = () => {
                   return (
                     <div
                       key={notif.id}
-                      className={`p-4 rounded-2xl border transition-all duration-200 space-y-3 ${
-                        !notif.read ? "shadow-lg" : "opacity-85"
-                      } ${
-                        isAlert
+                      className={`p-4 rounded-2xl border transition-all duration-200 space-y-3 ${!notif.read ? "shadow-lg" : "opacity-85"
+                        } ${isAlert
                           ? "bg-[#201511] border-[rgba(184,111,82,0.35)]"
                           : isRecovery
-                          ? "bg-[#18231a] border-[rgba(201,168,106,0.35)]"
-                          : "bg-[#181411] border-white/10 hover:border-white/20"
-                      }`}
+                            ? "bg-[#18231a] border-[rgba(201,168,106,0.35)]"
+                            : "bg-[#181411] border-white/10 hover:border-white/20"
+                        }`}
                     >
                       {/* Top Item Row */}
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-start gap-3">
                           <div
-                            className={`w-8 h-8 rounded-xl shrink-0 flex items-center justify-center ${
-                              isAlert
+                            className={`w-8 h-8 rounded-xl shrink-0 flex items-center justify-center ${isAlert
                                 ? "bg-[rgba(184,111,82,0.18)] text-[#B86F52]"
                                 : isRecovery
-                                ? "bg-[rgba(201,168,106,0.15)] text-[#C9A86A]"
-                                : "bg-white/10 text-white"
-                            }`}
+                                  ? "bg-[rgba(201,168,106,0.15)] text-[#C9A86A]"
+                                  : "bg-white/10 text-white"
+                              }`}
                           >
                             {isAlert ? (
                               <AlertTriangle className="w-4 h-4 text-[#B86F52]" />
@@ -244,11 +238,10 @@ export const NotificationSidebar = () => {
                           <button
                             type="button"
                             onClick={() => handleNotificationAction(notif)}
-                            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold font-sans transition-all flex items-center gap-1.5 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                              isAlert
+                            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold font-sans transition-all flex items-center gap-1.5 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${isAlert
                                 ? "bg-white text-[#181411] hover:bg-[#eae5d9]"
                                 : "bg-[rgba(201,168,106,0.15)] hover:bg-[rgba(201,168,106,0.25)] border border-[rgba(201,168,106,0.35)] text-[#C9A86A]"
-                            }`}
+                              }`}
                           >
                             <span>{notif.actionLabel}</span>
                             <ChevronRight className="w-3.5 h-3.5" />
