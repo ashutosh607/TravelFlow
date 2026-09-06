@@ -45,14 +45,14 @@ const INITIAL_SAVED_TRIPS = [
 ];
 
 export const TravelProvider = ({ children }) => {
-  // Theme Management (defaults to 'dark' to preserve existing brown look)
+  // Theme Management (defaults to 'light' as requested by user)
   const [theme, setTheme] = useState(() => {
     if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("travelflow_theme");
+      const savedTheme = localStorage.getItem("travelflow_theme") || localStorage.getItem("travelflow-theme");
       if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
       if (document.documentElement.classList.contains("dark")) return "dark";
     }
-    return "dark";
+    return "light";
   });
 
   useEffect(() => {
@@ -63,6 +63,7 @@ export const TravelProvider = ({ children }) => {
         document.documentElement.classList.remove("dark");
       }
       localStorage.setItem("travelflow_theme", theme);
+      localStorage.setItem("travelflow-theme", theme);
     }
   }, [theme]);
 

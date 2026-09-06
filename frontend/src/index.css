@@ -37,96 +37,196 @@
 }
 
 :root {
-  --background: #f4f8fb;
-  --foreground: #102136;
-  --card: #ffffff;
-  --card-foreground: #102136;
-  --popover: #ffffff;
-  --popover-foreground: #102136;
-  --primary: #112a46;
-  --primary-foreground: #ffffff;
-  --secondary: #e2edf6;
-  --secondary-foreground: #102136;
-  --muted: #e6f0f7;
-  --muted-foreground: #4a6785;
-  --accent: #dbeaf5;
-  --accent-foreground: #102136;
-  --destructive: #dc2626;
-  --border: rgba(64, 118, 175, 0.18);
-  --input: rgba(64, 118, 175, 0.2);
-  --ring: #1f4a75;
+  /* User's Exact Light Mode Sky Palette */
+  --light-bg-primary: #EAF6FB;
+  --light-bg-secondary: #F3FAFC;
+  --light-bg-tertiary: #F8FCFD;
+
+  --light-sky-soft: #DDF2FA;
+  --light-sky-pale: #EAF7FB;
+  --light-cloud: #F8FCFD;
+
+  --light-surface: #FFFFFF;
+  --light-surface-soft: #F4FAFC;
+  --light-surface-blue: #EDF8FC;
+
+  --light-text-primary: #17324D;
+  --light-text-secondary: #4B6475;
+  --light-text-muted: #718694;
+
+  --light-border: #D5E7EE;
+  --light-border-soft: #E3EFF3;
+
+  --light-accent: #3D91B3;
+  --light-accent-hover: #327C9B;
+  --light-accent-soft: #D9EFF7;
+
+  --light-shadow: rgba(38, 82, 102, 0.10);
+  --light-shadow-soft: rgba(38, 82, 102, 0.06);
+
+  /* Semantic Theme Tokens (Light Mode Defaults) */
+  --bg-primary: var(--light-bg-primary);
+  --bg-secondary: var(--light-bg-secondary);
+  --bg-tertiary: var(--light-bg-tertiary);
+
+  --surface: var(--light-surface);
+  --surface-soft: var(--light-surface-soft);
+  --surface-blue: var(--light-surface-blue);
+
+  --text-primary: var(--light-text-primary);
+  --text-secondary: var(--light-text-secondary);
+  --text-muted: var(--light-text-muted);
+
+  --border: var(--light-border);
+  --border-soft: var(--light-border-soft);
+
+  --accent: var(--light-accent);
+  --accent-hover: var(--light-accent-hover);
+  --accent-soft: var(--light-accent-soft);
+
+  --page-bg: var(--light-bg-primary);
+  --page-text: var(--light-text-primary);
+  --page-selection-bg: var(--light-accent);
+  --page-selection-text: #FFFFFF;
+
+  --card: #FFFFFF;
+  --card-foreground: #17324D;
+  --background: #EAF6FB;
+  --foreground: #17324D;
+  --popover: #FFFFFF;
+  --popover-foreground: #17324D;
+  --primary: #17324D;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EDF8FC;
+  --secondary-foreground: #17324D;
+  --muted: #F4FAFC;
+  --muted-foreground: #4B6475;
+  --input: #D5E7EE;
+  --ring: #3D91B3;
   --radius: 0.75rem;
 
-  /* Lower sections soft sky-inspired progression (Light Mode) */
-  --page-bg: #f4f8fb;
-  --page-text: #102136;
-  --page-selection-bg: #183a60;
-  --page-selection-text: #ffffff;
+  /* Landing Page Sections (Light Mode) */
+  --s2-bg: var(--light-sky-pale);
+  --s2-border: var(--light-border);
+  --s2-eyebrow: var(--light-accent);
+  --s2-title: var(--light-text-primary);
+  --s2-desc: var(--light-text-secondary);
+  --s2-btn-border: var(--light-text-primary);
+  --s2-btn-text: var(--light-text-primary);
+  --s2-card-bg: rgba(255, 255, 255, 0.92);
+  --s2-card-border: var(--light-border);
+  --s2-card-title: var(--light-text-primary);
+  --s2-card-desc: var(--light-text-secondary);
+  --s2-card-badge-bg: var(--light-sky-soft);
+  --s2-card-badge-text: var(--light-text-primary);
+  --s2-card-shadow: 0 12px 32px var(--light-shadow);
 
-  /* Section 2: Soft Sky Blue - flows down from the blue sky above */
-  --s2-bg: #e6eff6;
-  --s2-border: rgba(68, 122, 179, 0.2);
-  --s2-eyebrow: #43698f;
-  --s2-title: #0e2035;
-  --s2-desc: #385675;
-  --s2-btn-border: #0e2035;
-  --s2-btn-text: #0e2035;
-  --s2-card-bg: rgba(255, 255, 255, 0.88);
-  --s2-card-border: rgba(162, 194, 222, 0.65);
-  --s2-card-title: #0e2035;
-  --s2-card-desc: #415f80;
-  --s2-card-badge-bg: #d7e7f5;
-  --s2-card-badge-text: #14375d;
-  --s2-card-shadow: 0 14px 35px rgba(22, 54, 88, 0.07);
-
-  /* Section 3: Pale Cloud / Off-White */
-  --s3-bg: #f2f6fa;
-  --s3-border: rgba(68, 122, 179, 0.16);
-  --s3-eyebrow: #43698f;
-  --s3-title: #0e2035;
-  --s3-desc: #385675;
-  --s3-btn-bg: #122f50;
-  --s3-btn-text: #ffffff;
-  --s3-btn-hover: #0a1e35;
-  --s3-panel-bg: rgba(255, 255, 255, 0.94);
-  --s3-panel-border: rgba(162, 194, 222, 0.7);
-  --s3-panel-title: #1a395b;
-  --s3-panel-badge-bg: #d7e7f5;
-  --s3-panel-badge-text: #14375d;
-  --s3-event1-bg: #fef1f0;
+  --s3-bg: var(--light-bg-secondary);
+  --s3-border: var(--light-border);
+  --s3-eyebrow: var(--light-accent);
+  --s3-title: var(--light-text-primary);
+  --s3-desc: var(--light-text-secondary);
+  --s3-btn-bg: var(--light-text-primary);
+  --s3-btn-text: #FFFFFF;
+  --s3-btn-hover: #0F2338;
+  --s3-panel-bg: var(--light-surface);
+  --s3-panel-border: var(--light-border);
+  --s3-panel-title: var(--light-text-primary);
+  --s3-panel-badge-bg: var(--light-sky-soft);
+  --s3-panel-badge-text: var(--light-text-primary);
+  --s3-event1-bg: #FEF2F1;
   --s3-event1-border: rgba(220, 60, 40, 0.2);
-  --s3-event1-text: #8e2315;
-  --s3-event2-bg: #faf4ea;
+  --s3-event1-text: #8E2315;
+  --s3-event2-bg: #FAF5EA;
   --s3-event2-border: rgba(180, 130, 60, 0.22);
-  --s3-event2-text: #6d4f20;
-  --s3-event3-bg: #eaf3fb;
-  --s3-event3-border: rgba(50, 120, 190, 0.22);
-  --s3-event3-text: #123e6b;
-  --s3-event4-bg: #ebf8f0;
-  --s3-event4-border: rgba(30, 150, 80, 0.22);
+  --s3-event2-text: #6D4F20;
+  --s3-event3-bg: var(--light-surface-blue);
+  --s3-event3-border: rgba(61, 145, 179, 0.3);
+  --s3-event3-text: var(--light-text-primary);
+  --s3-event4-bg: #EDFBF3;
+  --s3-event4-border: rgba(30, 150, 80, 0.25);
   --s3-event4-text: #135830;
-  --s3-event4-badge-bg: #d0f0dc;
+  --s3-event4-badge-bg: #D4F4E2;
   --s3-event4-badge-text: #135830;
 
-  /* Section 4: Dusk Sky Neutral */
-  --cta-bg: #deeaf3;
-  --cta-border: rgba(68, 122, 179, 0.18);
-  --cta-eyebrow: #43698f;
-  --cta-title: #0a1a2c;
-  --cta-sub: #385675;
-  --cta-btn-bg: #122f50;
-  --cta-btn-text: #ffffff;
-  --cta-btn-hover: #0a1e35;
+  --cta-bg: var(--light-sky-soft);
+  --cta-border: var(--light-border);
+  --cta-eyebrow: var(--light-accent);
+  --cta-title: var(--light-text-primary);
+  --cta-sub: var(--light-text-secondary);
+  --cta-btn-bg: var(--light-text-primary);
+  --cta-btn-text: #FFFFFF;
+  --cta-btn-hover: #0F2338;
 
-  /* Footer: Slate-Sky Surface */
-  --footer-bg: #d3e3ee;
-  --footer-border: rgba(68, 122, 179, 0.18);
-  --footer-title: #0e2035;
-  --footer-sub: #405e7e;
-  --footer-copy: #5c7997;
+  --footer-bg: var(--light-border);
+  --footer-border: #C6DDE6;
+  --footer-title: var(--light-text-primary);
+  --footer-sub: var(--light-text-secondary);
+  --footer-copy: var(--light-text-muted);
+
+  /* Global Modals, Dashboards & Secondary Pages */
+  --modal-bg: var(--light-surface);
+  --modal-header-bg: var(--light-bg-secondary);
+  --modal-border: var(--light-border);
+  --modal-card-bg: var(--light-cloud);
+  --modal-card-hover: var(--light-surface-blue);
+  --modal-card-border: var(--light-border);
+  --modal-card-selected-bg: var(--light-text-primary);
+  --modal-card-selected-text: #FFFFFF;
+  --modal-subtext: var(--light-text-secondary);
+  --input-bg: var(--light-surface);
+  --input-border: var(--light-border);
+  --input-text: var(--light-text-primary);
+
+  /* Live Trip / My Trips Page */
+  --trip-bg: var(--light-bg-primary);
+  --trip-card-bg: var(--light-surface);
+  --trip-card-border: var(--light-border);
+  --trip-header-bg: rgba(234, 246, 251, 0.95);
+  --trip-section-bg: var(--light-bg-secondary);
+  --chat-bg: var(--light-surface);
+  --chat-border: var(--light-border);
+  --chat-header-bg: var(--light-bg-secondary);
+  --chat-msg-ai-bg: var(--light-surface-soft);
+  --chat-msg-user-bg: var(--light-text-primary);
+  --chat-msg-user-text: #FFFFFF;
+
+  /* AI Agent Page */
+  --agent-bg: var(--light-bg-primary);
+  --agent-card-bg: var(--light-surface);
+  --agent-card-border: var(--light-border);
+  --agent-chat-bg: var(--light-surface);
+  --agent-chat-border: var(--light-border);
 }
 
 .dark {
+  /* Global App Theme Tokens - Dark Mode Brown Palette (100% UNTOUCHED ORIGINAL) */
+  --bg-primary: #181411;
+  --bg-secondary: #14100d;
+  --bg-tertiary: #100d0a;
+
+  --sky-soft: #241e19;
+  --sky-pale: #1f1a15;
+  --cloud: #1f1a15;
+
+  --surface: #1f1a15;
+  --surface-soft: #14100d;
+  --surface-blue: #181411;
+
+  --text-primary: #ffffff;
+  --text-secondary: #b8afa3;
+  --text-muted: #736a5e;
+
+  --border: rgba(255, 255, 255, 0.12);
+  --border-soft: rgba(255, 255, 255, 0.08);
+
+  --accent: #C9A86A;
+  --accent-hover: #d8b87a;
+  --accent-soft: rgba(201, 168, 106, 0.15);
+
+  --shadow: rgba(0, 0, 0, 0.5);
+  --shadow-soft: rgba(0, 0, 0, 0.3);
+
   --background: #181411;
   --foreground: #f5f2eb;
   --card: #1f1a15;
@@ -139,10 +239,6 @@
   --secondary-foreground: #f5f2eb;
   --muted: #241e19;
   --muted-foreground: #a89f91;
-  --accent: #241e19;
-  --accent-foreground: #f5f2eb;
-  --destructive: #ffffff;
-  --border: rgba(255, 255, 255, 0.12);
   --input: rgba(255, 255, 255, 0.15);
   --ring: #f5f2eb;
 
@@ -209,6 +305,40 @@
   --footer-title: #ffffff;
   --footer-sub: #a89f91;
   --footer-copy: #736a5e;
+
+  /* Global Modals, Dashboards & Secondary Pages */
+  --modal-bg: #181411;
+  --modal-header-bg: #181411;
+  --modal-border: rgba(255, 255, 255, 0.15);
+  --modal-card-bg: #14100d;
+  --modal-card-hover: #1f1a15;
+  --modal-card-border: rgba(255, 255, 255, 0.1);
+  --modal-card-selected-bg: #ffffff;
+  --modal-card-selected-text: #181411;
+  --modal-subtext: #a89f91;
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.15);
+  --input-text: #ffffff;
+
+  /* Live Trip / My Trips Page */
+  --trip-bg: #181411;
+  --trip-card-bg: #1f1a15;
+  --trip-card-border: rgba(255, 255, 255, 0.1);
+  --trip-header-bg: rgba(24, 20, 17, 0.95);
+  --trip-section-bg: #14100d;
+  --chat-bg: #14100d;
+  --chat-border: rgba(255, 255, 255, 0.1);
+  --chat-header-bg: #181411;
+  --chat-msg-ai-bg: #1f1a15;
+  --chat-msg-user-bg: #ffffff;
+  --chat-msg-user-text: #181411;
+
+  /* AI Agent Page */
+  --agent-bg: #181411;
+  --agent-card-bg: #1f1a15;
+  --agent-card-border: rgba(255, 255, 255, 0.1);
+  --agent-chat-bg: #14100d;
+  --agent-chat-border: rgba(255, 255, 255, 0.15);
 }
 
 @layer base {
@@ -370,16 +500,16 @@ html.lenis body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #14100d;
+  background: var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #332a22;
+  background: var(--border);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #55473a;
+  background: var(--accent);
 }
 
 /* Hide scrollbar for clean horizontal snap carousels */

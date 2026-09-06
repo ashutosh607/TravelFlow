@@ -98,7 +98,7 @@ export const ExpandedRecommendationModal = () => {
           animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
           exit={{ opacity: 0, scale: 0.95, y: 45, filter: "blur(14px)" }}
           transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-[300] bg-[#14100d] text-[#f5f2eb] overflow-y-auto overflow-x-hidden custom-scrollbar scroll-smooth selection:bg-[#f5f2eb] selection:text-[#181411]"
+          className="fixed inset-0 z-[300] bg-[var(--modal-bg)] text-[var(--text-primary)] overflow-y-auto overflow-x-hidden custom-scrollbar scroll-smooth selection:bg-[var(--accent)] selection:text-white"
           style={{ overscrollBehavior: "contain", WebkitOverflowScrolling: "touch" }}
           onWheel={(e) => e.stopPropagation()}
           onTouchMove={(e) => e.stopPropagation()}
@@ -111,13 +111,13 @@ export const ExpandedRecommendationModal = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="sticky top-0 h-16 px-4 sm:px-8 border-b border-white/10 bg-[#181411]/95 backdrop-blur-xl flex items-center justify-between z-50 shrink-0"
+            className="sticky top-0 h-16 px-4 sm:px-8 border-b border-[var(--border)] bg-[var(--modal-header-bg)]/95 backdrop-blur-xl flex items-center justify-between z-50 shrink-0"
           >
 
             {/* Back Button */}
             <button
               onClick={collapseOption}
-              className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#a89f91] hover:text-white transition-colors cursor-pointer group"
+              className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer group"
             >
               <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
               <span className="hidden sm:inline">Back to All Options</span>
@@ -131,8 +131,8 @@ export const ExpandedRecommendationModal = () => {
                   key={d}
                   onClick={() => scrollToDay(d)}
                   className={`px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-mono transition-all cursor-pointer ${activeDay === d
-                      ? "bg-white text-[#181411] font-bold shadow-md scale-105"
-                      : "bg-white/5 hover:bg-white/15 text-[#a89f91] hover:text-white"
+                      ? "bg-[var(--text-primary)] text-[var(--surface)] dark:bg-white dark:text-[#181411] font-bold shadow-md scale-105"
+                      : "bg-[var(--surface-soft)] hover:bg-[var(--surface-blue)] dark:bg-white/5 dark:hover:bg-white/15 text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border)]"
                     }`}
                 >
                   DAY 0{d}
@@ -146,7 +146,7 @@ export const ExpandedRecommendationModal = () => {
                 onClick={() => setIsSaved(!isSaved)}
                 className={`p-2 rounded-full border transition-all cursor-pointer ${isSaved
                     ? "bg-[rgba(201,168,106,0.15)] border-[rgba(201,168,106,0.35)] text-[#C9A86A]"
-                    : "bg-white/5 hover:bg-white/15 border-white/10 text-[#a89f91] hover:text-white"
+                    : "bg-[var(--surface-soft)] hover:bg-[var(--surface-blue)] dark:bg-white/5 dark:hover:bg-white/15 border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   }`}
                 title="Save trip"
               >
@@ -155,7 +155,7 @@ export const ExpandedRecommendationModal = () => {
 
               <button
                 onClick={handleShare}
-                className="p-2 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-[#a89f91] hover:text-white transition-all cursor-pointer relative"
+                className="p-2 rounded-full bg-[var(--surface-soft)] hover:bg-[var(--surface-blue)] dark:bg-white/5 dark:hover:bg-white/15 border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer relative"
                 title="Share trip"
               >
                 <Share2 className="w-4 h-4" />
@@ -168,7 +168,7 @@ export const ExpandedRecommendationModal = () => {
 
               <button
                 onClick={() => startJourney(expandedOption)}
-                className="hidden md:flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#181411] hover:bg-[#eae5d9] transition-all hover:scale-105 cursor-pointer shadow-lg"
+                className="hidden md:flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] dark:bg-white dark:text-[#181411] dark:hover:bg-[#eae5d9] transition-all hover:scale-105 cursor-pointer shadow-lg"
               >
                 <span>Start Journey</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -177,7 +177,7 @@ export const ExpandedRecommendationModal = () => {
               {/* Explicit Close Button */}
               <button
                 onClick={collapseOption}
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-[#a89f91] hover:text-white transition-all cursor-pointer shrink-0"
+                className="w-9 h-9 rounded-full bg-[var(--surface-soft)] hover:bg-[var(--surface-blue)] dark:bg-white/5 dark:hover:bg-white/15 border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer shrink-0"
                 title="Close (Esc)"
                 aria-label="Close"
               >
@@ -198,7 +198,7 @@ export const ExpandedRecommendationModal = () => {
               alt={expandedOption.title}
               className="absolute inset-0 w-full h-full object-cover object-center scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#14100d] via-[#14100d]/55 to-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--modal-bg)] via-[var(--modal-bg)]/60 to-black/60 dark:from-[#14100d] dark:via-[#14100d]/55 dark:to-black/60" />
 
             {/* Hero Content Overlay */}
             <motion.div
@@ -266,41 +266,41 @@ export const ExpandedRecommendationModal = () => {
           {/* ============================================================ */}
           {/* TRIP SNAPSHOT: Clean Horizontal Overview                    */}
           {/* ============================================================ */}
-          <section className="max-w-6xl mx-auto px-4 sm:px-8 py-8 border-b border-white/10">
-            <div className="p-6 sm:p-7 rounded-[22px] bg-[#1c1713] border border-white/10 space-y-4">
+          <section className="max-w-6xl mx-auto px-4 sm:px-8 py-8 border-b border-[var(--border)]">
+            <div className="p-6 sm:p-7 rounded-[22px] bg-[var(--surface)] border border-[var(--border)] space-y-4 shadow-sm">
 
               {/* Top Stat Pills */}
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-center">
-                <div className="p-3 rounded-xl bg-[#14100d] border border-white/5">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#736a5e] block mb-0.5">Duration</span>
-                  <span className="text-sm sm:text-base font-bold text-white font-sans">5 DAYS</span>
+                <div className="p-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)]">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-muted)] block mb-0.5">Duration</span>
+                  <span className="text-sm sm:text-base font-bold text-[var(--text-primary)] font-sans">5 DAYS</span>
                 </div>
-                <div className="p-3 rounded-xl bg-[#14100d] border border-white/5">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#736a5e] block mb-0.5">Travellers</span>
-                  <span className="text-sm sm:text-base font-bold text-white font-sans">2 ADULTS</span>
+                <div className="p-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)]">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-muted)] block mb-0.5">Travellers</span>
+                  <span className="text-sm sm:text-base font-bold text-[var(--text-primary)] font-sans">2 ADULTS</span>
                 </div>
-                <div className="p-3 rounded-xl bg-[#14100d] border border-white/5">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#736a5e] block mb-0.5">Comfort Level</span>
-                  <span className="text-sm sm:text-base font-bold text-white font-sans">HERITAGE</span>
+                <div className="p-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)]">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-muted)] block mb-0.5">Comfort Level</span>
+                  <span className="text-sm sm:text-base font-bold text-[var(--text-primary)] font-sans">HERITAGE</span>
                 </div>
-                <div className="p-3 rounded-xl bg-[#14100d] border border-white/5">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#736a5e] block mb-0.5">All-Inclusive</span>
-                  <span className="text-sm sm:text-base font-bold text-[#e5dec9] font-sans">₹37,000</span>
+                <div className="p-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)]">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-muted)] block mb-0.5">All-Inclusive</span>
+                  <span className="text-sm sm:text-base font-bold text-[var(--accent)] dark:text-[#e5dec9] font-sans">₹37,000</span>
                 </div>
-                <div className="p-3 rounded-xl bg-[#14100d] border border-white/5 col-span-2 sm:col-span-1">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#736a5e] block mb-0.5">Travel Mode</span>
-                  <span className="text-xs sm:text-sm font-bold text-white font-sans">FLIGHT + CAB</span>
+                <div className="p-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] col-span-2 sm:col-span-1">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-muted)] block mb-0.5">Travel Mode</span>
+                  <span className="text-xs sm:text-sm font-bold text-[var(--text-primary)] font-sans">FLIGHT + CAB</span>
                 </div>
               </div>
 
               {/* AI Planned For You line */}
-              <div className="flex items-center justify-between pt-2 border-t border-white/5 flex-wrap gap-2 text-xs">
+              <div className="flex items-center justify-between pt-2 border-t border-[var(--border)] flex-wrap gap-2 text-xs">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-3.5 h-3.5 text-[#e5dec9]" />
-                  <span className="font-mono text-[#a89f91] uppercase tracking-wider text-[11px]">AI Planned For You:</span>
-                  <span className="text-[#f5f2eb] font-medium font-sans">Romance · Royal Food · Golden-Hour Photography · Relaxed Pacing</span>
+                  <Sparkles className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9]" />
+                  <span className="font-mono text-[var(--text-secondary)] uppercase tracking-wider text-[11px]">AI Planned For You:</span>
+                  <span className="text-[var(--text-primary)] font-medium font-sans">Romance · Royal Food · Golden-Hour Photography · Relaxed Pacing</span>
                 </div>
-                <span className="text-[11px] font-mono text-[#736a5e]">Verified Availability · Zero Surprise Markups</span>
+                <span className="text-[11px] font-mono text-[var(--text-muted)]">Verified Availability · Zero Surprise Markups</span>
               </div>
 
             </div>
@@ -334,16 +334,16 @@ export const ExpandedRecommendationModal = () => {
 
                 {/* Right Intro Story */}
                 <div className="lg:col-span-6 space-y-4">
-                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#e5dec9] font-bold block">
+                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--accent)] dark:text-[#e5dec9] font-bold block">
                     DAY 01 · THE PINK CITY
                   </span>
-                  <h2 className="text-3xl sm:text-5xl font-serif text-white leading-tight">
+                  <h2 className="text-3xl sm:text-5xl font-serif text-[var(--text-primary)] leading-tight">
                     Arrival & Royal Welcome
                   </h2>
-                  <p className="text-sm sm:text-base text-[#d8d2c8] leading-relaxed font-sans">
+                  <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
                     Your journey begins among the grand courtyards and vibrant terracotta architecture of the Pink City. Settle into a tranquil heritage haveli before witnessing the city glowing at twilight.
                   </p>
-                  <div className="flex items-center gap-4 text-xs font-mono text-[#a89f91] pt-2">
+                  <div className="flex items-center gap-4 text-xs font-mono text-[var(--text-muted)] pt-2 flex-wrap">
                     <span>✈ 10:00 AM Landing</span>
                     <span>·</span>
                     <span>🚕 Chauffeur Meets at Gate</span>
@@ -355,53 +355,53 @@ export const ExpandedRecommendationModal = () => {
               </div>
 
               {/* Clean Vertical Timeline */}
-              <div className="p-6 sm:p-8 rounded-3xl bg-[#1c1713] border border-white/10 space-y-6">
-                <span className="text-xs font-mono uppercase tracking-widest text-[#a89f91] block font-bold">
+              <div className="p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border)] space-y-6 shadow-sm">
+                <span className="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] block font-bold">
                   Day 01 Itinerary Schedule
                 </span>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-[#14100d] border border-white/5">
-                    <span className="text-xs font-mono font-bold text-[#e5dec9] shrink-0 pt-0.5">10:00 AM</span>
+                  <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)]">
+                    <span className="text-xs font-mono font-bold text-[var(--accent)] dark:text-[#e5dec9] shrink-0 pt-0.5">10:00 AM</span>
                     <div>
-                      <h4 className="text-sm font-bold text-white flex items-center gap-1.5 font-sans">
-                        <Plane className="w-3.5 h-3.5 text-[#e5dec9]" />
+                      <h4 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-1.5 font-sans">
+                        <Plane className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9]" />
                         Flight Arrival at Jaipur (JAI)
                       </h4>
-                      <p className="text-xs text-[#a89f91] mt-0.5">Arrival on IndiGo 6E-204 from Mumbai. Chauffeur meets at Gate 2 with cool towels.</p>
+                      <p className="text-xs text-[var(--text-secondary)] mt-0.5">Arrival on IndiGo 6E-204 from Mumbai. Chauffeur meets at Gate 2 with cool towels.</p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-[#14100d] border border-white/5">
-                    <span className="text-xs font-mono font-bold text-[#e5dec9] shrink-0 pt-0.5">11:30 AM</span>
+                  <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)]">
+                    <span className="text-xs font-mono font-bold text-[var(--accent)] dark:text-[#e5dec9] shrink-0 pt-0.5">11:30 AM</span>
                     <div>
-                      <h4 className="text-sm font-bold text-white flex items-center gap-1.5 font-sans">
-                        <Building className="w-3.5 h-3.5 text-[#e5dec9]" />
+                      <h4 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-1.5 font-sans">
+                        <Building className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9]" />
                         Check-in at Alsisar Haveli
                       </h4>
-                      <p className="text-xs text-[#a89f91] mt-0.5">Royal courtyard room pre-checked with cold hibiscus welcome drink.</p>
+                      <p className="text-xs text-[var(--text-secondary)] mt-0.5">Royal courtyard room pre-checked with cold hibiscus welcome drink.</p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-[#14100d] border border-white/5">
-                    <span className="text-xs font-mono font-bold text-[#e5dec9] shrink-0 pt-0.5">03:30 PM</span>
+                  <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)]">
+                    <span className="text-xs font-mono font-bold text-[var(--accent)] dark:text-[#e5dec9] shrink-0 pt-0.5">03:30 PM</span>
                     <div>
-                      <h4 className="text-sm font-bold text-white flex items-center gap-1.5 font-sans">
-                        <Compass className="w-3.5 h-3.5 text-[#e5dec9]" />
+                      <h4 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-1.5 font-sans">
+                        <Compass className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9]" />
                         City Palace & Chandra Mahal
                       </h4>
-                      <p className="text-xs text-[#a89f91] mt-0.5">Private licensed historian guide through the royal courtyards and Peacock Gate.</p>
+                      <p className="text-xs text-[var(--text-secondary)] mt-0.5">Private licensed historian guide through the royal courtyards and Peacock Gate.</p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-[#14100d] border border-white/5">
-                    <span className="text-xs font-mono font-bold text-[#e5dec9] shrink-0 pt-0.5">06:30 PM</span>
+                  <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)]">
+                    <span className="text-xs font-mono font-bold text-[var(--accent)] dark:text-[#e5dec9] shrink-0 pt-0.5">06:30 PM</span>
                     <div>
-                      <h4 className="text-sm font-bold text-white flex items-center gap-1.5 font-sans">
-                        <Sun className="w-3.5 h-3.5 text-[#e5dec9]" />
+                      <h4 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-1.5 font-sans">
+                        <Sun className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9]" />
                         Hawa Mahal Sunset Rooftop
                       </h4>
-                      <p className="text-xs text-[#a89f91] mt-0.5">Golden hour photography opposite the 953 carved windows with saffron chai.</p>
+                      <p className="text-xs text-[var(--text-secondary)] mt-0.5">Golden hour photography opposite the 953 carved windows with saffron chai.</p>
                     </div>
                   </div>
                 </div>
@@ -411,14 +411,14 @@ export const ExpandedRecommendationModal = () => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] font-mono tracking-widest uppercase text-[#e5dec9] font-bold block">Featured Attraction</span>
-                    <h3 className="text-2xl font-serif text-white">Hawa Mahal & The Royal Courtyards</h3>
+                    <span className="text-[10px] font-mono tracking-widest uppercase text-[var(--accent)] dark:text-[#e5dec9] font-bold block">Featured Attraction</span>
+                    <h3 className="text-2xl font-serif text-[var(--text-primary)]">Hawa Mahal & The Royal Courtyards</h3>
                   </div>
-                  <span className="text-xs font-mono text-[#a89f91] hidden sm:block">15:30 – 19:30 · Fast-Track Pass Included</span>
+                  <span className="text-xs font-mono text-[var(--text-muted)] hidden sm:block">15:30 – 19:30 · Fast-Track Pass Included</span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-                  <div className="md:col-span-8 rounded-2xl overflow-hidden h-72 relative group border border-white/10">
+                  <div className="md:col-span-8 rounded-2xl overflow-hidden h-72 relative group border border-[var(--border)]">
                     <img
                       src="/destinations/hawa_mahal.jpg"
                       alt="Hawa Mahal Façade"
@@ -431,7 +431,7 @@ export const ExpandedRecommendationModal = () => {
                     </div>
                   </div>
 
-                  <div className="md:col-span-4 rounded-2xl overflow-hidden h-72 relative group border border-white/10">
+                  <div className="md:col-span-4 rounded-2xl overflow-hidden h-72 relative group border border-[var(--border)]">
                     <img
                       src="/destinations/peacock_gate.jpg"
                       alt="City Palace Peacock Gate"
@@ -445,8 +445,8 @@ export const ExpandedRecommendationModal = () => {
                 </div>
 
                 {/* AI Personalization Callout */}
-                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center gap-3 text-xs text-[#d8d2c8]">
-                  <Sparkles className="w-4 h-4 text-[#e5dec9] shrink-0" />
+                <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] flex items-center gap-3 text-xs text-[var(--text-secondary)]">
+                  <Sparkles className="w-4 h-4 text-[var(--accent)] dark:text-[#e5dec9] shrink-0" />
                   <span><strong>AI Pick:</strong> Because you selected Romance + Photography, we arranged the Hawa Mahal rooftop stop at exactly 6:30 PM for golden-hour glow without midday heat.</span>
                 </div>
               </div>
@@ -455,35 +455,35 @@ export const ExpandedRecommendationModal = () => {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
                 {/* Food Section (Left 7 cols) */}
-                <div className="lg:col-span-7 p-6 rounded-3xl bg-[#1c1713] border border-white/10 space-y-4">
-                  <span className="text-xs font-mono uppercase tracking-widest text-[#a89f91] block font-bold">
+                <div className="lg:col-span-7 p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border)] space-y-4 shadow-sm">
+                  <span className="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] block font-bold">
                     Curated Food Stops · Day 01
                   </span>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="p-4 rounded-2xl bg-[#14100d] border border-white/5 space-y-2">
-                      <span className="text-[10px] font-mono uppercase text-[#e5dec9] block">Lunch · 01:00 PM</span>
-                      <h5 className="text-sm font-bold text-white font-sans">Handi Restaurant</h5>
-                      <p className="text-xs text-[#a89f91]">Signature Laal Maas simmered with Mathania chillies, accompanied by crispy butter naan.</p>
-                      <span className="text-[11px] font-mono text-[#736a5e] block">Approx ₹700 / person</span>
+                    <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] space-y-2">
+                      <span className="text-[10px] font-mono uppercase text-[var(--accent)] dark:text-[#e5dec9] block">Lunch · 01:00 PM</span>
+                      <h5 className="text-sm font-bold text-[var(--text-primary)] font-sans">Handi Restaurant</h5>
+                      <p className="text-xs text-[var(--text-secondary)]">Signature Laal Maas simmered with Mathania chillies, accompanied by crispy butter naan.</p>
+                      <span className="text-[11px] font-mono text-[var(--text-muted)] block">Approx ₹700 / person</span>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-[#14100d] border border-white/5 space-y-2">
-                      <span className="text-[10px] font-mono uppercase text-[#e5dec9] block">Dinner · 08:30 PM</span>
-                      <h5 className="text-sm font-bold text-white font-sans">Haveli Courtyard Sitar Dinner</h5>
-                      <p className="text-xs text-[#a89f91]">Traditional Rajasthani Thali served under lanterns with live acoustic instrumental sitar.</p>
-                      <span className="text-[11px] font-mono text-[#736a5e] block">Reserved Window Table</span>
+                    <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] space-y-2">
+                      <span className="text-[10px] font-mono uppercase text-[var(--accent)] dark:text-[#e5dec9] block">Dinner · 08:30 PM</span>
+                      <h5 className="text-sm font-bold text-[var(--text-primary)] font-sans">Haveli Courtyard Sitar Dinner</h5>
+                      <p className="text-xs text-[var(--text-secondary)]">Traditional Rajasthani Thali served under lanterns with live acoustic instrumental sitar.</p>
+                      <span className="text-[11px] font-mono text-[var(--text-muted)] block">Reserved Window Table</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Tonight's Stay (Right 5 cols) */}
-                <div className="lg:col-span-5 p-6 rounded-3xl bg-[#1c1713] border border-white/10 flex flex-col justify-between space-y-4">
+                <div className="lg:col-span-5 p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border)] flex flex-col justify-between space-y-4 shadow-sm">
                   <div>
-                    <span className="text-xs font-mono uppercase tracking-widest text-[#e5dec9] block font-bold mb-2">
+                    <span className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] dark:text-[#e5dec9] block font-bold mb-2">
                       Tonight's Stay
                     </span>
-                    <div className="rounded-2xl overflow-hidden h-36 relative mb-3 border border-white/10">
+                    <div className="rounded-2xl overflow-hidden h-36 relative mb-3 border border-[var(--border)]">
                       <img
                         src="/destinations/heritage_haveli.jpg"
                         alt="Alsisar Haveli Jaipur"
@@ -493,12 +493,12 @@ export const ExpandedRecommendationModal = () => {
                         ★★★★★ 4.9
                       </span>
                     </div>
-                    <h4 className="text-lg font-bold text-white font-sans">Alsisar Haveli — Heritage Suite</h4>
-                    <p className="text-xs text-[#a89f91] mt-1">
+                    <h4 className="text-lg font-bold text-[var(--text-primary)] font-sans">Alsisar Haveli — Heritage Suite</h4>
+                    <p className="text-xs text-[var(--text-secondary)] mt-1">
                       "Central location, heritage courtyard, hand-painted frescoes and easy access to tomorrow's Amer Fort route."
                     </p>
                   </div>
-                  <div className="text-xs font-mono text-[#e5dec9] pt-2 border-t border-white/5 flex items-center justify-between">
+                  <div className="text-xs font-mono text-[var(--accent)] dark:text-[#e5dec9] pt-2 border-t border-[var(--border)] flex items-center justify-between">
                     <span>Heritage Deluxe Room</span>
                     <span>Included in Trip</span>
                   </div>
@@ -512,22 +512,22 @@ export const ExpandedRecommendationModal = () => {
             {/* ---------------------------------------------------------- */}
             {/* DAY 02 — FORTS & BAZAARS (Story Left, Image Right)         */}
             {/* ---------------------------------------------------------- */}
-            <section id="journey-day-2" className="space-y-8 scroll-mt-24 pt-8 border-t border-white/10">
+            <section id="journey-day-2" className="space-y-8 scroll-mt-24 pt-8 border-t border-[var(--border)]">
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
                 {/* Left Intro Story */}
                 <div className="lg:col-span-6 space-y-4 order-2 lg:order-1">
-                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#e5dec9] font-bold block">
+                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--accent)] dark:text-[#e5dec9] font-bold block">
                     DAY 02 · FORTS & ARTISAN CULTURE
                   </span>
-                  <h2 className="text-3xl sm:text-5xl font-serif text-white leading-tight">
+                  <h2 className="text-3xl sm:text-5xl font-serif text-[var(--text-primary)] leading-tight">
                     Amber Fort Ramparts & Nahargarh
                   </h2>
-                  <p className="text-sm sm:text-base text-[#d8d2c8] leading-relaxed font-sans">
+                  <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
                     Ascend to the hilltop palaces of Amber Fort to witness the legendary Sheesh Mahal. Later, visit the geometric Panna Meena stepwell before winding through bustling artisan bazaars.
                   </p>
-                  <div className="flex items-center gap-4 text-xs font-mono text-[#a89f91] pt-2">
+                  <div className="flex items-center gap-4 text-xs font-mono text-[var(--text-muted)] pt-2 flex-wrap">
                     <span>🏰 Amber Fort & Sheesh Mahal</span>
                     <span>·</span>
                     <span>📷 Panna Meena Stepwell</span>
@@ -537,7 +537,7 @@ export const ExpandedRecommendationModal = () => {
                 </div>
 
                 {/* Right Image */}
-                <div className="lg:col-span-6 rounded-3xl overflow-hidden h-72 sm:h-96 relative group border border-white/10 shadow-2xl order-1 lg:order-2">
+                <div className="lg:col-span-6 rounded-3xl overflow-hidden h-72 sm:h-96 relative group border border-[var(--border)] shadow-xl order-1 lg:order-2">
                   <img
                     src="/destinations/amber_ramparts.jpg"
                     alt="Amber Fort Ramparts Reflection"
@@ -553,7 +553,7 @@ export const ExpandedRecommendationModal = () => {
 
               {/* Feature Place Multi-Image: Sheesh Mahal & Stepwell */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="rounded-2xl overflow-hidden h-60 relative group border border-white/10">
+                <div className="rounded-2xl overflow-hidden h-60 relative group border border-[var(--border)]">
                   <img
                     src="/destinations/sheesh_mahal.jpg"
                     alt="Sheesh Mahal Mirror Hall"
@@ -562,11 +562,11 @@ export const ExpandedRecommendationModal = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3 text-xs font-mono text-white">
                     <span className="font-bold block">Sheesh Mahal Mirror Hall</span>
-                    <span className="text-[10px] text-[#a89f91]">Amber Fort · 2 hrs</span>
+                    <span className="text-[10px] text-white/80">Amber Fort · 2 hrs</span>
                   </div>
                 </div>
 
-                <div className="rounded-2xl overflow-hidden h-60 relative group border border-white/10">
+                <div className="rounded-2xl overflow-hidden h-60 relative group border border-[var(--border)]">
                   <img
                     src="/destinations/panna_meena.jpg"
                     alt="Panna Meena Stepwell"
@@ -575,11 +575,11 @@ export const ExpandedRecommendationModal = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3 text-xs font-mono text-white">
                     <span className="font-bold block">Panna Meena Ka Kund</span>
-                    <span className="text-[10px] text-[#a89f91]">Geometric Stepwell · 45m</span>
+                    <span className="text-[10px] text-white/80">Geometric Stepwell · 45m</span>
                   </div>
                 </div>
 
-                <div className="rounded-2xl overflow-hidden h-60 relative group border border-white/10">
+                <div className="rounded-2xl overflow-hidden h-60 relative group border border-[var(--border)]">
                   <img
                     src="/destinations/nahargarh_sunset.jpg"
                     alt="Nahargarh Sunset Overlook"
@@ -588,14 +588,14 @@ export const ExpandedRecommendationModal = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3 text-xs font-mono text-white">
                     <span className="font-bold block">Nahargarh Hilltop Sunset</span>
-                    <span className="text-[10px] text-[#a89f91]">Panorama Dinner · 08:00 PM</span>
+                    <span className="text-[10px] text-white/80">Panorama Dinner · 08:00 PM</span>
                   </div>
                 </div>
               </div>
 
               {/* AI Callout */}
-              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center gap-3 text-xs text-[#d8d2c8]">
-                <Sparkles className="w-4 h-4 text-[#e5dec9] shrink-0" />
+              <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] flex items-center gap-3 text-xs text-[var(--text-secondary)]">
+                <Sparkles className="w-4 h-4 text-[var(--accent)] dark:text-[#e5dec9] shrink-0" />
                 <span><strong>Why this stop?</strong> Your preferred relaxed pacing gives you 2.5 full hours at Amber Fort instead of rushing through, with pre-booked electric cart transit to the main courtyard.</span>
               </div>
 
@@ -605,34 +605,34 @@ export const ExpandedRecommendationModal = () => {
             {/* ---------------------------------------------------------- */}
             {/* DAY 03 — SCENIC TRANSIT TO UDAIPUR (Transit Route Connector) */}
             {/* ---------------------------------------------------------- */}
-            <section id="journey-day-3" className="space-y-8 scroll-mt-24 pt-8 border-t border-white/10">
+            <section id="journey-day-3" className="space-y-8 scroll-mt-24 pt-8 border-t border-[var(--border)]">
 
               {/* Transit Route Connector Card */}
-              <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#1c1713] via-[#241e19] to-[#1c1713] border border-white/15 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+              <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[var(--surface)] via-[var(--surface-soft)] to-[var(--surface)] border border-[var(--border)] flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
                 <div className="space-y-2 text-center md:text-left">
-                  <span className="text-xs font-mono uppercase tracking-widest text-[#e5dec9] font-bold block">
+                  <span className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] dark:text-[#e5dec9] font-bold block">
                     INTER-CITY TRANSIT ROUTE
                   </span>
-                  <h3 className="text-2xl sm:text-3xl font-serif text-white">
+                  <h3 className="text-2xl sm:text-3xl font-serif text-[var(--text-primary)]">
                     Jaipur ➔ Udaipur (The City of Lakes)
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#a89f91] max-w-xl font-sans">
+                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-xl font-sans">
                     Leave the Pink City behind on a comfortable highway drive through the rugged Aravalli mountain pass, arriving at your lakefront palace in time for late afternoon high tea.
                   </p>
                 </div>
 
-                <div className="flex items-center gap-6 shrink-0 bg-[#14100d] px-6 py-4 rounded-2xl border border-white/10">
+                <div className="flex items-center gap-6 shrink-0 bg-[var(--surface-soft)] px-6 py-4 rounded-2xl border border-[var(--border)]">
                   <div className="text-center">
-                    <span className="text-[10px] font-mono text-[#a89f91] block">VEHICLE</span>
-                    <span className="text-sm font-bold text-white">Private AC Sedan</span>
+                    <span className="text-[10px] font-mono text-[var(--text-muted)] block">VEHICLE</span>
+                    <span className="text-sm font-bold text-[var(--text-primary)]">Private AC Sedan</span>
                   </div>
                   <div className="text-center">
-                    <span className="text-[10px] font-mono text-[#a89f91] block">DURATION</span>
-                    <span className="text-sm font-bold text-[#e5dec9]">6h 30m scenic</span>
+                    <span className="text-[10px] font-mono text-[var(--text-muted)] block">DURATION</span>
+                    <span className="text-sm font-bold text-[var(--accent)] dark:text-[#e5dec9]">6h 30m scenic</span>
                   </div>
                   <div className="text-center">
-                    <span className="text-[10px] font-mono text-[#a89f91] block">STOPS</span>
-                    <span className="text-sm font-bold text-white">Highway Chai</span>
+                    <span className="text-[10px] font-mono text-[var(--text-muted)] block">STOPS</span>
+                    <span className="text-sm font-bold text-[var(--text-primary)]">Highway Chai</span>
                   </div>
                 </div>
               </div>
@@ -640,7 +640,7 @@ export const ExpandedRecommendationModal = () => {
               {/* Day 3 Chapter Intro & Lakefront Arrival */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
-                <div className="lg:col-span-6 rounded-3xl overflow-hidden h-72 sm:h-96 relative group border border-white/10">
+                <div className="lg:col-span-6 rounded-3xl overflow-hidden h-72 sm:h-96 relative group border border-[var(--border)]">
                   <img
                     src="/destinations/lake_pichola_ghat.jpg"
                     alt="Lake Pichola Ghats Udaipur"
@@ -653,17 +653,17 @@ export const ExpandedRecommendationModal = () => {
                 </div>
 
                 <div className="lg:col-span-6 space-y-4">
-                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#e5dec9] font-bold block">
+                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--accent)] dark:text-[#e5dec9] font-bold block">
                     DAY 03 · THE CITY OF LAKES
                   </span>
-                  <h2 className="text-3xl sm:text-5xl font-serif text-white leading-tight">
+                  <h2 className="text-3xl sm:text-5xl font-serif text-[var(--text-primary)] leading-tight">
                     Lakefront Arrival & Sunset Ghats
                   </h2>
-                  <p className="text-sm sm:text-base text-[#d8d2c8] leading-relaxed font-sans">
+                  <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
                     Check into your palace suite directly overlooking Lake Pichola. Spend the afternoon wandering through the tranquil Gangaur Ghat before enjoying front-row seats at the historic Dharohar folk dance show.
                   </p>
-                  <div className="p-4 rounded-2xl bg-[#1c1713] border border-white/10 text-xs space-y-2">
-                    <div className="rounded-xl overflow-hidden h-24 relative border border-white/10">
+                  <div className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border)] text-xs space-y-2 shadow-sm">
+                    <div className="rounded-xl overflow-hidden h-24 relative border border-[var(--border)]">
                       <img
                         src="/destinations/lake_palace_udaipur.jpg"
                         alt="Udaipur Lakefront Heritage Panorama"
@@ -674,8 +674,8 @@ export const ExpandedRecommendationModal = () => {
                         Lake Pichola Heritage View
                       </span>
                     </div>
-                    <span className="font-bold text-white font-sans block">Tonight's Accommodation Upgrade:</span>
-                    <span className="text-[#a89f91]">Jagat Niwas Palace — Jharokha Lakeview Suite jutting directly over water.</span>
+                    <span className="font-bold text-[var(--text-primary)] font-sans block">Tonight's Accommodation Upgrade:</span>
+                    <span className="text-[var(--text-secondary)]">Jagat Niwas Palace — Jharokha Lakeview Suite jutting directly over water.</span>
                   </div>
                 </div>
 
@@ -687,25 +687,25 @@ export const ExpandedRecommendationModal = () => {
             {/* ---------------------------------------------------------- */}
             {/* DAY 04 — PALACES ON WATER & CANDLELIGHT YACHT (Full-Width) */}
             {/* ---------------------------------------------------------- */}
-            <section id="journey-day-4" className="space-y-8 scroll-mt-24 pt-8 border-t border-white/10">
+            <section id="journey-day-4" className="space-y-8 scroll-mt-24 pt-8 border-t border-[var(--border)]">
 
               {/* Big Feature Banner */}
-              <div className="relative rounded-3xl overflow-hidden h-80 sm:h-[420px] border border-white/10 flex flex-col justify-end p-6 sm:p-10">
+              <div className="relative rounded-3xl overflow-hidden h-80 sm:h-[420px] border border-[var(--border)] flex flex-col justify-end p-6 sm:p-10">
                 <img
                   src="/destinations/lake_pichola_boat.jpg"
                   alt="Lake Pichola Sunset Boat & City Palace"
                   className="absolute inset-0 w-full h-full object-cover scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#14100d] via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
                 <div className="relative z-10 max-w-2xl space-y-2">
-                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#e5dec9] font-bold block">
+                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--accent)] dark:text-[#e5dec9] font-bold block">
                     DAY 04 · CENTERPIECE EXPERIENCE
                   </span>
                   <h2 className="text-3xl sm:text-5xl font-serif text-white leading-tight">
                     Palaces on Water & Private Sunset Cruise
                   </h2>
-                  <p className="text-xs sm:text-sm text-[#f5f2eb]/90 leading-relaxed font-sans">
+                  <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-sans">
                     A private solar yacht whisks you across Lake Pichola to the 400-year-old island palace of Jag Mandir as golden light washes over the Aravalli ridges.
                   </p>
                 </div>
@@ -715,47 +715,47 @@ export const ExpandedRecommendationModal = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                 {/* Card 1 */}
-                <div className="p-5 rounded-3xl bg-[#1c1713] border border-white/10 space-y-3 flex flex-col justify-between">
+                <div className="p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border)] space-y-3 flex flex-col justify-between shadow-md">
                   <div>
-                    <span className="text-[10px] font-mono uppercase text-[#e5dec9] block">09:30 AM · Morning</span>
-                    <h4 className="text-base font-bold text-white font-sans mt-1">Udaipur City Palace</h4>
-                    <p className="text-xs text-[#a89f91] mt-1.5 leading-relaxed">
+                    <span className="text-[10px] font-mono uppercase text-[var(--accent)] dark:text-[#e5dec9] font-bold block">09:30 AM · Morning</span>
+                    <h4 className="text-base font-bold text-[var(--text-primary)] font-sans mt-1">Udaipur City Palace</h4>
+                    <p className="text-xs text-[var(--text-secondary)] mt-1.5 leading-relaxed">
                       India's largest palace complex featuring peacock mosaics, crystal gallery, and private armory courtyards.
                     </p>
                   </div>
-                  <span className="text-[11px] font-mono text-[#736a5e] pt-2 border-t border-white/5">Fast-Pass Entry Included</span>
+                  <span className="text-[11px] font-mono text-[var(--text-muted)] pt-2 border-t border-[var(--border)]">Fast-Pass Entry Included</span>
                 </div>
 
                 {/* Card 2 */}
-                <div className="p-5 rounded-3xl bg-[#1c1713] border border-white/10 space-y-3 flex flex-col justify-between overflow-hidden">
+                <div className="p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border)] space-y-3 flex flex-col justify-between overflow-hidden shadow-md">
                   <div>
-                    <div className="rounded-2xl overflow-hidden h-28 -mx-1 -mt-1 mb-3 relative border border-white/10">
+                    <div className="rounded-2xl overflow-hidden h-28 -mx-1 -mt-1 mb-3 relative border border-[var(--border)]">
                       <img
                         src="/destinations/jag_mandir.jpg"
                         alt="Jag Mandir Island Palace"
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#1c1713] via-transparent to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     </div>
-                    <span className="text-[10px] font-mono uppercase text-[#e5dec9] block">04:30 PM · Golden Hour</span>
-                    <h4 className="text-base font-bold text-white font-sans mt-1">Jag Mandir Solar Yacht</h4>
-                    <p className="text-xs text-[#a89f91] mt-1.5 leading-relaxed">
+                    <span className="text-[10px] font-mono uppercase text-[var(--accent)] dark:text-[#e5dec9] font-bold block">04:30 PM · Golden Hour</span>
+                    <h4 className="text-base font-bold text-[var(--text-primary)] font-sans mt-1">Jag Mandir Solar Yacht</h4>
+                    <p className="text-xs text-[var(--text-secondary)] mt-1.5 leading-relaxed">
                       Private chartered solar boat to the island courtyard with marble elephants and chilled mocktails.
                     </p>
                   </div>
-                  <span className="text-[11px] font-mono text-[#736a5e] pt-2 border-t border-white/5">Reserved Sunset Slot</span>
+                  <span className="text-[11px] font-mono text-[var(--text-muted)] pt-2 border-t border-[var(--border)]">Reserved Sunset Slot</span>
                 </div>
 
                 {/* Card 3 */}
-                <div className="p-5 rounded-3xl bg-[#1c1713] border border-white/10 space-y-3 flex flex-col justify-between">
+                <div className="p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border)] space-y-3 flex flex-col justify-between shadow-md">
                   <div>
-                    <span className="text-[10px] font-mono uppercase text-[#e5dec9] block">08:30 PM · Night</span>
-                    <h4 className="text-base font-bold text-white font-sans mt-1">Candlelight Water Edge Dining</h4>
-                    <p className="text-xs text-[#a89f91] mt-1.5 leading-relaxed">
+                    <span className="text-[10px] font-mono uppercase text-[var(--accent)] dark:text-[#e5dec9] font-bold block">08:30 PM · Night</span>
+                    <h4 className="text-base font-bold text-[var(--text-primary)] font-sans mt-1">Candlelight Water Edge Dining</h4>
+                    <p className="text-xs text-[var(--text-secondary)] mt-1.5 leading-relaxed">
                       Reserved table at Tribute / Ambrai right at the water's edge with illuminated City Palace reflection.
                     </p>
                   </div>
-                  <span className="text-[11px] font-mono text-[#736a5e] pt-2 border-t border-white/5">Chef's Tasting Menu</span>
+                  <span className="text-[11px] font-mono text-[var(--text-muted)] pt-2 border-t border-[var(--border)]">Chef's Tasting Menu</span>
                 </div>
 
               </div>
@@ -766,21 +766,21 @@ export const ExpandedRecommendationModal = () => {
             {/* ---------------------------------------------------------- */}
             {/* DAY 05 — MONSOON PALACE & FAREWELL                         */}
             {/* ---------------------------------------------------------- */}
-            <section id="journey-day-5" className="space-y-8 scroll-mt-24 pt-8 border-t border-white/10">
+            <section id="journey-day-5" className="space-y-8 scroll-mt-24 pt-8 border-t border-[var(--border)]">
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
                 <div className="lg:col-span-6 space-y-4">
-                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#e5dec9] font-bold block">
+                  <span className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--accent)] dark:text-[#e5dec9] font-bold block">
                     DAY 05 · PANORAMIC FAREWELL
                   </span>
-                  <h2 className="text-3xl sm:text-5xl font-serif text-white leading-tight">
+                  <h2 className="text-3xl sm:text-5xl font-serif text-[var(--text-primary)] leading-tight">
                     Monsoon Palace Vista & Return Home
                   </h2>
-                  <p className="text-sm sm:text-base text-[#d8d2c8] leading-relaxed font-sans">
+                  <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
                     Savor a slow rooftop breakfast gazing over the shimmering water before climbing to Sajjangarh (Monsoon Palace) for a 360-degree panoramic view of Udaipur's four lakes and surrounding wildlife sanctuary.
                   </p>
-                  <div className="flex items-center gap-4 text-xs font-mono text-[#a89f91] pt-2">
+                  <div className="flex items-center gap-4 text-xs font-mono text-[var(--text-muted)] pt-2">
                     <span>🏔 Sajjangarh Hilltop Vista</span>
                     <span>·</span>
                     <span>🎨 Pichwai Art Keepsakes</span>
@@ -789,7 +789,7 @@ export const ExpandedRecommendationModal = () => {
                   </div>
                 </div>
 
-                <div className="lg:col-span-6 rounded-3xl overflow-hidden h-72 sm:h-96 relative group border border-white/10">
+                <div className="lg:col-span-6 rounded-3xl overflow-hidden h-72 sm:h-96 relative group border border-[var(--border)]">
                   <img
                     src="/destinations/sajjangarh_monsoon.jpg"
                     alt="Sajjangarh Monsoon Palace"
@@ -809,64 +809,64 @@ export const ExpandedRecommendationModal = () => {
             {/* ============================================================ */}
             {/* BUDGET TRANSPARENCY & ITEMIZED BREAKDOWN                    */}
             {/* ============================================================ */}
-            <section className="pt-8 border-t border-white/10 space-y-6">
+            <section className="pt-8 border-t border-[var(--border)] space-y-6">
               <div className="text-center max-w-xl mx-auto space-y-2">
-                <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#e5dec9] font-bold">
+                <span className="text-xs font-mono uppercase tracking-[0.25em] text-[var(--accent)] dark:text-[#e5dec9] font-bold">
                   COMPREHENSIVE FINANCIAL BREAKDOWN
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-serif text-white">
+                <h3 className="text-2xl sm:text-3xl font-serif text-[var(--text-primary)]">
                   All-Inclusive Trip Estimate: {expandedOption.price}
                 </h3>
-                <p className="text-xs text-[#a89f91] font-sans">
+                <p className="text-xs text-[var(--text-secondary)] font-sans">
                   Transparent pricing with verified live supplier rates. Zero hidden booking fees or surge costs.
                 </p>
               </div>
 
-              <div className="max-w-3xl mx-auto p-6 sm:p-8 rounded-3xl bg-[#1c1713] border border-white/10 space-y-4">
-                <div className="space-y-3 divide-y divide-white/5 text-sm font-sans">
+              <div className="max-w-3xl mx-auto p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border)] space-y-4 shadow-lg">
+                <div className="space-y-3 divide-y divide-[var(--border)] text-sm font-sans">
                   <div className="flex items-center justify-between pb-3">
-                    <span className="text-white flex items-center gap-2">
-                      <Plane className="w-4 h-4 text-[#e5dec9]" />
+                    <span className="text-[var(--text-primary)] flex items-center gap-2">
+                      <Plane className="w-4 h-4 text-[var(--accent)] dark:text-[#e5dec9]" />
                       Return Flights (BOM ⇄ JAI / UDR)
                     </span>
-                    <span className="font-mono font-bold text-white">₹12,000</span>
+                    <span className="font-mono font-bold text-[var(--text-primary)]">₹12,000</span>
                   </div>
 
                   <div className="flex items-center justify-between py-3">
-                    <span className="text-white flex items-center gap-2">
-                      <Building className="w-4 h-4 text-[#e5dec9]" />
+                    <span className="text-[var(--text-primary)] flex items-center gap-2">
+                      <Building className="w-4 h-4 text-[var(--accent)] dark:text-[#e5dec9]" />
                       4 Nights Heritage Palace & Haveli Stays
                     </span>
-                    <span className="font-mono font-bold text-white">₹12,000</span>
+                    <span className="font-mono font-bold text-[var(--text-primary)]">₹12,000</span>
                   </div>
 
                   <div className="flex items-center justify-between py-3">
-                    <span className="text-white flex items-center gap-2">
-                      <Car className="w-4 h-4 text-[#e5dec9]" />
+                    <span className="text-[var(--text-primary)] flex items-center gap-2">
+                      <Car className="w-4 h-4 text-[var(--accent)] dark:text-[#e5dec9]" />
                       Private Chauffeur Sedan + Fuel + Inter-City
                     </span>
-                    <span className="font-mono font-bold text-white">₹5,500</span>
+                    <span className="font-mono font-bold text-[var(--text-primary)]">₹5,500</span>
                   </div>
 
                   <div className="flex items-center justify-between py-3">
-                    <span className="text-white flex items-center gap-2">
-                      <Utensils className="w-4 h-4 text-[#e5dec9]" />
+                    <span className="text-[var(--text-primary)] flex items-center gap-2">
+                      <Utensils className="w-4 h-4 text-[var(--accent)] dark:text-[#e5dec9]" />
                       Curated Dining, Sitar Dinners & High Teas
                     </span>
-                    <span className="font-mono font-bold text-white">₹4,500</span>
+                    <span className="font-mono font-bold text-[var(--text-primary)]">₹4,500</span>
                   </div>
 
                   <div className="flex items-center justify-between py-3">
-                    <span className="text-white flex items-center gap-2">
-                      <Compass className="w-4 h-4 text-[#e5dec9]" />
+                    <span className="text-[var(--text-primary)] flex items-center gap-2">
+                      <Compass className="w-4 h-4 text-[var(--accent)] dark:text-[#e5dec9]" />
                       Jag Mandir Yacht + Fort Fast-Pass Entry
                     </span>
-                    <span className="font-mono font-bold text-white">₹3,000</span>
+                    <span className="font-mono font-bold text-[var(--text-primary)]">₹3,000</span>
                   </div>
 
-                  <div className="flex items-center justify-between pt-4 border-t-2 border-white/20 text-base font-bold">
-                    <span className="text-white uppercase tracking-wider font-mono">TOTAL ESTIMATED INVESTMENT</span>
-                    <span className="font-mono text-xl text-[#e5dec9]">{expandedOption.price}</span>
+                  <div className="flex items-center justify-between pt-4 border-t-2 border-[var(--border)] text-base font-bold">
+                    <span className="text-[var(--text-primary)] uppercase tracking-wider font-mono">TOTAL ESTIMATED INVESTMENT</span>
+                    <span className="font-mono text-xl text-[var(--accent)] dark:text-[#e5dec9]">{expandedOption.price}</span>
                   </div>
                 </div>
               </div>
@@ -878,13 +878,13 @@ export const ExpandedRecommendationModal = () => {
             {/* ============================================================ */}
             <section className="pt-12 pb-16 text-center space-y-6">
               <div className="max-w-2xl mx-auto space-y-3">
-                <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#e5dec9] font-bold block">
+                <span className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--accent)] dark:text-[#e5dec9] font-bold block">
                   READY TO EXPERIENCE RAJASTHAN?
                 </span>
-                <h2 className="text-3xl sm:text-5xl font-serif text-white leading-tight">
+                <h2 className="text-3xl sm:text-5xl font-serif text-[var(--text-primary)] leading-tight">
                   Your Journey Awaits
                 </h2>
-                <p className="text-sm text-[#a89f91] font-sans">
+                <p className="text-sm text-[var(--text-secondary)] font-sans">
                   Every ticket, stay, and private transfer is coordinated automatically by TravelFlow AI. Live disruption buffers actively safeguard your time.
                 </p>
               </div>
@@ -892,7 +892,7 @@ export const ExpandedRecommendationModal = () => {
               <div className="flex items-center justify-center gap-4 flex-wrap pt-2">
                 <button
                   onClick={() => startJourney(expandedOption)}
-                  className="px-10 py-4 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider bg-white text-[#181411] hover:bg-[#eae5d9] transition-all hover:scale-105 cursor-pointer shadow-[0_0_35px_rgba(255,255,255,0.3)] flex items-center gap-2.5"
+                  className="px-10 py-4 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider bg-[var(--text-primary)] text-[var(--modal-bg)] dark:bg-white dark:text-[#181411] hover:opacity-90 transition-all hover:scale-105 cursor-pointer shadow-xl flex items-center gap-2.5"
                 >
                   <span>START THIS JOURNEY NOW</span>
                   <ArrowRight className="w-4 h-4" />
@@ -900,7 +900,7 @@ export const ExpandedRecommendationModal = () => {
 
                 <button
                   onClick={collapseOption}
-                  className="px-6 py-4 rounded-full text-xs font-mono uppercase tracking-wider text-[#a89f91] hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors cursor-pointer"
+                  className="px-6 py-4 rounded-full text-xs font-mono uppercase tracking-wider text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 border border-[var(--border)] transition-colors cursor-pointer"
                 >
                   ← BACK TO ALL POSSIBILITIES
                 </button>

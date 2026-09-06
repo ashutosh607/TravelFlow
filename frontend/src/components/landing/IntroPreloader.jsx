@@ -76,16 +76,16 @@ export const IntroPreloader = () => {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[300] bg-[#14100d] flex flex-col items-center justify-center text-center select-none px-6 pointer-events-none will-change-transform"
+      className="fixed inset-0 z-[300] bg-[var(--bg-secondary)] flex flex-col items-center justify-center text-center select-none px-6 pointer-events-none will-change-transform transition-colors duration-300"
     >
       <div className="max-w-2xl space-y-4">
         {/* Small text: TRAVELFLOW */}
-        <div className="text-xs sm:text-sm font-mono tracking-[0.35em] text-[#a89f91] uppercase font-semibold">
+        <div className="text-xs sm:text-sm font-mono tracking-[0.35em] text-[var(--accent)] dark:text-[#a89f91] uppercase font-semibold">
           {renderWordChars(smallText, "intro-char-small")}
         </div>
 
         {/* Main heading: Your journey, managed by AI. */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tighter text-white font-sans leading-[1.05]">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tighter text-[var(--text-primary)] font-sans leading-[1.05]">
           <div>{renderWordChars(line1, "intro-char-main")}</div>
           <div>{renderWordChars(line2, "intro-char-main")}</div>
         </h1>

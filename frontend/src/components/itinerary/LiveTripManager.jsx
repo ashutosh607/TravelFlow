@@ -290,18 +290,18 @@ export const LiveTripManager = () => {
             animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, x: -50, filter: "blur(12px)" }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="min-h-screen pt-28 pb-36 bg-[#181411] text-[#f5f2eb] selection:bg-[#f5f2eb] selection:text-[#181411]"
+            className="min-h-screen pt-28 pb-36 bg-[var(--trip-bg)] text-[var(--text-primary)] selection:bg-[var(--page-selection-bg)] selection:text-[var(--page-selection-text)] transition-colors duration-300"
           >
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 
               {/* Header Bar */}
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-white/10">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-[var(--border)]">
                 <div className="space-y-3.5 max-w-2xl">
                   <div className="flex items-center gap-2">
                     <span className="flex h-2.5 w-2.5 relative">
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#C9A86A]" />
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--accent)]" />
                     </span>
-                    <span className="text-xs font-mono tracking-[0.25em] text-[#a89f91] uppercase font-semibold">
+                    <span className="text-xs font-mono tracking-[0.25em] text-[var(--accent)] dark:text-[#a89f91] uppercase font-semibold">
                       CURATED TRIPS · TRAVELFLOW AI
                     </span>
                   </div>
@@ -310,10 +310,10 @@ export const LiveTripManager = () => {
                     text="My Trips"
                     as="h1"
                     delay={0.08}
-                    className="text-4xl sm:text-5xl font-serif text-white tracking-tight leading-tight"
+                    className="text-4xl sm:text-5xl font-serif text-[var(--text-primary)] tracking-tight leading-tight"
                   />
 
-                  <p className="text-sm text-[#a89f91] font-sans leading-relaxed">
+                  <p className="text-sm text-[var(--text-secondary)] font-sans leading-relaxed">
                     Manage your active itineraries, review completed journeys, inspect real-time AI Sentinel tracking, and converse with your personal 24/7 travel concierge.
                   </p>
                 </div>
@@ -321,7 +321,7 @@ export const LiveTripManager = () => {
                 {/* Plan Another Trip CTA */}
                 <button
                   onClick={() => setIsPlannerOpen(true)}
-                  className="px-7 py-4 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#181411] hover:bg-[#eae5d9] transition-all hover:scale-105 shadow-xl flex items-center justify-center gap-2 cursor-pointer shrink-0 self-start md:self-auto"
+                  className="px-7 py-4 rounded-full text-xs font-bold uppercase tracking-wider bg-[var(--text-primary)] text-[var(--surface)] dark:bg-white dark:text-[#181411] hover:opacity-90 transition-all hover:scale-105 shadow-xl flex items-center justify-center gap-2 cursor-pointer shrink-0 self-start md:self-auto"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Plan Another Trip</span>
@@ -330,30 +330,30 @@ export const LiveTripManager = () => {
 
               {/* Stats Bar */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
-                <div className="p-5 rounded-2xl bg-[#14100d] border border-white/10 space-y-1.5">
-                  <span className="text-xs font-mono text-[#736a5e] uppercase tracking-wider block">Total Journeys</span>
-                  <span className="text-3xl font-bold font-serif text-white">{savedTrips.length}</span>
+                <div className="p-5 rounded-2xl bg-[var(--trip-card-bg)] border border-[var(--trip-card-border)] space-y-1.5 shadow-sm">
+                  <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider block">Total Journeys</span>
+                  <span className="text-3xl font-bold font-serif text-[var(--text-primary)]">{savedTrips.length}</span>
                 </div>
-                <div className="p-5 rounded-2xl bg-[#14100d] border border-white/10 space-y-1.5">
-                  <span className="text-xs font-mono text-[#736a5e] uppercase tracking-wider block">AI Sentinel Status</span>
-                  <span className="text-sm font-bold text-[#C9A86A] flex items-center gap-2 pt-1">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#C9A86A]" />
+                <div className="p-5 rounded-2xl bg-[var(--trip-card-bg)] border border-[var(--trip-card-border)] space-y-1.5 shadow-sm">
+                  <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider block">AI Sentinel Status</span>
+                  <span className="text-sm font-bold text-[var(--accent)] flex items-center gap-2 pt-1">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent)]" />
                     Active & Protecting
                   </span>
                 </div>
-                <div className="p-5 rounded-2xl bg-[#14100d] border border-white/10 space-y-1.5">
-                  <span className="text-xs font-mono text-[#736a5e] uppercase tracking-wider block">Trip Health Score</span>
+                <div className="p-5 rounded-2xl bg-[var(--trip-card-bg)] border border-[var(--trip-card-border)] space-y-1.5 shadow-sm">
+                  <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider block">Trip Health Score</span>
                   <div className="flex items-center gap-2 pt-1">
-                    <span className="text-2xl font-bold font-mono text-[#C9A86A]">94/100</span>
-                    <span className="px-2.5 py-0.5 rounded-md bg-[rgba(201,168,106,0.15)] border border-[rgba(201,168,106,0.35)] font-mono font-bold text-[11px] text-[#C9A86A]">
+                    <span className="text-2xl font-bold font-mono text-[var(--accent)]">94/100</span>
+                    <span className="px-2.5 py-0.5 rounded-md bg-[var(--accent-soft)] border border-[var(--accent)]/30 font-mono font-bold text-[11px] text-[var(--accent)]">
                       OPTIMAL
                     </span>
                   </div>
                 </div>
-                <div className="p-5 rounded-2xl bg-[#14100d] border border-white/10 space-y-1.5">
-                  <span className="text-xs font-mono text-[#736a5e] uppercase tracking-wider block">Concierge AI</span>
-                  <span className="text-sm font-bold text-white flex items-center gap-2 pt-1">
-                    <Sparkles className="w-4 h-4 text-[#C9A86A]" />
+                <div className="p-5 rounded-2xl bg-[var(--trip-card-bg)] border border-[var(--trip-card-border)] space-y-1.5 shadow-sm">
+                  <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider block">Concierge AI</span>
+                  <span className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2 pt-1">
+                    <Sparkles className="w-4 h-4 text-[var(--accent)]" />
                     Concierge Ready
                   </span>
                 </div>
@@ -362,24 +362,24 @@ export const LiveTripManager = () => {
               {/* Horizontal Trips List */}
               <div className="space-y-6">
                 <div className="flex items-center justify-between pb-2">
-                  <h2 className="text-sm font-mono uppercase tracking-[0.2em] text-[#d8d2c8] font-bold">
+                  <h2 className="text-sm font-mono uppercase tracking-[0.2em] text-[var(--text-primary)] font-bold">
                     Saved & Active Journeys ({savedTrips.length})
                   </h2>
-                  <span className="text-xs text-[#a89f91] font-sans">
+                  <span className="text-xs text-[var(--text-secondary)] font-sans">
                     Click any trip to explore rich details and chat with AI
                   </span>
                 </div>
 
                 {savedTrips.length === 0 ? (
-                  <div className="text-center py-24 rounded-3xl bg-[#14100d] border border-white/10 space-y-5">
-                    <Sparkles className="w-10 h-10 text-[#a89f91] mx-auto" />
-                    <h3 className="text-xl font-serif text-white">No trips saved yet</h3>
-                    <p className="text-sm text-[#a89f91] max-w-md mx-auto leading-relaxed">
+                  <div className="text-center py-24 rounded-3xl bg-[var(--trip-card-bg)] border border-[var(--trip-card-border)] space-y-5 shadow-sm">
+                    <Sparkles className="w-10 h-10 text-[var(--text-muted)] mx-auto" />
+                    <h3 className="text-xl font-serif text-[var(--text-primary)]">No trips saved yet</h3>
+                    <p className="text-sm text-[var(--text-secondary)] max-w-md mx-auto leading-relaxed">
                       Fill our AI travel concierge form to generate curated journeys tailored to your budget and travel group.
                     </p>
                     <button
                       onClick={() => setIsPlannerOpen(true)}
-                      className="px-8 py-3.5 rounded-full bg-white text-[#181411] text-xs font-bold uppercase tracking-wider hover:bg-[#eae5d9] transition-all cursor-pointer shadow-lg"
+                      className="px-8 py-3.5 rounded-full bg-[var(--text-primary)] text-[var(--surface)] dark:bg-white dark:text-[#181411] text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all cursor-pointer shadow-lg"
                     >
                       Start Planning Now
                     </button>
@@ -406,10 +406,10 @@ export const LiveTripManager = () => {
                               transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
                             }}
                             whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                            className="group cursor-pointer rounded-3xl bg-[#1a1512] hover:bg-[#1f1a15] border border-white/10 hover:border-[rgba(201,168,106,0.35)] transition-colors duration-300 p-6 sm:p-7 shadow-2xl flex flex-col lg:flex-row gap-7 items-stretch select-none"
+                            className="group cursor-pointer rounded-3xl bg-[var(--trip-card-bg)] hover:bg-[var(--surface-soft)] border border-[var(--trip-card-border)] hover:border-[var(--accent)] transition-all duration-300 p-6 sm:p-7 shadow-xl flex flex-col lg:flex-row gap-7 items-stretch select-none"
                           >
                             {/* Left: Thumbnail Image */}
-                            <div className="relative w-full lg:w-84 h-56 lg:h-auto rounded-2xl overflow-hidden shrink-0 bg-[#14100d]">
+                            <div className="relative w-full lg:w-84 h-56 lg:h-auto rounded-2xl overflow-hidden shrink-0 bg-[var(--surface-soft)]">
                               <img
                                 src={trip.image}
                                 alt={trip.title}
@@ -420,13 +420,13 @@ export const LiveTripManager = () => {
                               {/* Status Badges on Image */}
                               <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
                                 {isCompleted ? (
-                                  <span className="text-xs font-mono tracking-wider uppercase px-3 py-1 rounded-full bg-[rgba(201,168,106,0.15)] border border-[rgba(201,168,106,0.35)] text-[#C9A86A] font-bold flex items-center gap-1.5 shadow-sm">
+                                  <span className="text-xs font-mono tracking-wider uppercase px-3 py-1 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/30 text-[var(--accent)] font-bold flex items-center gap-1.5 shadow-sm">
                                     <CheckCircle className="w-3.5 h-3.5" />
                                     Journey Completed
                                   </span>
                                 ) : (
                                   <span className="text-xs font-mono tracking-wider uppercase px-3 py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white font-semibold flex items-center gap-1.5">
-                                    <span className="w-2 h-2 rounded-full bg-[#C9A86A]" />
+                                    <span className="w-2 h-2 rounded-full bg-[var(--accent)]" />
                                     Active Journey
                                   </span>
                                 )}
@@ -436,7 +436,7 @@ export const LiveTripManager = () => {
                                 <span className="font-mono text-xs bg-black/70 backdrop-blur-sm px-3 py-1 rounded-md border border-white/10 font-medium">
                                   {trip.duration} · {trip.travelGroup || "Couple"}
                                 </span>
-                                <span className="font-mono text-xs text-[#C9A86A] font-bold">
+                                <span className="font-mono text-xs text-[var(--accent)] dark:text-[#C9A86A] font-bold">
                                   {trip.aiMatch || 94}% AI Match
                                 </span>
                               </div>
@@ -446,24 +446,24 @@ export const LiveTripManager = () => {
                             <div className="flex-1 flex flex-col justify-between space-y-4">
                               <div className="space-y-2.5">
                                 <div className="flex flex-wrap items-center justify-between gap-3">
-                                  <span className="text-xs font-mono uppercase tracking-widest text-[#a89f91] font-semibold">
+                                  <span className="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] font-semibold">
                                     {trip.badge || "Curated Journey"}
                                   </span>
-                                  <span className="text-sm font-mono font-bold text-white bg-white/10 px-3.5 py-1.5 rounded-full border border-white/10">
+                                  <span className="text-sm font-mono font-bold text-[var(--text-primary)] bg-[var(--surface-soft)] px-3.5 py-1.5 rounded-full border border-[var(--border)]">
                                     {trip.price}
                                   </span>
                                 </div>
 
-                                <h3 className="text-2xl sm:text-3xl font-serif text-white group-hover:text-[#C9A86A] transition-colors leading-snug">
+                                <h3 className="text-2xl sm:text-3xl font-serif text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors leading-snug">
                                   {trip.title}
                                 </h3>
 
-                                <p className="text-sm font-sans text-[#a89f91] flex items-center gap-2">
-                                  <MapPin className="w-4 h-4 text-[#C9A86A] shrink-0" />
+                                <p className="text-sm font-sans text-[var(--text-secondary)] flex items-center gap-2">
+                                  <MapPin className="w-4 h-4 text-[var(--accent)] shrink-0" />
                                   <span>{trip.route}</span>
                                 </p>
 
-                                <p className="text-xs sm:text-sm text-[#d8d2c8] line-clamp-2 leading-relaxed pt-1">
+                                <p className="text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-2 leading-relaxed pt-1">
                                   {trip.description}
                                 </p>
                               </div>
@@ -473,7 +473,7 @@ export const LiveTripManager = () => {
                                 {trip.tags?.map((t, idx) => (
                                   <span
                                     key={idx}
-                                    className="text-xs font-mono uppercase px-3 py-1 rounded-md bg-white/[0.04] border border-white/10 text-[#a89f91]"
+                                    className="text-xs font-mono uppercase px-3 py-1 rounded-md bg-[var(--surface-soft)] border border-[var(--border)] text-[var(--text-muted)]"
                                   >
                                     {t}
                                   </span>
@@ -482,13 +482,13 @@ export const LiveTripManager = () => {
 
                               {/* Verified Traveler Review Snippet (If reviewed) */}
                               {trip.review && (
-                                <div className="p-3.5 rounded-xl bg-[rgba(201,168,106,0.15)] border border-[rgba(201,168,106,0.35)] flex items-start gap-2.5 text-xs text-[#C9A86A]">
-                                  <Star className="w-4 h-4 fill-current text-[#C9A86A] shrink-0 mt-0.5" />
+                                <div className="p-3.5 rounded-xl bg-[var(--accent-soft)] border border-[var(--accent)]/30 flex items-start gap-2.5 text-xs text-[var(--accent)]">
+                                  <Star className="w-4 h-4 fill-current text-[var(--accent)] shrink-0 mt-0.5" />
                                   <div>
                                     <span className="font-bold font-sans block">
                                       Verified Review · {trip.review.rating}.0 ★
                                     </span>
-                                    <p className="line-clamp-1 italic text-[#f5f2eb] pt-0.5">
+                                    <p className="line-clamp-1 italic text-[var(--text-primary)] pt-0.5">
                                       "{trip.review.comment}"
                                     </p>
                                   </div>
@@ -497,13 +497,13 @@ export const LiveTripManager = () => {
 
                               {/* Latest AI Concierge Message Snippet */}
                               {!trip.review && lastMessage && (
-                                <div className="p-3.5 rounded-xl bg-[#14100d]/80 border border-white/5 flex items-start gap-3 text-xs text-[#d8d2c8]">
-                                  <Sparkles className="w-4 h-4 text-[#C9A86A] shrink-0 mt-0.5" />
+                                <div className="p-3.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] flex items-start gap-3 text-xs text-[var(--text-secondary)]">
+                                  <Sparkles className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
                                   <div className="flex-1 min-w-0">
-                                    <span className="font-mono text-[10px] uppercase text-[#a89f91] block">
+                                    <span className="font-mono text-[10px] uppercase text-[var(--text-muted)] block">
                                       Latest AI Concierge Update · {lastMessage.timestamp}
                                     </span>
-                                    <p className="line-clamp-1 text-xs text-[#f5f2eb]">
+                                    <p className="line-clamp-1 text-xs text-[var(--text-primary)]">
                                       {lastMessage.text.replace(/\*\*/g, "")}
                                     </p>
                                   </div>
@@ -512,11 +512,11 @@ export const LiveTripManager = () => {
                             </div>
 
                             {/* Right: Actions (Open, Done, Review, Remove) */}
-                            <div className="lg:w-64 shrink-0 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-white/10 pt-5 lg:pt-0 lg:pl-7 gap-4">
+                            <div className="lg:w-64 shrink-0 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-[var(--border)] pt-5 lg:pt-0 lg:pl-7 gap-4">
 
                               <div className="flex items-center justify-between lg:justify-end gap-3">
-                                <span className="text-xs font-mono text-[#736a5e] uppercase">Status:</span>
-                                <span className="px-3 py-1 rounded-lg bg-[rgba(201,168,106,0.15)] border border-[rgba(201,168,106,0.35)] font-mono font-bold text-xs text-[#C9A86A]">
+                                <span className="text-xs font-mono text-[var(--text-muted)] uppercase">Status:</span>
+                                <span className="px-3 py-1 rounded-lg bg-[var(--accent-soft)] border border-[var(--accent)]/30 font-mono font-bold text-xs text-[var(--accent)]">
                                   OPTIMAL
                                 </span>
                               </div>
@@ -531,7 +531,7 @@ export const LiveTripManager = () => {
                                     e.stopPropagation();
                                     selectTrip(trip.id);
                                   }}
-                                  className="w-full py-3 px-4 rounded-xl bg-white text-[#181411] hover:bg-[#eae5d9] text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-md hover:scale-[1.02] cursor-pointer"
+                                  className="w-full py-3 px-4 rounded-xl bg-[var(--text-primary)] text-[var(--surface)] dark:bg-white dark:text-[#181411] hover:opacity-90 text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-md hover:scale-[1.02] cursor-pointer"
                                 >
                                   <span>Open Details & Chat</span>
                                   <ArrowRight className="w-3.5 h-3.5" />
@@ -545,7 +545,7 @@ export const LiveTripManager = () => {
                                       e.stopPropagation();
                                       markTripCompleted(trip.id);
                                     }}
-                                    className="w-full py-2.5 px-3 rounded-xl bg-[rgba(201,168,106,0.15)] hover:bg-[rgba(201,168,106,0.25)] border border-[rgba(201,168,106,0.35)] text-[#C9A86A] text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                                    className="w-full py-2.5 px-3 rounded-xl bg-[var(--accent-soft)] hover:opacity-90 border border-[var(--accent)]/30 text-[var(--accent)] text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                                   >
                                     <CheckCircle className="w-3.5 h-3.5" />
                                     <span>Journey Done? Leave Review</span>
@@ -557,7 +557,7 @@ export const LiveTripManager = () => {
                                       e.stopPropagation();
                                       setReviewingTripId(trip.id);
                                     }}
-                                    className="w-full py-2.5 px-3 rounded-xl bg-[rgba(201,168,106,0.15)] hover:bg-[rgba(201,168,106,0.25)] border border-[rgba(201,168,106,0.35)] text-[#C9A86A] text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                                    className="w-full py-2.5 px-3 rounded-xl bg-[var(--accent-soft)] hover:opacity-90 border border-[var(--accent)]/30 text-[var(--accent)] text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                                   >
                                     <Star className="w-3.5 h-3.5 fill-current" />
                                     <span>{trip.review ? "Update Review" : "Write Review"}</span>
@@ -571,7 +571,7 @@ export const LiveTripManager = () => {
                                     e.stopPropagation();
                                     setTripToDelete(trip);
                                   }}
-                                  className="w-full py-2 px-3 rounded-xl text-[11px] font-mono text-[#a89f91] hover:text-[#B86F52] hover:bg-[rgba(184,111,82,0.12)] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                                  className="w-full py-2 px-3 rounded-xl text-[11px] font-mono text-[var(--text-muted)] hover:text-[#B86F52] hover:bg-[rgba(184,111,82,0.12)] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                                 >
                                   <Trash2 className="w-3 h-3" />
                                   <span>Remove Journey</span>
@@ -601,26 +601,26 @@ export const LiveTripManager = () => {
                   if (e.target === e.currentTarget) setReviewingTripId(null);
                 }}
               >
-                <div className="relative w-full max-w-xl bg-[#1a1512] border border-white/20 rounded-3xl p-7 sm:p-8 shadow-2xl space-y-6 text-[#f5f2eb]">
+                <div className="relative w-full max-w-xl bg-[var(--modal-bg)] border border-[var(--modal-border)] rounded-3xl p-7 sm:p-8 shadow-2xl space-y-6 text-[var(--text-primary)]">
 
                   {/* Modal Header */}
-                  <div className="flex items-start justify-between border-b border-white/10 pb-4">
+                  <div className="flex items-start justify-between border-b border-[var(--border)] pb-4">
                     <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-xs font-mono text-[#C9A86A] uppercase font-bold">
+                      <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent)] uppercase font-bold">
                         <Sparkles className="w-3.5 h-3.5" />
                         Verified Traveler Review
                       </div>
-                      <h3 className="text-2xl font-serif text-white font-bold">
+                      <h3 className="text-2xl font-serif text-[var(--text-primary)] font-bold">
                         How was your journey to {targetReviewTrip.title}?
                       </h3>
-                      <p className="text-xs text-[#a89f91] font-sans">
+                      <p className="text-xs text-[var(--text-secondary)] font-sans">
                         Your feedback helps TravelFlow AI refine pacing, stays, and transit for future travelers.
                       </p>
                     </div>
 
                     <button
                       onClick={() => setReviewingTripId(null)}
-                      className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#a89f91] hover:text-white cursor-pointer"
+                      className="w-8 h-8 rounded-full bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] cursor-pointer transition-colors"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -628,7 +628,7 @@ export const LiveTripManager = () => {
 
                   {/* Star Rating Selector */}
                   <div className="space-y-2 text-center py-2">
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#a89f91] block">
+                    <span className="text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] block">
                       Overall Rating
                     </span>
 
@@ -642,15 +642,15 @@ export const LiveTripManager = () => {
                         >
                           <Star
                             className={`w-8 h-8 ${star <= reviewRating
-                                ? "fill-[#C9A86A] text-[#C9A86A]"
-                                : "text-white/20"
+                                ? "fill-[var(--accent)] text-[var(--accent)]"
+                                : "text-[var(--border)]"
                               }`}
                           />
                         </button>
                       ))}
                     </div>
 
-                    <span className="text-sm font-sans font-bold text-[#C9A86A] block">
+                    <span className="text-sm font-sans font-bold text-[var(--accent)] block">
                       {reviewRating === 5 && "Exceptional Experience (5.0 / 5.0)"}
                       {reviewRating === 4 && "Great Journey (4.0 / 5.0)"}
                       {reviewRating === 3 && "Satisfactory (3.0 / 5.0)"}
@@ -660,7 +660,7 @@ export const LiveTripManager = () => {
 
                   {/* Quick Sentiment Tags */}
                   <div className="space-y-2">
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#a89f91] block">
+                    <span className="text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] block">
                       What did you enjoy most? (Tap to select)
                     </span>
                     <div className="flex flex-wrap gap-2">
@@ -672,8 +672,8 @@ export const LiveTripManager = () => {
                             type="button"
                             onClick={() => toggleReviewTag(tag)}
                             className={`px-3.5 py-1.5 rounded-full text-xs font-sans transition-all cursor-pointer border ${isSelected
-                                ? "bg-white text-[#181411] border-white font-semibold shadow-sm"
-                                : "bg-white/5 border-white/10 text-[#d8d2c8] hover:border-white/30"
+                                ? "bg-[var(--text-primary)] text-[var(--surface)] border-[var(--text-primary)] font-semibold shadow-sm dark:bg-white dark:text-[#181411] dark:border-white"
+                                : "bg-[var(--surface-soft)] border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent)]"
                               }`}
                           >
                             {tag}
@@ -686,7 +686,7 @@ export const LiveTripManager = () => {
                   {/* Review Textarea */}
                   <form onSubmit={handleReviewSubmit} className="space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-mono uppercase tracking-wider text-[#a89f91] block">
+                      <label className="text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] block">
                         Traveler Thoughts & Recommendations
                       </label>
                       <textarea
@@ -694,7 +694,7 @@ export const LiveTripManager = () => {
                         value={reviewComment}
                         onChange={(e) => setReviewComment(e.target.value)}
                         placeholder="Share your favorite memory, tips for dining, or how the pacing felt..."
-                        className="w-full p-4 rounded-2xl bg-black/40 border border-white/15 focus:border-white/40 text-xs text-white placeholder:text-[#5e5346] font-sans focus:outline-none resize-none leading-relaxed"
+                        className="w-full p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] focus:border-[var(--accent)] text-xs text-[var(--text-primary)] placeholder:text-[var(--text-muted)] font-sans focus:outline-none resize-none leading-relaxed"
                       />
                     </div>
 
@@ -702,13 +702,13 @@ export const LiveTripManager = () => {
                       <button
                         type="button"
                         onClick={() => setReviewingTripId(null)}
-                        className="px-5 py-3 rounded-full text-xs font-mono text-[#a89f91] hover:text-white cursor-pointer"
+                        className="px-5 py-3 rounded-full text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--text-primary)] cursor-pointer"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
-                        className="px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#181411] hover:bg-[#eae5d9] transition-all shadow-lg cursor-pointer"
+                        className="px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-[var(--text-primary)] text-[var(--surface)] hover:opacity-90 dark:bg-white dark:text-[#181411] transition-all shadow-lg cursor-pointer"
                       >
                         Submit Traveler Review
                       </button>
@@ -727,17 +727,17 @@ export const LiveTripManager = () => {
             animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, x: 50, filter: "blur(12px)" }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="min-h-screen pt-24 pb-36 bg-[#181411] text-[#f5f2eb] selection:bg-[#f5f2eb] selection:text-[#181411]"
+            className="min-h-screen pt-24 pb-36 bg-[var(--trip-bg)] text-[var(--text-primary)] selection:bg-[var(--page-selection-bg)] selection:text-[var(--page-selection-text)] transition-colors duration-300"
           >
 
             {/* Top Sticky Navigation Bar */}
-            <div className="sticky top-0 z-40 bg-[#181411]/95 backdrop-blur-xl border-b border-white/10 px-4 sm:px-8 py-4 mb-8">
+            <div className="sticky top-0 z-40 bg-[var(--trip-header-bg)] backdrop-blur-xl border-b border-[var(--border)] px-4 sm:px-8 py-4 mb-8">
               <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
 
                 {/* Back to All Trips Button */}
                 <button
                   onClick={backToMyTrips}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-xs font-mono uppercase tracking-wider text-white transition-all cursor-pointer border border-white/15 hover:scale-105"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 text-xs font-mono uppercase tracking-wider text-[var(--text-primary)] transition-all cursor-pointer border border-[var(--border)] hover:scale-105"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   <span>Back to My Trips</span>
@@ -745,10 +745,10 @@ export const LiveTripManager = () => {
 
                 {/* Center Trip Title & Route */}
                 <div className="hidden sm:flex flex-col items-center text-center">
-                  <h2 className="text-lg font-serif text-white font-bold leading-tight">
+                  <h2 className="text-lg font-serif text-[var(--text-primary)] font-bold leading-tight">
                     {activeTrip.title}
                   </h2>
-                  <span className="text-xs font-mono text-[#a89f91]">
+                  <span className="text-xs font-mono text-[var(--text-secondary)]">
                     {activeTrip.route} · {activeTrip.duration}
                   </span>
                 </div>
@@ -758,7 +758,7 @@ export const LiveTripManager = () => {
                   {activeTrip.status !== "Completed" ? (
                     <button
                       onClick={() => markTripCompleted(activeTrip.id)}
-                      className="px-4 py-2 rounded-full bg-[rgba(201,168,106,0.15)] hover:bg-[rgba(201,168,106,0.25)] border border-[rgba(201,168,106,0.35)] text-[#C9A86A] text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                      className="px-4 py-2 rounded-full bg-[var(--accent-soft)] hover:opacity-90 border border-[var(--accent)]/30 text-[var(--accent)] text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
                     >
                       <CheckCircle className="w-3.5 h-3.5" />
                       <span className="hidden sm:inline">Journey Done</span>
@@ -766,21 +766,21 @@ export const LiveTripManager = () => {
                   ) : (
                     <button
                       onClick={() => setReviewingTripId(activeTrip.id)}
-                      className="px-4 py-2 rounded-full bg-[rgba(201,168,106,0.15)] hover:bg-[rgba(201,168,106,0.25)] border border-[rgba(201,168,106,0.35)] text-[#C9A86A] text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                      className="px-4 py-2 rounded-full bg-[var(--accent-soft)] hover:opacity-90 border border-[var(--accent)]/30 text-[var(--accent)] text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
                     >
                       <Star className="w-3.5 h-3.5 fill-current" />
                       <span>{activeTrip.review ? "Review Recorded" : "Leave Review"}</span>
                     </button>
                   )}
 
-                  <span className="text-xs font-mono px-3.5 py-1.5 rounded-full bg-[rgba(201,168,106,0.15)] border border-[rgba(201,168,106,0.35)] text-[#C9A86A] font-semibold flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#C9A86A]" />
+                  <span className="text-xs font-mono px-3.5 py-1.5 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/30 text-[var(--accent)] font-semibold flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[var(--accent)]" />
                     Sentinel Active
                   </span>
 
                   <button
                     onClick={() => setTripToDelete(activeTrip)}
-                    className="p-2 rounded-full text-[#a89f91] hover:text-[#B86F52] hover:bg-[rgba(184,111,82,0.12)] border border-white/10 hover:border-[rgba(184,111,82,0.35)] transition-all cursor-pointer"
+                    className="p-2 rounded-full text-[var(--text-secondary)] hover:text-[#B86F52] hover:bg-[rgba(184,111,82,0.12)] border border-[var(--border)] hover:border-[rgba(184,111,82,0.35)] transition-all cursor-pointer"
                     title="Remove Journey"
                     aria-label="Remove Journey"
                   >
@@ -794,42 +794,42 @@ export const LiveTripManager = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
               {/* Cockpit Status Bar with Flight Disruption Simulator */}
-              <div className="rounded-3xl bg-[#1f1a15] border border-white/15 p-7 backdrop-blur-xl shadow-2xl">
+              <div className="rounded-3xl bg-[var(--trip-card-bg)] border border-[var(--trip-card-border)] p-7 backdrop-blur-xl shadow-xl">
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
 
                   <div className="space-y-2">
                     <div className="flex items-center gap-3">
-                      <span className="text-xs font-mono tracking-widest uppercase text-[#a89f91] font-semibold">
+                      <span className="text-xs font-mono tracking-widest uppercase text-[var(--text-muted)] font-semibold">
                         TRIP TELEMETRY & LIVE MONITORING
                       </span>
-                      <span className="text-xs font-mono px-3 py-1 rounded-full bg-white/10 text-white border border-white/10">
+                      <span className="text-xs font-mono px-3 py-1 rounded-full bg-[var(--surface-soft)] text-[var(--text-primary)] border border-[var(--border)]">
                         {activeTrip.travelGroup || "Couple"} Pacing
                       </span>
                       {activeTrip.status === "Completed" && (
-                        <span className="text-xs font-mono px-3 py-1 rounded-full bg-[rgba(201,168,106,0.15)] text-[#C9A86A] border border-[rgba(201,168,106,0.35)] font-semibold">
+                        <span className="text-xs font-mono px-3 py-1 rounded-full bg-[var(--accent-soft)] text-[var(--accent)] border border-[var(--accent)]/30 font-semibold">
                           ✓ Completed
                         </span>
                       )}
                     </div>
-                    <h1 className="text-3xl sm:text-4xl font-serif text-white">
+                    <h1 className="text-3xl sm:text-4xl font-serif text-[var(--text-primary)]">
                       {activeTrip.title}
                     </h1>
-                    <p className="text-sm font-mono text-[#a89f91]">
-                      {activeTrip.route} · Total Investment: <span className="text-white font-bold">{activeTrip.price}</span>
+                    <p className="text-sm font-mono text-[var(--text-secondary)]">
+                      {activeTrip.route} · Total Investment: <span className="text-[var(--text-primary)] font-bold">{activeTrip.price}</span>
                     </p>
                   </div>
 
                   {/* Health Score & Simulation Button */}
                   <div className="flex flex-wrap items-center gap-4">
-                    <div className="flex items-center gap-3.5 px-5 py-3 rounded-2xl bg-[#14100d] border border-white/10">
+                    <div className="flex items-center gap-3.5 px-5 py-3 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)]">
                       <div className="text-right">
-                        <span className="text-[10px] uppercase font-mono tracking-widest text-[#736a5e] block">Trip Health</span>
-                        <span className="text-xl font-mono font-bold text-white">{tripHealthScore}/100</span>
+                        <span className="text-[10px] uppercase font-mono tracking-widest text-[var(--text-muted)] block">Trip Health</span>
+                        <span className="text-xl font-mono font-bold text-[var(--text-primary)]">{tripHealthScore}/100</span>
                       </div>
 
-                      {/* Health Badge: Champagne Gold for OPTIMAL, Terracotta #B86F52 for RISK */}
+                      {/* Health Badge */}
                       <div className={`px-4 py-2 rounded-xl flex items-center justify-center font-mono font-bold text-xs tracking-wider whitespace-nowrap ${tripHealthScore >= 80
-                          ? "bg-[rgba(201,168,106,0.15)] border border-[rgba(201,168,106,0.35)] text-[#C9A86A]"
+                          ? "bg-[var(--accent-soft)] border border-[var(--accent)]/30 text-[var(--accent)]"
                           : "bg-[rgba(184,111,82,0.15)] border border-[rgba(184,111,82,0.35)] text-[#B86F52]"
                         }`}>
                         {tripHealthScore >= 80 ? "OPTIMAL" : "RISK"}
@@ -839,9 +839,9 @@ export const LiveTripManager = () => {
                     {disruptionState === "none" && (
                       <button
                         onClick={handleTriggerSimulation}
-                        className="px-5 py-3 rounded-2xl font-bold text-xs bg-white text-[#181411] hover:bg-[#eae5d9] transition-all flex items-center gap-2 shadow-md uppercase tracking-wider cursor-pointer hover:scale-105 active:scale-95"
+                        className="px-5 py-3 rounded-2xl font-bold text-xs bg-[var(--text-primary)] text-[var(--surface)] hover:opacity-90 dark:bg-white dark:text-[#181411] transition-all flex items-center gap-2 shadow-md uppercase tracking-wider cursor-pointer hover:scale-105 active:scale-95"
                       >
-                        <Zap className="w-4 h-4 fill-current text-[#C9A86A]" />
+                        <Zap className="w-4 h-4 fill-current text-[var(--accent)]" />
                         <span>Simulate Delay (+3h)</span>
                       </button>
                     )}
@@ -849,7 +849,7 @@ export const LiveTripManager = () => {
                     {disruptionState !== "none" && (
                       <button
                         onClick={resetDisruption}
-                        className="px-4 py-3 rounded-2xl text-xs font-mono text-[#a89f91] hover:text-white bg-[#14100d] border border-white/10 transition-colors flex items-center gap-2 cursor-pointer"
+                        className="px-4 py-3 rounded-2xl text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--surface-soft)] border border-[var(--border)] transition-colors flex items-center gap-2 cursor-pointer"
                       >
                         <RotateCcw className="w-3.5 h-3.5" />
                         <span>Reset Demo</span>
@@ -862,22 +862,22 @@ export const LiveTripManager = () => {
 
               {/* Disruption Alert Banner */}
               {isDisrupted && (
-                <div className="rounded-3xl bg-[#231713] border border-[rgba(184,111,82,0.35)] p-7 backdrop-blur-xl animate-fade-in shadow-2xl space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+                <div className="rounded-3xl bg-[#FEF2F1] dark:bg-[#231713] border border-[rgba(184,111,82,0.35)] p-7 backdrop-blur-xl animate-fade-in shadow-xl space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--border)] pb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-[rgba(184,111,82,0.15)] border border-[rgba(184,111,82,0.35)] flex items-center justify-center text-[#B86F52]">
                         <AlertTriangle className="w-5 h-5 text-[#B86F52]" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-white font-sans">{disruptionData.title}</h3>
-                        <p className="text-xs font-mono text-[#d8d2c8]">
+                        <h3 className="text-lg font-bold text-[var(--text-primary)] font-sans">{disruptionData.title}</h3>
+                        <p className="text-xs font-mono text-[var(--text-secondary)]">
                           {disruptionData.reason} · Original: {disruptionData.originalArrival} ➔ Delayed: {disruptionData.newArrival}
                         </p>
                       </div>
                     </div>
                     <button
                       onClick={applyDisruptionRecovery}
-                      className="px-7 py-3 rounded-full font-bold text-xs uppercase tracking-wider bg-white text-[#181411] hover:bg-[#eae5d9] transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer"
+                      className="px-7 py-3 rounded-full font-bold text-xs uppercase tracking-wider bg-[var(--text-primary)] text-[var(--surface)] hover:opacity-90 dark:bg-white dark:text-[#181411] transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer"
                     >
                       <Sparkles className="w-4 h-4" />
                       <span>Auto-Replan Now →</span>
@@ -888,17 +888,17 @@ export const LiveTripManager = () => {
 
               {/* Recovery Success Banner */}
               {isRecovered && (
-                <div className="rounded-3xl bg-[#1b261e] border border-white/20 p-7 backdrop-blur-xl animate-fade-in shadow-xl flex items-center justify-between gap-4 flex-wrap">
+                <div className="rounded-3xl bg-[#EDFBF3] dark:bg-[#1b261e] border border-[rgba(30,150,80,0.25)] dark:border-white/20 p-7 backdrop-blur-xl animate-fade-in shadow-xl flex items-center justify-between gap-4 flex-wrap">
                   <div className="flex items-center gap-3">
-                    <CheckCircle2 className="w-6 h-6 text-[#C9A86A]" />
+                    <CheckCircle2 className="w-6 h-6 text-[var(--accent)]" />
                     <div>
-                      <h3 className="text-base font-bold text-white">Itinerary Successfully Re-Optimized</h3>
-                      <p className="text-xs font-mono text-[#d8d2c8]">City Palace shifted to Day 2 morning · Sunset at Hawa Mahal and dinner preserved</p>
+                      <h3 className="text-base font-bold text-[var(--text-primary)]">Itinerary Successfully Re-Optimized</h3>
+                      <p className="text-xs font-mono text-[var(--text-secondary)]">City Palace shifted to Day 2 morning · Sunset at Hawa Mahal and dinner preserved</p>
                     </div>
                   </div>
                   <button
                     onClick={() => setShowWhyExplanation(true)}
-                    className="px-5 py-2.5 rounded-full font-bold text-xs bg-white text-[#181411] hover:bg-[#eae5d9] flex items-center gap-2 cursor-pointer shadow-md"
+                    className="px-5 py-2.5 rounded-full font-bold text-xs bg-[var(--text-primary)] text-[var(--surface)] hover:opacity-90 dark:bg-white dark:text-[#181411] flex items-center gap-2 cursor-pointer shadow-md"
                   >
                     <HelpCircle className="w-4 h-4" />
                     <span>Why this change?</span>
@@ -921,8 +921,8 @@ export const LiveTripManager = () => {
                         key={dp.day}
                         onClick={() => setSelectedDay(dp.day)}
                         className={`px-6 py-3.5 rounded-2xl text-xs font-semibold shrink-0 transition-all border cursor-pointer ${selectedDay === dp.day
-                            ? "bg-white text-[#181411] border-white font-bold shadow-lg scale-[1.02]"
-                            : "bg-[#1f1a15] border-white/10 text-[#a89f91] hover:border-white/30 hover:text-white"
+                            ? "bg-[var(--text-primary)] text-[var(--surface)] border-[var(--text-primary)] font-bold shadow-lg scale-[1.02] dark:bg-white dark:text-[#181411] dark:border-white"
+                            : "bg-[var(--surface)] border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent)] hover:text-[var(--text-primary)]"
                           }`}
                       >
                         <div className="text-left">
@@ -938,16 +938,16 @@ export const LiveTripManager = () => {
                   </div>
 
                   {/* Day Summary Callout */}
-                  <div className="p-5 rounded-2xl bg-[#14100d] border border-white/10 flex items-center justify-between">
+                  <div className="p-5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] flex items-center justify-between">
                     <div>
-                      <span className="text-xs font-mono tracking-widest text-[#a89f91] uppercase block mb-1">
+                      <span className="text-xs font-mono tracking-widest text-[var(--text-muted)] uppercase block mb-1">
                         DAY {selectedDay} OVERVIEW
                       </span>
-                      <h3 className="text-xl font-serif text-white">
+                      <h3 className="text-xl font-serif text-[var(--text-primary)]">
                         {currentDayPlan.summary || "Explore heritage landmarks and royal culture"}
                       </h3>
                     </div>
-                    <span className="text-xs font-mono text-[#e5dec9] px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10">
+                    <span className="text-xs font-mono text-[var(--accent)] px-3.5 py-1.5 rounded-full bg-[var(--surface)] border border-[var(--border)]">
                       {currentDayPlan.activities?.length || 0} Scheduled Activities
                     </span>
                   </div>
@@ -957,7 +957,7 @@ export const LiveTripManager = () => {
                     <div className="space-y-4">
 
                       {/* Hero Photo for this Day */}
-                      <div className="relative h-72 sm:h-80 w-full rounded-3xl overflow-hidden bg-[#14100d] border border-white/10 shadow-xl group">
+                      <div className="relative h-72 sm:h-80 w-full rounded-3xl overflow-hidden bg-[var(--surface-soft)] border border-[var(--border)] shadow-xl group">
                         <img
                           src={currentMedia.hero}
                           alt={currentMedia.heroTitle}
@@ -984,9 +984,9 @@ export const LiveTripManager = () => {
                           {currentMedia.features.map((feat, idx) => (
                             <div
                               key={idx}
-                              className="rounded-2xl bg-[#1a1512] border border-white/10 overflow-hidden shadow-md flex flex-col justify-between"
+                              className="rounded-2xl bg-[var(--surface)] border border-[var(--border)] overflow-hidden shadow-md flex flex-col justify-between"
                             >
-                              <div className="relative h-40 w-full overflow-hidden bg-[#14100d]">
+                              <div className="relative h-40 w-full overflow-hidden bg-[var(--surface-soft)]">
                                 <img
                                   src={feat.image}
                                   alt={feat.title}
@@ -998,8 +998,8 @@ export const LiveTripManager = () => {
                                 </span>
                               </div>
                               <div className="p-4 space-y-1.5">
-                                <h5 className="text-base font-serif font-bold text-white">{feat.title}</h5>
-                                <p className="text-xs text-[#a89f91] font-sans leading-relaxed">{feat.caption}</p>
+                                <h5 className="text-base font-serif font-bold text-[var(--text-primary)]">{feat.title}</h5>
+                                <p className="text-xs text-[var(--text-secondary)] font-sans leading-relaxed">{feat.caption}</p>
                               </div>
                             </div>
                           ))}
@@ -1011,7 +1011,7 @@ export const LiveTripManager = () => {
 
                   {/* Timed Activity Schedule for Current Day */}
                   <div className="space-y-3.5 pt-2">
-                    <span className="text-xs font-mono tracking-wider uppercase text-[#a89f91] font-bold block">
+                    <span className="text-xs font-mono tracking-wider uppercase text-[var(--text-muted)] font-bold block">
                       DAY {selectedDay} CHRONOLOGICAL SCHEDULE
                     </span>
 
@@ -1020,14 +1020,14 @@ export const LiveTripManager = () => {
                         <div
                           key={idx}
                           className={`p-5 rounded-2xl border transition-all ${act.isAiAdded
-                              ? "bg-[#261f14] border-[#e5dec9]/40 shadow-lg"
-                              : "bg-[#1a1512] border-white/10 hover:border-white/20"
+                              ? "bg-[var(--surface-blue)] dark:bg-[#261f14] border-[var(--accent)]/40 dark:border-[#e5dec9]/40 shadow-lg"
+                              : "bg-[var(--surface)] border-[var(--border)] hover:border-[var(--accent)]"
                             }`}
                         >
                           <div className="flex items-start justify-between gap-4">
                             <div className="space-y-1.5">
                               <div className="flex items-center gap-2.5 flex-wrap">
-                                <span className="text-xs font-mono font-bold text-white bg-white/10 px-2.5 py-1 rounded">
+                                <span className="text-xs font-mono font-bold text-[var(--text-primary)] bg-[var(--surface-soft)] border border-[var(--border)] px-2.5 py-1 rounded">
                                   {act.time}
                                 </span>
 
@@ -1039,31 +1039,31 @@ export const LiveTripManager = () => {
                                 )}
 
                                 {act.isAiAdded && (
-                                  <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded-full bg-[rgba(201,168,106,0.15)] border border-[rgba(201,168,106,0.35)] text-[#C9A86A] flex items-center gap-1 shadow-sm">
+                                  <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/30 text-[var(--accent)] flex items-center gap-1 shadow-sm">
                                     <Sparkles className="w-3 h-3 fill-current" />
                                     ADDED BY AI CONCIERGE
                                   </span>
                                 )}
 
-                                <span className="text-xs font-mono text-[#a89f91]">
+                                <span className="text-xs font-mono text-[var(--text-muted)]">
                                   {act.transit} · {act.duration}
                                 </span>
                               </div>
 
-                              <h4 className="text-lg font-serif font-bold text-white pt-1">
+                              <h4 className="text-lg font-serif font-bold text-[var(--text-primary)] pt-1">
                                 {act.title}
                               </h4>
 
-                              <p className="text-xs sm:text-sm text-[#d8d2c8] leading-relaxed">
+                              <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
                                 {act.desc}
                               </p>
                             </div>
 
                             <div className="text-right shrink-0">
-                              <span className="text-sm font-mono font-bold text-white block">
+                              <span className="text-sm font-mono font-bold text-[var(--text-primary)] block">
                                 {act.cost}
                               </span>
-                              <span className="text-xs font-mono text-[#C9A86A]">
+                              <span className="text-xs font-mono text-[var(--accent)]">
                                 {act.availability || "Confirmed"}
                               </span>
                             </div>
@@ -1074,15 +1074,15 @@ export const LiveTripManager = () => {
                   </div>
 
                   {/* Budget & Highlight Cards */}
-                  <div className="p-6 rounded-2xl bg-[#14100d] border border-white/10 space-y-4">
-                    <span className="text-xs font-mono uppercase tracking-widest text-[#a89f91] font-semibold block">
+                  <div className="p-6 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] space-y-4">
+                    <span className="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] font-semibold block">
                       TRIP HIGHLIGHTS & AMENITIES
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
                       {activeTrip.highlights?.map((h, idx) => (
-                        <div key={idx} className="p-4 rounded-xl bg-[#1a1512] border border-white/5 space-y-1">
-                          <span className="font-bold text-white font-sans block text-sm">{h.title}</span>
-                          <span className="text-[#a89f91] text-xs leading-relaxed">{h.detail}</span>
+                        <div key={idx} className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)] space-y-1">
+                          <span className="font-bold text-[var(--text-primary)] font-sans block text-sm">{h.title}</span>
+                          <span className="text-[var(--text-secondary)] text-xs leading-relaxed">{h.detail}</span>
                         </div>
                       ))}
                     </div>
@@ -1094,36 +1094,36 @@ export const LiveTripManager = () => {
                 <div className={`lg:col-span-5 ${isChatPanelOpen ? "block" : "hidden lg:block"}`}>
                   <div
                     ref={chatPanelRef}
-                    className={`sticky top-24 rounded-3xl bg-[#14100d] border transition-all duration-500 p-6 shadow-2xl flex flex-col h-[780px] justify-between ${isChatSpotlight
-                        ? "border-[#C9A86A] ring-2 ring-[#C9A86A]/50 shadow-[0_0_50px_rgba(201,168,106,0.3)]"
-                        : "border-white/20"
+                    className={`sticky top-24 rounded-3xl bg-[var(--chat-bg)] border transition-all duration-500 p-6 shadow-2xl flex flex-col h-[780px] justify-between text-[var(--text-primary)] ${isChatSpotlight
+                        ? "border-[var(--accent)] ring-2 ring-[var(--accent)]/50 shadow-[0_0_50px_rgba(61,145,179,0.3)]"
+                        : "border-[var(--chat-border)]"
                       }`}
                   >
 
                     {/* Chat Header */}
-                    <div className="pb-4 border-b border-white/10 space-y-2 shrink-0">
+                    <div className="pb-4 border-b border-[var(--border)] space-y-2 shrink-0">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white border border-white/20 shadow-inner">
-                            <Sparkles className="w-4 h-4 text-[#C9A86A]" />
+                          <div className="w-9 h-9 rounded-full bg-[var(--surface-soft)] flex items-center justify-center text-[var(--text-primary)] border border-[var(--border)] shadow-inner">
+                            <Sparkles className="w-4 h-4 text-[var(--accent)]" />
                           </div>
                           <div>
-                            <h3 className="text-base font-sans font-bold text-white flex items-center gap-2">
+                            <h3 className="text-base font-sans font-bold text-[var(--text-primary)] flex items-center gap-2">
                               <span>AI Concierge</span>
-                              <span className="w-2 h-2 rounded-full bg-[#C9A86A]" />
+                              <span className="w-2 h-2 rounded-full bg-[var(--accent)]" />
                             </h3>
-                            <span className="text-xs font-mono text-[#a89f91] block">
+                            <span className="text-xs font-mono text-[var(--text-secondary)] block">
                               Context: {activeTrip.title}
                             </span>
                           </div>
                         </div>
 
-                        <span className="text-[11px] font-mono uppercase px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[#d8d2c8] font-semibold">
+                        <span className="text-[11px] font-mono uppercase px-3 py-1 rounded-full bg-[var(--surface-soft)] border border-[var(--border)] text-[var(--text-secondary)] font-semibold">
                           24/7 ACTIVE
                         </span>
                       </div>
 
-                      <p className="text-xs text-[#736a5e] font-sans leading-relaxed pt-1">
+                      <p className="text-xs text-[var(--text-muted)] font-sans leading-relaxed pt-1">
                         Ask to modify activities, adjust schedules, or request local dining. The AI dynamically updates your itinerary!
                       </p>
                     </div>
@@ -1139,26 +1139,26 @@ export const LiveTripManager = () => {
                           >
                             <div className="flex items-center gap-1.5 px-1">
                               {isUser ? (
-                                <span className="text-[10px] font-mono text-[#736a5e] uppercase">You · {msg.timestamp}</span>
+                                <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase">You · {msg.timestamp}</span>
                               ) : (
-                                <span className="text-[10px] font-mono text-[#e5dec9] uppercase font-bold flex items-center gap-1">
-                                  <Sparkles className="w-3 h-3 text-[#C9A86A]" />
+                                <span className="text-[10px] font-mono text-[var(--text-secondary)] uppercase font-bold flex items-center gap-1">
+                                  <Sparkles className="w-3 h-3 text-[var(--accent)]" />
                                   AI Concierge · {msg.timestamp}
                                 </span>
                               )}
                             </div>
 
                             {msg.isDisruptionProposal ? (
-                              <div className="p-5 rounded-2xl bg-[#1c1612] border border-[rgba(201,168,106,0.35)] shadow-xl space-y-4 max-w-[96%] sm:max-w-[92%]">
+                              <div className="p-5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--accent)]/40 shadow-xl space-y-4 max-w-[96%] sm:max-w-[92%]">
                                 {/* Alert Header */}
-                                <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-3">
+                                <div className="flex items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
                                   <div className="flex items-center gap-2.5">
                                     <div className="w-8 h-8 rounded-xl bg-[rgba(184,111,82,0.15)] border border-[rgba(184,111,82,0.35)] flex items-center justify-center">
                                       <AlertTriangle className="w-4 h-4 text-[#B86F52]" />
                                     </div>
                                     <div>
-                                      <span className="text-xs font-bold text-white block">Flight Delay Detected ({msg.flightNumber || "6E-204"})</span>
-                                      <span className="text-[11px] font-mono text-[#a89f91]">Arrival: {msg.originalArrival || "10:00 AM"} ➔ {msg.newArrival || "01:00 PM"} (+3 Hours)</span>
+                                      <span className="text-xs font-bold text-[var(--text-primary)] block">Flight Delay Detected ({msg.flightNumber || "6E-204"})</span>
+                                      <span className="text-[11px] font-mono text-[var(--text-secondary)]">Arrival: {msg.originalArrival || "10:00 AM"} ➔ {msg.newArrival || "01:00 PM"} (+3 Hours)</span>
                                     </div>
                                   </div>
                                   <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-[rgba(184,111,82,0.15)] text-[#B86F52] border border-[rgba(184,111,82,0.35)] font-bold shrink-0">
@@ -1169,42 +1169,42 @@ export const LiveTripManager = () => {
                                 {/* Structured Explanation Sections */}
                                 <div className="space-y-3 text-xs sm:text-sm">
                                   {/* Proposed Changes Section */}
-                                  <div className="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-2">
-                                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#C9A86A] font-bold block flex items-center gap-1.5">
+                                  <div className="p-3.5 rounded-xl bg-[var(--surface)] border border-[var(--border)] space-y-2">
+                                    <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--accent)] font-bold block flex items-center gap-1.5">
                                       <RotateCcw className="w-3.5 h-3.5" />
                                       Proposed Schedule Adjustments
                                     </span>
-                                    <ul className="space-y-2 text-xs text-[#e5dec9] leading-relaxed">
+                                    <ul className="space-y-2 text-xs text-[var(--text-secondary)] leading-relaxed">
                                       <li className="flex items-start gap-2">
-                                        <span className="text-[#C9A86A] font-bold mt-0.5">•</span>
+                                        <span className="text-[var(--accent)] font-bold mt-0.5">•</span>
                                         <span><strong>Rescheduled:</strong> City Palace & Jantar Mantar moved to <strong>Day 2 at 09:30 AM</strong> with VIP Fast-Track Pass.</span>
                                       </li>
                                       <li className="flex items-start gap-2">
-                                        <span className="text-[#C9A86A] font-bold mt-0.5">•</span>
+                                        <span className="text-[var(--accent)] font-bold mt-0.5">•</span>
                                         <span><strong>Adjusted:</strong> Lunch shifted to <strong>02:00 PM</strong> inside Alsisar Haveli Courtyard to avoid rushed midday city transit.</span>
                                       </li>
                                       <li className="flex items-start gap-2">
-                                        <span className="text-[#C9A86A] font-bold mt-0.5">•</span>
+                                        <span className="text-[var(--accent)] font-bold mt-0.5">•</span>
                                         <span><strong>Preserved:</strong> Golden hour sunset at Hawa Mahal (06:30 PM) and candlelit courtyard dinner (08:30 PM) stay 100% on schedule.</span>
                                       </li>
                                     </ul>
                                   </div>
 
                                   {/* Why Explanation Section */}
-                                  <div className="p-3.5 rounded-xl bg-[#14100d] border border-white/5 space-y-1.5">
-                                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#a89f91] font-bold block flex items-center gap-1.5">
-                                      <HelpCircle className="w-3.5 h-3.5 text-[#C9A86A]" />
+                                  <div className="p-3.5 rounded-xl bg-[var(--surface)] border border-[var(--border)] space-y-1.5">
+                                    <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-secondary)] font-bold block flex items-center gap-1.5">
+                                      <HelpCircle className="w-3.5 h-3.5 text-[var(--accent)]" />
                                       Why This Recovery Is Recommended
                                     </span>
-                                    <p className="text-xs text-[#c4bcaa] leading-relaxed">
+                                    <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
                                       Landing at 01:00 PM leaves under 45 minutes before City Palace ticket counters close at 04:30 PM, causing high stress and rushed traffic. Shifting it to Day 2 morning guarantees 2.5 unhurried hours in optimal morning lighting while preserving your evening dining flawlessly. Total extra cost: <strong>₹0</strong>.
                                     </p>
                                   </div>
                                 </div>
 
                                 {/* Proactive Ask & Action CTAs */}
-                                <div className="pt-2 border-t border-white/10 space-y-3">
-                                  <p className="text-xs font-semibold text-white">
+                                <div className="pt-2 border-t border-[var(--border)] space-y-3">
+                                  <p className="text-xs font-semibold text-[var(--text-primary)]">
                                     Would you like me to apply this re-optimized plan to your itinerary?
                                   </p>
 
@@ -1213,9 +1213,9 @@ export const LiveTripManager = () => {
                                       <button
                                         type="button"
                                         onClick={applyDisruptionRecovery}
-                                        className="px-4 py-2.5 rounded-xl bg-white text-[#181411] hover:bg-[#eae5d9] text-xs font-bold transition-all flex items-center gap-1.5 shadow-lg cursor-pointer hover:scale-105 active:scale-95"
+                                        className="px-4 py-2.5 rounded-xl bg-[var(--text-primary)] text-[var(--bg-secondary)] hover:opacity-90 text-xs font-bold transition-all flex items-center gap-1.5 shadow-lg cursor-pointer hover:scale-105 active:scale-95"
                                       >
-                                        <Sparkles className="w-3.5 h-3.5 text-[#C9A86A]" />
+                                        <Sparkles className="w-3.5 h-3.5 text-[var(--accent)]" />
                                         <span>✓ Auto-Replan Now</span>
                                       </button>
                                       <button
@@ -1223,13 +1223,13 @@ export const LiveTripManager = () => {
                                         onClick={() => {
                                           sendTripChatMessage(activeTrip.id, "Keep original schedule for now, I will manage transit manually.");
                                         }}
-                                        className="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-[#a89f91] hover:text-white transition-all cursor-pointer font-mono"
+                                        className="px-3.5 py-2.5 rounded-xl bg-[var(--surface)] hover:bg-[var(--surface-soft)] border border-[var(--border)] text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer font-mono"
                                       >
                                         Keep Original Schedule
                                       </button>
                                     </div>
                                   ) : (
-                                    <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[rgba(201,168,106,0.15)] border border-[rgba(201,168,106,0.35)] text-xs text-[#C9A86A] font-bold font-mono">
+                                    <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[var(--accent)]/15 border border-[var(--accent)]/35 text-xs text-[var(--accent)] font-bold font-mono">
                                       <CheckCircle2 className="w-4 h-4" />
                                       <span>✓ Applied & Synchronized with Itinerary</span>
                                     </div>
@@ -1237,19 +1237,19 @@ export const LiveTripManager = () => {
                                 </div>
                               </div>
                             ) : msg.isRecoveryConfirmation ? (
-                              <div className="p-4 rounded-2xl bg-[#17221a] border border-[rgba(201,168,106,0.35)] text-[#f5f2eb] rounded-tl-sm shadow-xl space-y-2 max-w-[92%] sm:max-w-[88%]">
-                                <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#C9A86A]">
+                              <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-[#17221a] border border-emerald-300 dark:border-emerald-500/40 text-[var(--text-primary)] rounded-tl-sm shadow-xl space-y-2 max-w-[92%] sm:max-w-[88%]">
+                                <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-600 dark:text-[var(--accent)]">
                                   <CheckCircle2 className="w-4 h-4" />
                                   <span>Itinerary Successfully Re-Optimized</span>
                                 </div>
-                                <p className="text-xs sm:text-sm text-[#d8d2c8] leading-relaxed whitespace-pre-wrap">
+                                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap">
                                   {msg.text}
                                 </p>
                                 <div className="pt-2">
                                   <button
                                     type="button"
                                     onClick={() => setSelectedDay(2)}
-                                    className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-mono text-white flex items-center gap-1.5 transition-all cursor-pointer"
+                                    className="px-3.5 py-2 rounded-xl bg-[var(--surface-soft)] hover:bg-[var(--surface)] border border-[var(--border)] text-xs font-mono text-[var(--text-primary)] flex items-center gap-1.5 transition-all cursor-pointer"
                                   >
                                     <span>Inspect Day 2 Schedule →</span>
                                   </button>
@@ -1258,8 +1258,8 @@ export const LiveTripManager = () => {
                             ) : (
                               <div
                                 className={`p-4 rounded-2xl text-xs sm:text-sm leading-relaxed max-w-[92%] sm:max-w-[88%] whitespace-pre-wrap ${isUser
-                                    ? "bg-white text-[#181411] font-sans font-medium rounded-tr-sm shadow-md"
-                                    : "bg-[#1f1a15] border border-white/15 text-[#f5f2eb] rounded-tl-sm shadow-inner"
+                                    ? "bg-[var(--chat-msg-user-bg)] text-[var(--chat-msg-user-text)] font-sans font-medium rounded-tr-sm shadow-md"
+                                    : "bg-[var(--chat-msg-ai-bg)] border border-[var(--border)] text-[var(--text-primary)] rounded-tl-sm shadow-inner"
                                   }`}
                               >
                                 {msg.text}
@@ -1271,15 +1271,15 @@ export const LiveTripManager = () => {
 
                       {/* Dynamic Thinking / Searching Indicator */}
                       {isTripChatThinking && (
-                        <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#1c1713] border border-[rgba(201,168,106,0.35)] text-xs font-mono text-[#e5dec9] w-fit shadow-xl animate-pulse">
-                          <div className="w-7 h-7 rounded-full bg-[rgba(201,168,106,0.15)] flex items-center justify-center shrink-0">
-                            <RefreshCw className="w-4 h-4 text-[#C9A86A] animate-spin" />
+                        <div className="flex items-center gap-3 p-4 rounded-2xl bg-[var(--surface)] border border-[var(--accent)] text-xs font-mono text-[var(--text-secondary)] w-fit shadow-xl animate-pulse">
+                          <div className="w-7 h-7 rounded-full bg-[var(--accent)]/15 flex items-center justify-center shrink-0">
+                            <RefreshCw className="w-4 h-4 text-[var(--accent)] animate-spin" />
                           </div>
                           <div className="space-y-0.5">
-                            <span className="text-[10px] uppercase tracking-wider text-[#C9A86A] font-bold block">
+                            <span className="text-[10px] uppercase tracking-wider text-[var(--accent)] font-bold block">
                               TravelFlow Real-Time Agent
                             </span>
-                            <span className="text-xs text-white">
+                            <span className="text-xs text-[var(--text-primary)]">
                               {tripChatThinkingStep || "Searching alternative routes & schedule buffers..."}
                             </span>
                           </div>
@@ -1290,7 +1290,7 @@ export const LiveTripManager = () => {
                     </div>
 
                     {/* Suggestion Chips & Prompt Input */}
-                    <div className="space-y-3 pt-2 border-t border-white/10 shrink-0">
+                    <div className="space-y-3 pt-2 border-t border-[var(--border)] shrink-0">
 
                       {/* Suggestion Chips */}
                       <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1">
@@ -1299,7 +1299,7 @@ export const LiveTripManager = () => {
                             key={idx}
                             type="button"
                             onClick={() => sendTripChatMessage(activeTrip.id, pill.replace(/✨|🚤|🎒|👑/g, "").trim())}
-                            className="px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/15 border border-white/10 text-[11px] text-[#d8d2c8] hover:text-white whitespace-nowrap transition-all font-sans cursor-pointer"
+                            className="px-3 py-1.5 rounded-full bg-[var(--surface-soft)] hover:bg-[var(--surface)] border border-[var(--border)] text-[11px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] whitespace-nowrap transition-all font-sans cursor-pointer"
                           >
                             {pill}
                           </button>
@@ -1309,26 +1309,26 @@ export const LiveTripManager = () => {
                       {/* Input Form */}
                       <form
                         onSubmit={handleSendChat}
-                        className="relative flex items-center bg-black/50 border border-white/15 focus-within:border-white/40 rounded-2xl transition-all p-2"
+                        className="relative flex items-center bg-[var(--surface-soft)] border border-[var(--border)] focus-within:border-[var(--accent)] rounded-2xl transition-all p-2"
                       >
                         <input
                           type="text"
                           value={chatInput}
                           onChange={(e) => setChatInput(e.target.value)}
                           placeholder="Ask AI Concierge to modify or answer..."
-                          className="w-full pl-4 pr-12 py-2.5 bg-transparent text-sm text-white placeholder:text-[#5e5346] focus:outline-none font-sans"
+                          className="w-full pl-4 pr-12 py-2.5 bg-transparent text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none font-sans"
                         />
                         <button
                           type="submit"
                           disabled={!chatInput.trim() || isTripChatThinking}
-                          className="w-9 h-9 rounded-full bg-white hover:bg-[#eae5d9] disabled:opacity-30 text-[#181411] flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 shrink-0"
+                          className="w-9 h-9 rounded-full bg-[var(--text-primary)] hover:opacity-90 disabled:opacity-30 text-[var(--bg-secondary)] flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 shrink-0"
                           aria-label="Send message"
                         >
                           <Send className="w-4 h-4 rotate-45 -translate-y-0.5" />
                         </button>
                       </form>
 
-                      <div className="text-xs font-mono text-[#736a5e] text-center pt-0.5">
+                      <div className="text-xs font-mono text-[var(--text-muted)] text-center pt-0.5">
                         Scroll up anytime to view earlier prompts & answers.
                       </div>
 
@@ -1344,34 +1344,34 @@ export const LiveTripManager = () => {
             {/* Explainable AI Modal */}
             {showWhyExplanation && (
               <div
-                className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+                className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md animate-fade-in"
                 onClick={(e) => {
                   if (e.target === e.currentTarget) setShowWhyExplanation(false);
                 }}
               >
-                <div className="relative w-full max-w-xl bg-[#181411] border border-white/20 rounded-3xl p-7 sm:p-8 shadow-2xl space-y-6 text-[#f5f2eb]">
-                  <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                    <div className="flex items-center gap-2.5 text-white font-bold text-base font-sans">
-                      <Sparkles className="w-5 h-5 text-[#e5dec9]" />
+                <div className="relative w-full max-w-xl bg-[var(--modal-bg)] border border-[var(--modal-border)] rounded-3xl p-7 sm:p-8 shadow-2xl space-y-6 text-[var(--text-primary)]">
+                  <div className="flex items-center justify-between border-b border-[var(--border)] pb-4">
+                    <div className="flex items-center gap-2.5 text-[var(--text-primary)] font-bold text-base font-sans">
+                      <Sparkles className="w-5 h-5 text-[var(--accent)]" />
                       Explainable AI Logic Breakdown
                     </div>
                     <button
                       onClick={() => setShowWhyExplanation(false)}
-                      className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#a89f91] hover:text-white cursor-pointer"
+                      className="w-8 h-8 rounded-full bg-[var(--surface-soft)] hover:bg-[var(--surface)] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] cursor-pointer border border-[var(--border)]"
                     >
                       <X className="w-4 h-4" />
                     </button>
                   </div>
 
-                  <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-[#d8d2c8]">
-                    <p className="p-4 rounded-xl bg-[#14100d] border border-white/10 text-[#f5f2eb] font-sans">
+                  <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">
+                    <p className="p-4 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-[var(--text-primary)] font-sans">
                       {disruptionData.aiRecoveryPlan.whyExplanation}
                     </p>
                   </div>
 
                   <button
                     onClick={() => setShowWhyExplanation(false)}
-                    className="w-full py-3.5 rounded-full font-bold text-xs uppercase tracking-wider bg-white text-[#181411] hover:bg-[#eae5d9] transition-colors cursor-pointer shadow-md"
+                    className="w-full py-3.5 rounded-full font-bold text-xs uppercase tracking-wider bg-[var(--text-primary)] text-[var(--bg-secondary)] hover:opacity-90 transition-opacity cursor-pointer shadow-md"
                   >
                     Understood & Close
                   </button>
@@ -1382,32 +1382,32 @@ export const LiveTripManager = () => {
             {/* Review Modal if activeTrip is being reviewed */}
             {reviewingTripId && (
               <div
-                className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in"
+                className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-black/60 dark:bg-black/85 backdrop-blur-md animate-fade-in"
                 onClick={(e) => {
                   if (e.target === e.currentTarget) setReviewingTripId(null);
                 }}
               >
-                <div className="relative w-full max-w-xl bg-[#1a1512] border border-white/20 rounded-3xl p-7 sm:p-8 shadow-2xl space-y-6 text-[#f5f2eb]">
-                  <div className="flex items-start justify-between border-b border-white/10 pb-4">
+                <div className="relative w-full max-w-xl bg-[var(--modal-bg)] border border-[var(--modal-border)] rounded-3xl p-7 sm:p-8 shadow-2xl space-y-6 text-[var(--text-primary)]">
+                  <div className="flex items-start justify-between border-b border-[var(--border)] pb-4">
                     <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-xs font-mono text-[#e5dec9] uppercase font-bold">
+                      <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent)] uppercase font-bold">
                         <Sparkles className="w-3.5 h-3.5" />
                         Verified Traveler Review
                       </div>
-                      <h3 className="text-2xl font-serif text-white font-bold">
+                      <h3 className="text-2xl font-serif text-[var(--text-primary)] font-bold">
                         How was your journey to {activeTrip.title}?
                       </h3>
                     </div>
                     <button
                       onClick={() => setReviewingTripId(null)}
-                      className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-[#a89f91] hover:text-white cursor-pointer"
+                      className="w-8 h-8 rounded-full bg-[var(--surface-soft)] hover:bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] cursor-pointer"
                     >
                       <X className="w-4 h-4" />
                     </button>
                   </div>
 
                   <div className="space-y-2 text-center py-2">
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#a89f91] block">
+                    <span className="text-xs font-mono uppercase tracking-wider text-[var(--text-secondary)] block">
                       Overall Rating
                     </span>
                     <div className="flex items-center justify-center gap-2">
@@ -1421,13 +1421,13 @@ export const LiveTripManager = () => {
                           <Star
                             className={`w-8 h-8 ${star <= reviewRating
                                 ? "fill-[#C9A86A] text-[#C9A86A]"
-                                : "text-white/20"
+                                : "text-[var(--border)]"
                               }`}
                           />
                         </button>
                       ))}
                     </div>
-                    <span className="text-sm font-sans font-bold text-[#C9A86A] block">
+                    <span className="text-sm font-sans font-bold text-[var(--accent)] block">
                       {reviewRating === 5 && "Exceptional Experience (5.0 / 5.0)"}
                       {reviewRating === 4 && "Great Journey (4.0 / 5.0)"}
                       {reviewRating === 3 && "Satisfactory (3.0 / 5.0)"}
@@ -1436,7 +1436,7 @@ export const LiveTripManager = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#a89f91] block">
+                    <span className="text-xs font-mono uppercase tracking-wider text-[var(--text-secondary)] block">
                       What did you enjoy most? (Tap to select)
                     </span>
                     <div className="flex flex-wrap gap-2">
@@ -1446,8 +1446,8 @@ export const LiveTripManager = () => {
                           type="button"
                           onClick={() => toggleReviewTag(tag)}
                           className={`px-3.5 py-1.5 rounded-full text-xs font-sans transition-all cursor-pointer border ${selectedTags.includes(tag)
-                              ? "bg-white text-[#181411] border-white font-semibold shadow-sm"
-                              : "bg-white/5 border-white/10 text-[#d8d2c8] hover:border-white/30"
+                              ? "bg-[var(--accent)] text-white border-[var(--accent)] font-semibold shadow-sm"
+                              : "bg-[var(--surface-soft)] border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                             }`}
                         >
                           {tag}
@@ -1462,19 +1462,19 @@ export const LiveTripManager = () => {
                       value={reviewComment}
                       onChange={(e) => setReviewComment(e.target.value)}
                       placeholder="Share your favorite memory, tips for dining, or how the pacing felt..."
-                      className="w-full p-4 rounded-2xl bg-black/40 border border-white/15 focus:border-white/40 text-xs text-white placeholder:text-[#5e5346] font-sans focus:outline-none resize-none leading-relaxed"
+                      className="w-full p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] focus:border-[var(--accent)] text-xs text-[var(--text-primary)] placeholder:text-[var(--text-muted)] font-sans focus:outline-none resize-none leading-relaxed"
                     />
                     <div className="flex items-center justify-end gap-3 pt-2">
                       <button
                         type="button"
                         onClick={() => setReviewingTripId(null)}
-                        className="px-5 py-3 rounded-full text-xs font-mono text-[#a89f91] hover:text-white cursor-pointer"
+                        className="px-5 py-3 rounded-full text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--text-primary)] cursor-pointer"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
-                        className="px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#181411] hover:bg-[#eae5d9] transition-all shadow-lg cursor-pointer"
+                        className="px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-[var(--text-primary)] text-[var(--bg-secondary)] hover:opacity-90 transition-all shadow-lg cursor-pointer"
                       >
                         Submit Traveler Review
                       </button>
@@ -1498,7 +1498,7 @@ export const LiveTripManager = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[350] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+            className="fixed inset-0 z-[350] flex items-center justify-center p-4 bg-black/60 dark:bg-black/85 backdrop-blur-md"
             onClick={(e) => {
               if (e.target === e.currentTarget) setTripToDelete(null);
             }}
@@ -1508,11 +1508,11 @@ export const LiveTripManager = () => {
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)", y: 0 }}
               exit={{ opacity: 0, scale: 0.92, filter: "blur(10px)", y: 20 }}
               transition={{ type: "spring", damping: 26, stiffness: 350 }}
-              className="relative w-full max-w-md bg-[#181411] border border-white/20 rounded-3xl p-7 sm:p-8 shadow-[0_25px_80px_rgba(0,0,0,0.95)] text-[#f5f2eb] space-y-6 overflow-hidden"
+              className="relative w-full max-w-md bg-[var(--modal-bg)] border border-[var(--modal-border)] rounded-3xl p-7 sm:p-8 shadow-[0_25px_80px_rgba(0,0,0,0.4)] dark:shadow-[0_25px_80px_rgba(0,0,0,0.95)] text-[var(--text-primary)] space-y-6 overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Subtle Champagne Gold Ambient Corner Glow */}
-              <div className="absolute top-0 right-0 w-36 h-36 bg-[rgba(201,168,106,0.08)] rounded-full blur-3xl pointer-events-none" />
+              {/* Subtle Ambient Corner Glow */}
+              <div className="absolute top-0 right-0 w-36 h-36 bg-[var(--accent)]/10 rounded-full blur-3xl pointer-events-none" />
 
               {/* Modal Header: Icon & Close */}
               <div className="flex items-start justify-between relative z-10">
@@ -1524,7 +1524,7 @@ export const LiveTripManager = () => {
                     <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#B86F52] font-bold block">
                       REMOVE JOURNEY
                     </span>
-                    <h3 className="text-xl font-serif text-white font-bold leading-tight">
+                    <h3 className="text-xl font-serif text-[var(--text-primary)] font-bold leading-tight">
                       Remove from My Trips?
                     </h3>
                   </div>
@@ -1532,7 +1532,7 @@ export const LiveTripManager = () => {
 
                 <button
                   onClick={() => setTripToDelete(null)}
-                  className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-[#a89f91] hover:text-white transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-full bg-[var(--surface-soft)] hover:bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer"
                   aria-label="Close"
                 >
                   <X className="w-4 h-4" />
@@ -1540,27 +1540,27 @@ export const LiveTripManager = () => {
               </div>
 
               {/* Trip Preview Pill */}
-              <div className="p-4 rounded-2xl bg-[#14100d] border border-white/10 flex items-center gap-3.5 relative z-10">
+              <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] flex items-center gap-3.5 relative z-10">
                 <img
                   src={tripToDelete.image}
                   alt={tripToDelete.title}
-                  className="w-14 h-14 rounded-xl object-cover shrink-0 border border-white/10"
+                  className="w-14 h-14 rounded-xl object-cover shrink-0 border border-[var(--border)]"
                 />
                 <div className="space-y-0.5 min-w-0 flex-1">
-                  <h4 className="text-sm font-serif font-bold text-white truncate">
+                  <h4 className="text-sm font-serif font-bold text-[var(--text-primary)] truncate">
                     {tripToDelete.title}
                   </h4>
-                  <p className="text-xs font-sans text-[#a89f91] truncate">
+                  <p className="text-xs font-sans text-[var(--text-secondary)] truncate">
                     {tripToDelete.route} · {tripToDelete.duration}
                   </p>
-                  <span className="text-[11px] font-mono font-bold text-[#C9A86A] block">
+                  <span className="text-[11px] font-mono font-bold text-[var(--accent)] block">
                     {tripToDelete.price}
                   </span>
                 </div>
               </div>
 
               {/* Informative Note */}
-              <p className="text-xs text-[#a89f91] font-sans leading-relaxed relative z-10">
+              <p className="text-xs text-[var(--text-secondary)] font-sans leading-relaxed relative z-10">
                 This will permanently remove this itinerary, live AI Sentinel radar telemetry, and your concierge conversation history. You can plan another trip anytime.
               </p>
 
@@ -1569,7 +1569,7 @@ export const LiveTripManager = () => {
                 <button
                   type="button"
                   onClick={() => setTripToDelete(null)}
-                  className="px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider text-[#d8d2c8] hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all cursor-pointer"
+                  className="px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--surface-soft)] hover:bg-[var(--surface)] border border-[var(--border)] transition-all cursor-pointer"
                 >
                   Keep Journey
                 </button>

@@ -183,7 +183,7 @@ export const TripPlanningModal = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 lg:p-8 bg-black/80 backdrop-blur-md text-[#f5f2eb]"
+          className="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 lg:p-8 bg-black/60 dark:bg-black/80 backdrop-blur-md text-[var(--text-primary)]"
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsPlannerOpen(false);
           }}
@@ -196,7 +196,7 @@ export const TripPlanningModal = () => {
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)", y: 0 }}
             exit={{ opacity: 0, scale: 0.94, filter: "blur(12px)", y: 20 }}
             transition={{ type: "spring", damping: 28, stiffness: 350 }}
-            className="relative w-full max-w-[880px] bg-[#181411] border border-white/15 rounded-[22px] shadow-[0_30px_100px_rgba(0,0,0,0.95)] overflow-hidden flex flex-col max-h-[92vh]"
+            className="relative w-full max-w-[880px] bg-[var(--modal-bg)] border border-[var(--modal-border)] rounded-[22px] shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-[var(--text-primary)]"
             onClick={(e) => e.stopPropagation()}
           >
 
@@ -216,21 +216,21 @@ export const TripPlanningModal = () => {
                       <React.Fragment key={num}>
                         <div className="flex items-center gap-1.5">
                           <span className={`text-[11px] sm:text-xs font-mono tracking-wider transition-colors duration-300 ${isCurrent
-                              ? "text-white font-bold"
+                              ? "text-[var(--text-primary)] font-bold"
                               : isCompleted
-                                ? "text-[#e5dec9]"
-                                : "text-[#5e5346]"
+                                ? "text-[var(--accent)] dark:text-[#e5dec9]"
+                                : "text-[var(--text-muted)]"
                             }`}>
                             0{num}
                           </span>
                           {isCompleted && (
-                            <Check className="w-2.5 h-2.5 text-[#e5dec9] stroke-[3]" />
+                            <Check className="w-2.5 h-2.5 text-[var(--accent)] dark:text-[#e5dec9] stroke-[3]" />
                           )}
                         </div>
                         {i < 3 && (
-                          <div className="w-6 sm:w-10 h-[1.5px] bg-white/10 relative overflow-hidden rounded-full">
+                          <div className="w-6 sm:w-10 h-[1.5px] bg-[var(--border)] relative overflow-hidden rounded-full">
                             <div
-                              className={`h-full bg-gradient-to-r from-white to-[#e5dec9] transition-all duration-500 rounded-full ${step > num ? "w-full" : "w-0"
+                              className={`h-full bg-gradient-to-r from-[var(--text-primary)] to-[var(--accent)] dark:from-white dark:to-[#e5dec9] transition-all duration-500 rounded-full ${step > num ? "w-full" : "w-0"
                                 }`}
                             />
                           </div>
@@ -243,7 +243,7 @@ export const TripPlanningModal = () => {
                 {/* Minimal Close Button */}
                 <button
                   onClick={() => setIsPlannerOpen(false)}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-[#a89f91] hover:text-white transition-all hover:scale-105 cursor-pointer"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/15 border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all hover:scale-105 cursor-pointer"
                   aria-label="Close"
                 >
                   <X className="w-4 h-4" />
@@ -253,7 +253,7 @@ export const TripPlanningModal = () => {
               {/* Question Heading & Supporting Copy */}
               <div className="space-y-1.5 pt-1">
                 <div className="flex items-center justify-between flex-wrap gap-2">
-                  <h2 className="text-2xl sm:text-[30px] font-bold text-white tracking-tight font-sans leading-tight">
+                  <h2 className="text-2xl sm:text-[30px] font-bold text-[var(--text-primary)] tracking-tight font-sans leading-tight">
                     {step === 1 && "Where are you going?"}
                     {step === 2 && "Who's coming along?"}
                     {step === 3 && "What kind of trip feels like you?"}
@@ -261,13 +261,13 @@ export const TripPlanningModal = () => {
                   </h2>
 
                   {step === 3 && (
-                    <span className="text-xs font-mono font-medium tracking-wide px-3 py-1 rounded-full bg-white/10 text-[#e5dec9] border border-white/15">
+                    <span className="text-xs font-mono font-medium tracking-wide px-3 py-1 rounded-full bg-[var(--accent-soft)] dark:bg-white/10 text-[var(--accent)] dark:text-[#e5dec9] border border-[var(--border)]">
                       {formData.preferences.length} selected
                     </span>
                   )}
                 </div>
 
-                <p className="text-xs sm:text-sm text-[#a89f91] font-sans">
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-sans">
                   {step === 1 && "Tell us the basics and we'll build the journey around you."}
                   {step === 2 && "This helps your AI planner tune the pace, stays and experiences."}
                   {step === 3 && "Pick as many as you like. Your AI planner will use these to shape your itinerary."}
@@ -303,16 +303,16 @@ export const TripPlanningModal = () => {
 
                       {/* Visual Route Section: Starting Location -> Destination */}
                       <div>
-                        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#a89f91] font-semibold block mb-2">
+                        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--text-muted)] font-semibold block mb-2">
                           Routing & Destination
                         </span>
 
-                        <div className="grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] items-center gap-3 p-4 sm:p-5 rounded-2xl bg-[#1c1713] border border-white/10 hover:border-white/20 transition-all shadow-inner">
+                        <div className="grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] items-center gap-3 p-4 sm:p-5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] hover:border-[var(--accent)]/50 transition-all shadow-sm">
 
                           {/* From: Starting Point */}
                           <div className="space-y-1">
-                            <label className="text-[11px] font-mono uppercase tracking-wider text-[#a89f91] flex items-center gap-1.5">
-                              <MapPin className="w-3.5 h-3.5 text-[#e5dec9]" />
+                            <label className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
+                              <MapPin className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9]" />
                               Starting Point
                             </label>
                             <input
@@ -320,19 +320,19 @@ export const TripPlanningModal = () => {
                               value={formData.startingLocation}
                               onChange={e => setFormData({ ...formData, startingLocation: e.target.value })}
                               placeholder="e.g. Mumbai"
-                              className="w-full bg-transparent text-lg sm:text-xl font-bold text-white placeholder:text-white/25 focus:outline-none font-sans"
+                              className="w-full bg-transparent text-lg sm:text-xl font-bold text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none font-sans"
                             />
                           </div>
 
                           {/* From -> To Connector Arrow */}
-                          <div className="hidden md:flex items-center justify-center w-9 h-9 rounded-full bg-white/5 border border-white/10 text-[#e5dec9]">
+                          <div className="hidden md:flex items-center justify-center w-9 h-9 rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--text-secondary)]">
                             <ArrowRight className="w-4 h-4" />
                           </div>
 
                           {/* To: Destination */}
                           <div className="space-y-1">
-                            <label className="text-[11px] font-mono uppercase tracking-wider text-[#a89f91] flex items-center gap-1.5">
-                              <MapPin className="w-3.5 h-3.5 text-white" />
+                            <label className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
+                              <MapPin className="w-3.5 h-3.5 text-[var(--text-primary)]" />
                               Destination
                             </label>
                             <input
@@ -340,7 +340,7 @@ export const TripPlanningModal = () => {
                               value={formData.destination}
                               onChange={e => setFormData({ ...formData, destination: e.target.value })}
                               placeholder="e.g. Rajasthan (Jaipur & Udaipur)"
-                              className="w-full bg-transparent text-lg sm:text-xl font-bold text-white placeholder:text-white/25 focus:outline-none font-sans"
+                              className="w-full bg-transparent text-lg sm:text-xl font-bold text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none font-sans"
                             />
                           </div>
 
@@ -351,28 +351,27 @@ export const TripPlanningModal = () => {
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
 
                         {/* Start Date */}
-                        <div className="p-4 rounded-2xl bg-[#1c1713] border border-white/10 hover:border-white/20 transition-all space-y-1.5">
-                          <label className="text-[11px] font-mono uppercase tracking-wider text-[#a89f91] flex items-center gap-1.5">
-                            <Calendar className="w-3.5 h-3.5 text-[#e5dec9]" />
+                        <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] hover:border-[var(--accent)]/50 transition-all space-y-1.5">
+                          <label className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9]" />
                             Departure Date
                           </label>
                           <input
                             type="date"
                             value={formData.startDate}
                             onChange={e => setFormData({ ...formData, startDate: e.target.value })}
-                            style={{ colorScheme: "dark" }}
-                            className="w-full bg-transparent text-sm font-semibold text-white focus:outline-none font-sans cursor-pointer"
+                            className="w-full bg-transparent text-sm font-semibold text-[var(--text-primary)] focus:outline-none font-sans cursor-pointer"
                           />
                         </div>
 
                         {/* Duration Stepper */}
-                        <div className="p-4 rounded-2xl bg-[#1c1713] border border-white/10 hover:border-white/20 transition-all space-y-1.5">
-                          <label className="text-[11px] font-mono uppercase tracking-wider text-[#a89f91] flex items-center gap-1.5">
-                            <Clock className="w-3.5 h-3.5 text-[#e5dec9]" />
+                        <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] hover:border-[var(--accent)]/50 transition-all space-y-1.5">
+                          <label className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
+                            <Clock className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9]" />
                             Duration
                           </label>
                           <div className="flex items-center justify-between">
-                            <span className="text-base font-bold text-white font-sans">
+                            <span className="text-base font-bold text-[var(--text-primary)] font-sans">
                               {formData.days} {formData.days === 1 ? "day" : "days"}
                             </span>
                             <div className="flex items-center gap-1">
@@ -380,7 +379,7 @@ export const TripPlanningModal = () => {
                                 type="button"
                                 onClick={() => setFormData(prev => ({ ...prev, days: Math.max(1, prev.days - 1) }))}
                                 disabled={formData.days <= 1}
-                                className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/15 disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center text-white text-xs border border-white/10 transition-colors cursor-pointer"
+                                className="w-7 h-7 rounded-lg bg-[var(--surface)] hover:bg-[var(--surface-blue)] dark:bg-white/5 dark:hover:bg-white/15 disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center text-[var(--text-primary)] text-xs border border-[var(--border)] transition-colors cursor-pointer"
                               >
                                 <Minus className="w-3 h-3" />
                               </button>
@@ -388,7 +387,7 @@ export const TripPlanningModal = () => {
                                 type="button"
                                 onClick={() => setFormData(prev => ({ ...prev, days: Math.min(30, prev.days + 1) }))}
                                 disabled={formData.days >= 30}
-                                className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/15 disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center text-white text-xs border border-white/10 transition-colors cursor-pointer"
+                                className="w-7 h-7 rounded-lg bg-[var(--surface)] hover:bg-[var(--surface-blue)] dark:bg-white/5 dark:hover:bg-white/15 disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center text-[var(--text-primary)] text-xs border border-[var(--border)] transition-colors cursor-pointer"
                               >
                                 <Plus className="w-3 h-3" />
                               </button>
@@ -397,13 +396,13 @@ export const TripPlanningModal = () => {
                         </div>
 
                         {/* Travellers Stepper */}
-                        <div className="p-4 rounded-2xl bg-[#1c1713] border border-white/10 hover:border-white/20 transition-all space-y-1.5">
-                          <label className="text-[11px] font-mono uppercase tracking-wider text-[#a89f91] flex items-center gap-1.5">
-                            <Users className="w-3.5 h-3.5 text-[#e5dec9]" />
+                        <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] hover:border-[var(--accent)]/50 transition-all space-y-1.5">
+                          <label className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
+                            <Users className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9]" />
                             Travellers
                           </label>
                           <div className="flex items-center justify-between">
-                            <span className="text-base font-bold text-white font-sans">
+                            <span className="text-base font-bold text-[var(--text-primary)] font-sans">
                               {formData.travellers} {formData.travellers === 1 ? "traveller" : "travellers"}
                             </span>
                             <div className="flex items-center gap-1">
@@ -411,7 +410,7 @@ export const TripPlanningModal = () => {
                                 type="button"
                                 onClick={() => setFormData(prev => ({ ...prev, travellers: Math.max(1, prev.travellers - 1) }))}
                                 disabled={formData.travellers <= 1}
-                                className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/15 disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center text-white text-xs border border-white/10 transition-colors cursor-pointer"
+                                className="w-7 h-7 rounded-lg bg-[var(--surface)] hover:bg-[var(--surface-blue)] dark:bg-white/5 dark:hover:bg-white/15 disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center text-[var(--text-primary)] text-xs border border-[var(--border)] transition-colors cursor-pointer"
                               >
                                 <Minus className="w-3 h-3" />
                               </button>
@@ -419,7 +418,7 @@ export const TripPlanningModal = () => {
                                 type="button"
                                 onClick={() => setFormData(prev => ({ ...prev, travellers: Math.min(50, prev.travellers + 1) }))}
                                 disabled={formData.travellers >= 50}
-                                className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/15 disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center text-white text-xs border border-white/10 transition-colors cursor-pointer"
+                                className="w-7 h-7 rounded-lg bg-[var(--surface)] hover:bg-[var(--surface-blue)] dark:bg-white/5 dark:hover:bg-white/15 disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center text-[var(--text-primary)] text-xs border border-[var(--border)] transition-colors cursor-pointer"
                               >
                                 <Plus className="w-3 h-3" />
                               </button>
@@ -430,8 +429,8 @@ export const TripPlanningModal = () => {
                       </div>
 
                       {/* Subtle AI Personality Message */}
-                      <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/5 text-xs text-[#a89f91]">
-                        <Sparkles className="w-3.5 h-3.5 text-[#e5dec9] shrink-0" />
+                      <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-xs text-[var(--text-secondary)]">
+                        <Sparkles className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9] shrink-0" />
                         <span>Your AI planner will automatically calculate ideal route transit and daily pacing based on your dates and party size.</span>
                       </div>
 
@@ -446,7 +445,7 @@ export const TripPlanningModal = () => {
 
                       {/* 9 Recommendation Cards */}
                       <div>
-                        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#a89f91] font-semibold block mb-2.5">
+                        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--text-muted)] font-semibold block mb-2.5">
                           Select Your Travel Group
                         </span>
 
@@ -460,13 +459,13 @@ export const TripPlanningModal = () => {
                                 key={grp.id}
                                 onClick={() => handleGroupSelect(grp.id)}
                                 className={`cursor-pointer p-4 rounded-2xl border flex flex-col justify-between h-[110px] transition-all duration-200 select-none ${isSelected
-                                    ? "bg-white text-[#181411] border-white shadow-[0_10px_25px_rgba(255,255,255,0.12)] scale-[1.02]"
-                                    : "bg-[#1c1713] border-white/10 text-[#d8d2c8] hover:border-white/25 hover:-translate-y-0.5"
+                                    ? "bg-[var(--text-primary)] text-white border-[var(--text-primary)] dark:bg-white dark:text-[#181411] dark:border-white shadow-lg scale-[1.02]"
+                                    : "bg-[var(--modal-card-bg)] border-[var(--modal-card-border)] text-[var(--text-primary)] hover:border-[var(--accent)] hover:-translate-y-0.5"
                                   }`}
                               >
                                 <div className="flex items-start justify-between gap-2">
                                   <div className="flex items-center gap-2">
-                                    <span className={isSelected ? "text-[#181411]" : "text-[#e5dec9]"}>
+                                    <span className={isSelected ? "text-white dark:text-[#181411]" : "text-[var(--accent)] dark:text-[#e5dec9]"}>
                                       {getGroupIcon(grp.id)}
                                     </span>
                                     <span className="font-bold text-sm font-sans tracking-tight leading-snug">
@@ -475,13 +474,13 @@ export const TripPlanningModal = () => {
                                   </div>
 
                                   {isSelected && (
-                                    <div className="w-5 h-5 rounded-full bg-[#181411] text-white flex items-center justify-center shrink-0">
+                                    <div className="w-5 h-5 rounded-full bg-white text-[var(--text-primary)] dark:bg-[#181411] dark:text-white flex items-center justify-center shrink-0 shadow-sm">
                                       <Check className="w-3 h-3 stroke-[3]" />
                                     </div>
                                   )}
                                 </div>
 
-                                <p className={`text-xs font-sans leading-relaxed ${isSelected ? "text-[#55473a] font-medium" : "text-[#a89f91]"
+                                <p className={`text-xs font-sans leading-relaxed ${isSelected ? "text-white/80 dark:text-[#55473a] font-medium" : "text-[var(--text-secondary)]"
                                   }`}>
                                   {shortDesc}
                                 </p>
@@ -492,46 +491,46 @@ export const TripPlanningModal = () => {
                       </div>
 
                       {/* Secondary Travel Preferences: Budget Range + Preferred Travel Mode */}
-                      <div className="pt-2 border-t border-white/5 space-y-2.5">
-                        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#a89f91] font-semibold block">
+                      <div className="pt-2 border-t border-[var(--border)] space-y-2.5">
+                        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--text-muted)] font-semibold block">
                           Travel Style & Budget
                         </span>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
 
                           {/* Budget Comfort Range */}
-                          <div className="p-3.5 rounded-2xl bg-[#1c1713] border border-white/10 space-y-1">
-                            <label className="text-[11px] font-mono uppercase tracking-wider text-[#a89f91] flex items-center gap-1.5">
-                              <Wallet className="w-3.5 h-3.5 text-[#e5dec9]" />
+                          <div className="p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] space-y-1">
+                            <label className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
+                              <Wallet className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9]" />
                               Budget Range
                             </label>
                             <select
                               value={formData.budgetRange}
                               onChange={e => setFormData({ ...formData, budgetRange: e.target.value })}
-                              className="w-full bg-transparent text-sm font-semibold text-white focus:outline-none font-sans cursor-pointer py-1"
+                              className="w-full bg-transparent text-sm font-semibold text-[var(--text-primary)] focus:outline-none font-sans cursor-pointer py-1"
                             >
-                              <option value="₹20,000 - ₹30,000" className="bg-[#181411] text-white">₹20,000 - ₹30,000 (Budget Conscious)</option>
-                              <option value="₹35,000 - ₹45,000" className="bg-[#181411] text-white">₹35,000 - ₹45,000 (Comfort & Heritage)</option>
-                              <option value="₹50,000 - ₹75,000" className="bg-[#181411] text-white">₹50,000 - ₹75,000 (Premium Luxury)</option>
-                              <option value="₹1,00,000+" className="bg-[#181411] text-white">₹1,00,000+ (Ultra High-End)</option>
+                              <option value="₹20,000 - ₹30,000" className="bg-[var(--surface)] text-[var(--text-primary)]">₹20,000 - ₹30,000 (Budget Conscious)</option>
+                              <option value="₹35,000 - ₹45,000" className="bg-[var(--surface)] text-[var(--text-primary)]">₹35,000 - ₹45,000 (Comfort & Heritage)</option>
+                              <option value="₹50,000 - ₹75,000" className="bg-[var(--surface)] text-[var(--text-primary)]">₹50,000 - ₹75,000 (Premium Luxury)</option>
+                              <option value="₹1,00,000+" className="bg-[var(--surface)] text-[var(--text-primary)]">₹1,00,000+ (Ultra High-End)</option>
                             </select>
                           </div>
 
                           {/* Preferred Travel Mode */}
-                          <div className="p-3.5 rounded-2xl bg-[#1c1713] border border-white/10 space-y-1">
-                            <label className="text-[11px] font-mono uppercase tracking-wider text-[#a89f91] flex items-center gap-1.5">
-                              <Plane className="w-3.5 h-3.5 text-[#e5dec9]" />
+                          <div className="p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] space-y-1">
+                            <label className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
+                              <Plane className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9]" />
                               Preferred Travel Mode
                             </label>
                             <select
                               value={formData.preferredMode}
                               onChange={e => setFormData({ ...formData, preferredMode: e.target.value })}
-                              className="w-full bg-transparent text-sm font-semibold text-white focus:outline-none font-sans cursor-pointer py-1"
+                              className="w-full bg-transparent text-sm font-semibold text-[var(--text-primary)] focus:outline-none font-sans cursor-pointer py-1"
                             >
-                              <option value="Flight + Private Cab" className="bg-[#181411] text-white">Flight + Private AC Cab</option>
-                              <option value="Executive Express Train (Vande Bharat)" className="bg-[#181411] text-white">Executive Express Train</option>
-                              <option value="Self Drive SUV / Rental" className="bg-[#181411] text-white">Self-Drive SUV / Rental</option>
-                              <option value="All-Inclusive Multi-Modal" className="bg-[#181411] text-white">All-Inclusive Multi-Modal</option>
+                              <option value="Flight + Private Cab" className="bg-[var(--surface)] text-[var(--text-primary)]">Flight + Private AC Cab</option>
+                              <option value="Executive Express Train (Vande Bharat)" className="bg-[var(--surface)] text-[var(--text-primary)]">Executive Express Train</option>
+                              <option value="Self Drive SUV / Rental" className="bg-[var(--surface)] text-[var(--text-primary)]">Self-Drive SUV / Rental</option>
+                              <option value="All-Inclusive Multi-Modal" className="bg-[var(--surface)] text-[var(--text-primary)]">All-Inclusive Multi-Modal</option>
                             </select>
                           </div>
 
@@ -546,7 +545,7 @@ export const TripPlanningModal = () => {
                   {/* ------------------------------------------------------------ */}
                   {step === 3 && (
                     <div className="space-y-4">
-                      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#a89f91] font-semibold block">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--text-muted)] font-semibold block">
                         Select Experiences That Excite You
                       </span>
 
@@ -558,12 +557,12 @@ export const TripPlanningModal = () => {
                               key={pref.id}
                               onClick={() => togglePreference(pref.id)}
                               className={`cursor-pointer p-3 sm:p-3.5 rounded-xl border flex items-center justify-between transition-all duration-200 select-none ${isSelected
-                                  ? "bg-white text-[#181411] border-white font-semibold shadow-md scale-[1.02]"
-                                  : "bg-[#1c1713] border-white/10 text-[#d8d2c8] hover:border-white/25 hover:text-white hover:-translate-y-0.5"
+                                  ? "bg-[var(--text-primary)] text-white border-[var(--text-primary)] dark:bg-white dark:text-[#181411] dark:border-white font-semibold shadow-md scale-[1.02]"
+                                  : "bg-[var(--modal-card-bg)] border-[var(--modal-card-border)] text-[var(--text-primary)] hover:border-[var(--accent)] hover:-translate-y-0.5"
                                 }`}
                             >
                               <div className="flex items-center gap-2.5 min-w-0">
-                                <span className={isSelected ? "text-[#181411]" : "text-[#e5dec9]"}>
+                                <span className={isSelected ? "text-white dark:text-[#181411]" : "text-[var(--accent)] dark:text-[#e5dec9]"}>
                                   {getPrefIcon(pref.id)}
                                 </span>
                                 <span className="text-xs font-medium font-sans truncate">
@@ -571,7 +570,7 @@ export const TripPlanningModal = () => {
                                 </span>
                               </div>
 
-                              <div className={`w-4 h-4 rounded-full flex items-center justify-center border shrink-0 transition-colors ${isSelected ? "bg-[#181411] border-[#181411] text-white" : "border-white/20"
+                              <div className={`w-4 h-4 rounded-full flex items-center justify-center border shrink-0 transition-colors ${isSelected ? "bg-white text-[var(--text-primary)] dark:bg-[#181411] dark:border-[#181411] dark:text-white" : "border-[var(--border)]"
                                 }`}>
                                 {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
                               </div>
@@ -580,8 +579,8 @@ export const TripPlanningModal = () => {
                         })}
                       </div>
 
-                      <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/5 text-xs text-[#a89f91] mt-4">
-                        <Sparkles className="w-3.5 h-3.5 text-[#e5dec9] shrink-0" />
+                      <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-xs text-[var(--text-secondary)] mt-4">
+                        <Sparkles className="w-3.5 h-3.5 text-[var(--accent)] dark:text-[#e5dec9] shrink-0" />
                         <span>Your selections will prioritize hidden gems, activity booking slots, and curated local stops.</span>
                       </div>
                     </div>
@@ -594,19 +593,19 @@ export const TripPlanningModal = () => {
                     <div className="space-y-5">
 
                       {/* Elegant AI Personalization Insight Card */}
-                      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/15 space-y-1.5 shadow-sm">
-                        <div className="flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-[#e5dec9] font-bold">
+                      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[var(--accent-soft)] to-[var(--surface-soft)] border border-[var(--border)] space-y-1.5 shadow-sm">
+                        <div className="flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-[var(--accent)] dark:text-[#e5dec9] font-bold">
                           <Sparkles className="w-3.5 h-3.5" />
                           Personalized for {formData.travelGroup}
                         </div>
-                        <p className="text-xs sm:text-sm text-[#f5f2eb] leading-relaxed font-sans font-medium">
+                        <p className="text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed font-sans font-medium">
                           "{getGroupInsight(formData.travelGroup)}"
                         </p>
                       </div>
 
                       {/* Optional Safeguard Selectable Rows */}
                       <div className="space-y-2">
-                        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#a89f91] font-semibold block">
+                        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--text-muted)] font-semibold block">
                           Tailored Safeguards & Amenities
                         </span>
 
@@ -618,16 +617,16 @@ export const TripPlanningModal = () => {
                                 key={idx}
                                 onClick={() => toggleSafetyItem(req)}
                                 className={`cursor-pointer p-3.5 sm:p-4 rounded-xl border flex items-center justify-between text-xs sm:text-sm transition-all duration-200 select-none ${isChecked
-                                    ? "bg-white/[0.09] border-white/30 text-white font-medium shadow-sm"
-                                    : "bg-[#1c1713] border-white/8 text-[#a89f91] hover:border-white/20 hover:text-[#d8d2c8]"
+                                    ? "bg-[var(--accent-soft)]/60 dark:bg-white/[0.09] border-[var(--accent)] dark:border-white/30 text-[var(--text-primary)] font-medium shadow-sm"
+                                    : "bg-[var(--surface-soft)] border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent)]/50 hover:text-[var(--text-primary)]"
                                   }`}
                               >
                                 <div className="flex items-center gap-3">
-                                  <Shield className={`w-4 h-4 shrink-0 ${isChecked ? "text-[#e5dec9]" : "text-[#5e5346]"}`} />
+                                  <Shield className={`w-4 h-4 shrink-0 ${isChecked ? "text-[var(--accent)] dark:text-[#e5dec9]" : "text-[var(--text-muted)]"}`} />
                                   <span className="font-sans leading-snug">{req}</span>
                                 </div>
 
-                                <div className={`w-5 h-5 rounded-md flex items-center justify-center border shrink-0 transition-colors ${isChecked ? "bg-white border-white text-black" : "border-white/20 bg-transparent"
+                                <div className={`w-5 h-5 rounded-md flex items-center justify-center border shrink-0 transition-colors ${isChecked ? "bg-[var(--text-primary)] border-[var(--text-primary)] text-white dark:bg-white dark:border-white dark:text-black" : "border-[var(--border)] bg-transparent"
                                   }`}>
                                   {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
                                 </div>
@@ -647,14 +646,14 @@ export const TripPlanningModal = () => {
             {/* ============================================================ */}
             {/* FOOTER: Context-Aware CTAs, Generous Padding, Clean Layout  */}
             {/* ============================================================ */}
-            <div className="px-6 sm:px-10 py-5 border-t border-white/10 bg-[#14100d] flex items-center justify-between shrink-0">
+            <div className="px-6 sm:px-10 py-5 border-t border-[var(--border)] bg-[var(--surface-soft)] flex items-center justify-between shrink-0">
 
               {/* Back Button (Hidden on Step 1) */}
               {step > 1 ? (
                 <button
                   type="button"
                   onClick={handleBack}
-                  className="h-[48px] sm:h-[52px] px-4 sm:px-6 rounded-full text-xs font-semibold text-[#a89f91] hover:text-white flex items-center gap-2 transition-colors cursor-pointer"
+                  className="h-[48px] sm:h-[52px] px-4 sm:px-6 rounded-full text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center gap-2 transition-colors cursor-pointer"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Back</span>
@@ -668,7 +667,7 @@ export const TripPlanningModal = () => {
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="group h-[48px] sm:h-[52px] px-6 sm:px-8 rounded-full text-xs sm:text-sm font-semibold bg-white text-[#181411] hover:bg-[#eae5d9] flex items-center gap-2.5 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-md"
+                  className="group h-[48px] sm:h-[52px] px-6 sm:px-8 rounded-full text-xs sm:text-sm font-semibold bg-[var(--text-primary)] text-[var(--surface)] hover:opacity-90 dark:bg-white dark:text-[#181411] dark:hover:bg-[#eae5d9] flex items-center gap-2.5 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-md"
                 >
                   <span>
                     {step === 1 && "Continue planning"}
@@ -681,9 +680,9 @@ export const TripPlanningModal = () => {
                 <button
                   type="button"
                   onClick={handleFinalSubmit}
-                  className="group h-[48px] sm:h-[52px] px-8 sm:px-10 rounded-full text-xs sm:text-sm font-bold bg-white text-[#181411] hover:bg-[#eae5d9] flex items-center gap-2.5 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-[0_0_30px_rgba(255,255,255,0.25)]"
+                  className="group h-[48px] sm:h-[52px] px-8 sm:px-10 rounded-full text-xs sm:text-sm font-bold bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] dark:bg-white dark:text-[#181411] dark:hover:bg-[#eae5d9] flex items-center gap-2.5 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-lg"
                 >
-                  <Sparkles className="w-4 h-4 text-[#8a7a58]" />
+                  <Sparkles className="w-4 h-4 text-white dark:text-[#8a7a58]" />
                   <span>Plan my journey</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </button>
