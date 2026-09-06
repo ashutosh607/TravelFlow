@@ -115,7 +115,7 @@ function MainAppContent() {
   }, [isPlannerOpen, isCardExpanded, isNotificationDrawerOpen]);
 
   return (
-    <div className="min-h-screen bg-[#181411] text-[#f5f2eb] font-sans overflow-x-hidden selection:bg-[#f5f2eb] selection:text-[#181411]">
+    <div className="min-h-screen bg-[var(--page-bg)] text-[var(--page-text)] font-sans overflow-x-hidden selection:bg-[var(--page-selection-bg)] selection:text-[var(--page-selection-text)] transition-colors duration-300">
 
       {/* Cinematic Intro Preloader */}
       <IntroPreloader />
@@ -168,13 +168,13 @@ function MainAppContent() {
       </main>
 
       {/* Global Minimal Footer */}
-      <footer className="border-t border-white/10 bg-[#100d0a] py-12 text-center text-xs font-mono text-[#a89f91] space-y-3">
-        <div className="flex items-center justify-center gap-6 text-sm uppercase tracking-widest font-sans font-bold text-white">
+      <footer className="border-t border-[var(--footer-border)] bg-[var(--footer-bg)] py-12 text-center text-xs font-mono text-[var(--footer-sub)] space-y-3 transition-colors duration-300">
+        <div className="flex items-center justify-center gap-6 text-sm uppercase tracking-widest font-sans font-bold text-[var(--footer-title)]">
           <span>TRAVELFLOW</span>
           <span>·</span>
-          <span className="text-[#a89f91] font-normal font-mono text-xs">We don't just plan your trip. We manage it.</span>
+          <span className="text-[var(--footer-sub)] font-normal font-mono text-xs">We don't just plan your trip. We manage it.</span>
         </div>
-        <p className="text-[#736a5e] text-[11px]">
+        <p className="text-[var(--footer-copy)] text-[11px]">
           © {new Date().getFullYear()} TravelFlow AI Systems. All rights reserved.
         </p>
       </footer>

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { 
   INITIAL_TRIP_STATE, 
   INITIAL_RECOMMENDATIONS, 
@@ -45,6 +45,31 @@ const INITIAL_SAVED_TRIPS = [
 ];
 
 export const TravelProvider = ({ children }) => {
+  // Theme Management (defaults to 'dark' to preserve existing brown look)
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("travelflow_theme");
+      if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
+      if (document.documentElement.classList.contains("dark")) return "dark";
+    }
+    return "dark";
+  });
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+      localStorage.setItem("travelflow_theme", theme);
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === "dark" ? "light" : "dark");
+  };
+
   const [tripData, setTripData] = useState(INITIAL_TRIP_STATE);
   const [recommendations, setRecommendations] = useState(INITIAL_RECOMMENDATIONS);
   const [selectedOptionId, setSelectedOptionId] = useState("opt-1");
@@ -801,7 +826,11 @@ export const TravelProvider = ({ children }) => {
         applyDisruptionRecovery,
         resetDisruption,
         showWhyExplanation,
-        setShowWhyExplanation
+        setShowWhyExplanation,
+        // Theme Control
+        theme,
+        setTheme,
+        toggleTheme
       }}
     >
       {children}

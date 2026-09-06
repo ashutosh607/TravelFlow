@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, Sparkles, Bell } from "lucide-react";
+import { Menu, X, Sparkles, Bell, Sun, Moon } from "lucide-react";
 import { useTravel } from "../context/TravelContext";
 
 const NavItem = ({ text, onClick, active, icon }) => {
@@ -39,7 +39,9 @@ export const Navbar = () => {
     setIsPlannerOpen,
     isCardExpanded,
     unreadNotificationCount,
-    setIsNotificationDrawerOpen
+    setIsNotificationDrawerOpen,
+    theme,
+    toggleTheme
   } = useTravel();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -82,8 +84,23 @@ export const Navbar = () => {
         {/* Space in middle for the animated TRAVELFLOW logo to land */}
         <div className="w-[120px] lg:w-[180px] hidden md:block" />
 
-        {/* Desktop & Tablet Right - Notifications Bell */}
-        <div className="hidden md:flex items-center justify-end gap-3 lg:gap-4 tracking-tight pointer-events-auto">
+        {/* Desktop & Tablet Right - Theme Toggle & Notifications Bell */}
+        <div className="hidden md:flex items-center justify-end gap-2.5 lg:gap-3 tracking-tight pointer-events-auto">
+          {/* Theme Toggle (Light Sky Palette vs Dark Brown Palette) */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="relative p-2.5 rounded-full bg-white/[0.06] hover:bg-white/15 border border-white/15 hover:border-[rgba(201,168,106,0.35)] text-[#d8d2c8] hover:text-white transition-all cursor-pointer group flex items-center justify-center shadow-md hover:scale-105 active:scale-95"
+            title={theme === "dark" ? "Switch to Light Mode (Sky Palette)" : "Switch to Dark Mode (Brown Palette)"}
+            aria-label="Toggle theme mode"
+          >
+            {theme === "dark" ? (
+              <Sun className="w-4 h-4 text-[#e5dec9] group-hover:text-white transition-colors" />
+            ) : (
+              <Moon className="w-4 h-4 text-[#f5f2eb] group-hover:text-white transition-colors" />
+            )}
+          </button>
+
           <button
             type="button"
             onClick={() => setIsNotificationDrawerOpen(true)}
@@ -103,7 +120,7 @@ export const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile (< md): Logo (when not on landing to avoid duplicate hero logo), Notifications & Menu button */}
+        {/* Mobile (< md): Logo, Theme Toggle, Notifications & Menu button */}
         <div className="md:hidden flex w-full justify-between items-center pointer-events-auto">
           {activeView !== "landing" ? (
             <span
@@ -116,7 +133,17 @@ export const Navbar = () => {
             <div className="w-4" />
           )}
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="relative p-2 text-white hover:bg-white/10 rounded-full cursor-pointer transition-colors"
+              title="Toggle theme mode"
+              aria-label="Toggle theme mode"
+            >
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
             <button
               type="button"
               onClick={() => setIsNotificationDrawerOpen(true)}

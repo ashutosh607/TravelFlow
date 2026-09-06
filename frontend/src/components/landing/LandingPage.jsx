@@ -137,7 +137,7 @@ export const LandingPage = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-[#181411] text-[#f5f2eb] overflow-hidden selection:bg-[#f5f2eb] selection:text-[#181411]">
+    <div ref={containerRef} className="relative min-h-screen bg-[var(--page-bg)] text-[var(--page-text)] overflow-hidden selection:bg-[var(--page-selection-bg)] selection:text-[var(--page-selection-text)] transition-colors duration-300">
 
       {/* ============================================================ */}
       {/* 1. MASTER CINEMATIC SCROLL HERO (AIRPLANE WINDOW + SKY + CARDS) */}
@@ -147,26 +147,26 @@ export const LandingPage = () => {
       {/* ============================================================ */}
       {/* 2. DEEP DIVE: "WE UNDERSTAND HOW YOU TRAVEL" */}
       {/* ============================================================ */}
-      <section id="about" className="relative z-10 py-16 sm:py-24 lg:py-32 border-t border-white/10 bg-[#14100d] overflow-hidden">
+      <section id="about" className="relative z-10 py-16 sm:py-24 lg:py-32 border-t border-[var(--s2-border)] bg-[var(--s2-bg)] text-[var(--page-text)] overflow-hidden transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
 
             <div className="lg:col-span-5 space-y-4 sm:space-y-6">
-              <span className="s2-eyebrow text-xs font-mono tracking-widest text-[#a89f91] uppercase block">
+              <span className="s2-eyebrow text-xs font-mono tracking-widest text-[var(--s2-eyebrow)] uppercase block font-semibold">
                 [ 02 / PERSONALIZATION LAYER ]
               </span>
-              <h2 className="text-[clamp(2.1rem,4.5vw,3.75rem)] font-extrabold tracking-tighter text-white font-sans leading-[1.0] sm:leading-[0.95]">
+              <h2 className="text-[clamp(2.1rem,4.5vw,3.75rem)] font-extrabold tracking-tighter text-[var(--s2-title)] font-sans leading-[1.0] sm:leading-[0.95]">
                 <span className="s2-title-line block">We understand</span>
                 <span className="s2-title-line block">how you travel.</span>
               </h2>
-              <p className="s2-desc text-[#b8afa3] text-sm sm:text-base leading-relaxed font-sans">
+              <p className="s2-desc text-[var(--s2-desc)] text-sm sm:text-base leading-relaxed font-sans">
                 Your budget. Your interests. Your people. TravelFlow turns them into a journey designed around you.
               </p>
 
               <div className="s2-btn pt-2">
                 <button
                   onClick={() => setIsPlannerOpen(true)}
-                  className="inline-flex items-center gap-2 text-xs font-bold font-mono tracking-wider uppercase text-white hover:text-[#eae5d9] group border-b border-white pb-1"
+                  className="inline-flex items-center gap-2 text-xs font-bold font-mono tracking-wider uppercase text-[var(--s2-btn-text)] hover:opacity-75 group border-b border-[var(--s2-btn-border)] pb-1 transition-all"
                 >
                   <span>Configure Preferences</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -174,52 +174,52 @@ export const LandingPage = () => {
               </div>
             </div>
 
-            {/* Persona Cards: Equal height, balanced CSS grid */}
+            {/* Persona Cards: Floating Cloud Surfaces in Light Mode, Rich Brown in Dark Mode */}
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
 
-              <div className="s2-card p-5 sm:p-6 rounded-2xl bg-[#1f1a15] border border-white/10 flex flex-col justify-between space-y-3 shadow-lg h-full">
-                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white font-bold text-xs font-mono">
+              <div className="s2-card p-5 sm:p-6 rounded-2xl bg-[var(--s2-card-bg)] border border-[var(--s2-card-border)] flex flex-col justify-between space-y-3 shadow-[var(--s2-card-shadow)] backdrop-blur-md h-full transition-all">
+                <div className="w-8 h-8 rounded-lg bg-[var(--s2-card-badge-bg)] text-[var(--s2-card-badge-text)] flex items-center justify-center font-bold text-xs font-mono">
                   01
                 </div>
                 <div>
-                  <h4 className="text-base font-bold text-white font-sans">Couples & Romance</h4>
-                  <p className="text-xs text-[#b8afa3] leading-relaxed font-sans mt-1.5">
+                  <h4 className="text-base font-bold text-[var(--s2-card-title)] font-sans">Couples & Romance</h4>
+                  <p className="text-xs text-[var(--s2-card-desc)] leading-relaxed font-sans mt-1.5">
                     Sunset boat reservations, private lakeside suites, candlelit dining & relaxed late starts.
                   </p>
                 </div>
               </div>
 
-              <div className="s2-card p-5 sm:p-6 rounded-2xl bg-[#1f1a15] border border-white/10 flex flex-col justify-between space-y-3 shadow-lg h-full">
-                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white font-bold text-xs font-mono">
+              <div className="s2-card p-5 sm:p-6 rounded-2xl bg-[var(--s2-card-bg)] border border-[var(--s2-card-border)] flex flex-col justify-between space-y-3 shadow-[var(--s2-card-shadow)] backdrop-blur-md h-full transition-all">
+                <div className="w-8 h-8 rounded-lg bg-[var(--s2-card-badge-bg)] text-[var(--s2-card-badge-text)] flex items-center justify-center font-bold text-xs font-mono">
                   02
                 </div>
                 <div>
-                  <h4 className="text-base font-bold text-white font-sans">Family & Seniors</h4>
-                  <p className="text-xs text-[#b8afa3] leading-relaxed font-sans mt-1.5">
+                  <h4 className="text-base font-bold text-[var(--s2-card-title)] font-sans">Family & Seniors</h4>
+                  <p className="text-xs text-[var(--s2-card-desc)] leading-relaxed font-sans mt-1.5">
                     Step-free monument access, scheduled afternoon rest buffers, and nearby pediatric medical safety.
                   </p>
                 </div>
               </div>
 
-              <div className="s2-card p-5 sm:p-6 rounded-2xl bg-[#1f1a15] border border-white/10 flex flex-col justify-between space-y-3 shadow-lg h-full">
-                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white font-bold text-xs font-mono">
+              <div className="s2-card p-5 sm:p-6 rounded-2xl bg-[var(--s2-card-bg)] border border-[var(--s2-card-border)] flex flex-col justify-between space-y-3 shadow-[var(--s2-card-shadow)] backdrop-blur-md h-full transition-all">
+                <div className="w-8 h-8 rounded-lg bg-[var(--s2-card-badge-bg)] text-[var(--s2-card-badge-text)] flex items-center justify-center font-bold text-xs font-mono">
                   03
                 </div>
                 <div>
-                  <h4 className="text-base font-bold text-white font-sans">Smart Budget Optimizer</h4>
-                  <p className="text-xs text-[#b8afa3] leading-relaxed font-sans mt-1.5">
+                  <h4 className="text-base font-bold text-[var(--s2-card-title)] font-sans">Smart Budget Optimizer</h4>
+                  <p className="text-xs text-[var(--s2-card-desc)] leading-relaxed font-sans mt-1.5">
                     Itemized breakdowns across travel, hotels, dining, and activities with instant trade-off balancing.
                   </p>
                 </div>
               </div>
 
-              <div className="s2-card p-5 sm:p-6 rounded-2xl bg-[#1f1a15] border border-white/10 flex flex-col justify-between space-y-3 shadow-lg h-full">
-                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white font-bold text-xs font-mono">
+              <div className="s2-card p-5 sm:p-6 rounded-2xl bg-[var(--s2-card-bg)] border border-[var(--s2-card-border)] flex flex-col justify-between space-y-3 shadow-[var(--s2-card-shadow)] backdrop-blur-md h-full transition-all">
+                <div className="w-8 h-8 rounded-lg bg-[var(--s2-card-badge-bg)] text-[var(--s2-card-badge-text)] flex items-center justify-center font-bold text-xs font-mono">
                   04
                 </div>
                 <div>
-                  <h4 className="text-base font-bold text-white font-sans">Collaborative Group Sync</h4>
-                  <p className="text-xs text-[#b8afa3] leading-relaxed font-sans mt-1.5">
+                  <h4 className="text-base font-bold text-[var(--s2-card-title)] font-sans">Collaborative Group Sync</h4>
+                  <p className="text-xs text-[var(--s2-card-desc)] leading-relaxed font-sans mt-1.5">
                     Balanced itinerary voting, automated expense splitting, and customized multi-group transit coordination.
                   </p>
                 </div>
@@ -234,19 +234,19 @@ export const LandingPage = () => {
       {/* ============================================================ */}
       {/* 3. DEEP DIVE: "WE ADAPT AS YOU TRAVEL" (HERO USP) */}
       {/* ============================================================ */}
-      <section id="adaptation" className="relative z-10 py-16 sm:py-24 lg:py-32 border-t border-white/10 bg-[#181411] overflow-hidden">
+      <section id="adaptation" className="relative z-10 py-16 sm:py-24 lg:py-32 border-t border-[var(--s3-border)] bg-[var(--s3-bg)] text-[var(--page-text)] overflow-hidden transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
 
             <div className="lg:col-span-5 space-y-4 sm:space-y-6">
-              <span className="s3-eyebrow text-xs font-mono tracking-widest text-[#a89f91] uppercase block">
+              <span className="s3-eyebrow text-xs font-mono tracking-widest text-[var(--s3-eyebrow)] uppercase block font-semibold">
                 [ 03 / REAL-TIME MANAGEMENT ]
               </span>
-              <h2 className="text-[clamp(2.1rem,4.5vw,3.75rem)] font-extrabold tracking-tighter text-white font-sans leading-[1.0] sm:leading-[0.95]">
+              <h2 className="text-[clamp(2.1rem,4.5vw,3.75rem)] font-extrabold tracking-tighter text-[var(--s3-title)] font-sans leading-[1.0] sm:leading-[0.95]">
                 <span className="s3-title-line block">We adapt</span>
                 <span className="s3-title-line block">as you travel.</span>
               </h2>
-              <p className="s3-desc text-[#b8afa3] text-sm sm:text-base leading-relaxed font-sans">
+              <p className="s3-desc text-[var(--s3-desc)] text-sm sm:text-base leading-relaxed font-sans">
                 When plans change, TravelFlow finds the next best way forward. Flight delays, weather downpours, traffic, or closed attractions are resolved automatically.
               </p>
 
@@ -256,7 +256,7 @@ export const LandingPage = () => {
                     setActiveView("liveTrip");
                     triggerDisruption();
                   }}
-                  className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#181411] hover:bg-[#eae5d9] transition-all shadow-md flex items-center justify-center sm:justify-start gap-2 text-center"
+                  className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-[var(--s3-btn-bg)] text-[var(--s3-btn-text)] hover:bg-[var(--s3-btn-hover)] transition-all shadow-md flex items-center justify-center sm:justify-start gap-2 text-center"
                 >
                   <Zap className="w-4 h-4 fill-current shrink-0" />
                   <span>Simulate Live Flight Delay & Auto-Recovery →</span>
@@ -266,43 +266,43 @@ export const LandingPage = () => {
 
             {/* Disruption Cascade Card & Sequential Story Panel */}
             <div className="lg:col-span-7">
-              <div className="s3-panel-container rounded-2xl bg-[#1f1a15] border border-white/15 p-5 sm:p-7 md:p-8 space-y-5 sm:space-y-6 shadow-2xl">
+              <div className="s3-panel-container rounded-2xl bg-[var(--s3-panel-bg)] border border-[var(--s3-panel-border)] p-5 sm:p-7 md:p-8 space-y-5 sm:space-y-6 shadow-2xl backdrop-blur-md transition-all">
 
-                <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                  <span className="text-xs font-mono uppercase tracking-widest text-[#d8d2c8] font-bold">
+                <div className="flex items-center justify-between border-b border-[var(--s3-border)] pb-4">
+                  <span className="text-xs font-mono uppercase tracking-widest text-[var(--s3-panel-title)] font-bold">
                     Telemetry: Flight Delay Auto-Recovery
                   </span>
-                  <span className="text-[10px] font-mono bg-white/10 text-white px-2.5 py-0.5 rounded-full shrink-0">
+                  <span className="text-[10px] font-mono bg-[var(--s3-panel-badge-bg)] text-[var(--s3-panel-badge-text)] px-2.5 py-0.5 rounded-full shrink-0 font-semibold">
                     Active Sentinel
                   </span>
                 </div>
 
                 <div className="space-y-3 font-mono text-xs">
                   {/* Event 1: The Disruption Event */}
-                  <div className="s3-event p-3 sm:p-3.5 rounded-xl bg-[#2a1b18] border border-white/10 text-white flex items-center gap-3">
-                    <Plane className="w-4 h-4 text-white shrink-0" />
+                  <div className="s3-event p-3 sm:p-3.5 rounded-xl bg-[var(--s3-event1-bg)] border border-[var(--s3-event1-border)] text-[var(--s3-event1-text)] flex items-center gap-3 transition-colors">
+                    <Plane className="w-4 h-4 text-current shrink-0" />
                     <span>Flight delayed by 3h (10:00 AM ➔ 01:00 PM)</span>
                   </div>
 
                   {/* Event 2: The Conflict */}
-                  <div className="s3-event p-3 sm:p-3.5 rounded-xl bg-[#14100d] border border-white/10 text-[#d8d2c8] flex items-center gap-3">
-                    <Clock className="w-4 h-4 text-white shrink-0" />
+                  <div className="s3-event p-3 sm:p-3.5 rounded-xl bg-[var(--s3-event2-bg)] border border-[var(--s3-event2-border)] text-[var(--s3-event2-text)] flex items-center gap-3 transition-colors">
+                    <Clock className="w-4 h-4 text-current shrink-0" />
                     <span>Hotel check-in & 3:30 PM City Palace slot conflicted</span>
                   </div>
 
                   {/* Event 3: AI Dynamic Decision */}
-                  <div className="s3-event p-3 sm:p-3.5 rounded-xl bg-[#1f1a15] border border-white/20 text-[#f5f2eb] flex items-center gap-3">
-                    <Sparkles className="w-4 h-4 text-[#e5dec9] shrink-0" />
+                  <div className="s3-event p-3 sm:p-3.5 rounded-xl bg-[var(--s3-event3-bg)] border border-[var(--s3-event3-border)] text-[var(--s3-event3-text)] flex items-center gap-3 transition-colors">
+                    <Sparkles className="w-4 h-4 text-current shrink-0" />
                     <span>AI moves City Palace to Day 2 morning · Preserves romantic sunset dinner</span>
                   </div>
 
                   {/* Event 4: Recovery & Restored Health */}
-                  <div className="s3-event p-3 sm:p-3.5 rounded-xl bg-[#18241c] border border-white/20 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div className="s3-event p-3 sm:p-3.5 rounded-xl bg-[var(--s3-event4-bg)] border border-[var(--s3-event4-border)] text-[var(--s3-event4-text)] flex flex-col sm:flex-row sm:items-center justify-between gap-2 transition-colors">
                     <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-current shrink-0" />
                       <span>Trip Health: 61/100 ➔ 84/100 Restored</span>
                     </div>
-                    <span className="text-[10px] font-bold uppercase tracking-widest bg-white/10 px-2.5 py-0.5 rounded text-white self-start sm:self-auto">
+                    <span className="text-[10px] font-bold uppercase tracking-widest bg-[var(--s3-event4-badge-bg)] text-[var(--s3-event4-badge-text)] px-2.5 py-0.5 rounded self-start sm:self-auto">
                       $0 Extra Cost
                     </span>
                   </div>
@@ -318,23 +318,23 @@ export const LandingPage = () => {
       {/* ============================================================ */}
       {/* 4. FINAL CALL TO ACTION */}
       {/* ============================================================ */}
-      <section id="final-cta" className="relative z-10 py-16 sm:py-24 lg:py-32 border-t border-white/10 text-center bg-[#100d0a] overflow-hidden">
+      <section id="final-cta" className="relative z-10 py-16 sm:py-24 lg:py-32 border-t border-[var(--cta-border)] text-center bg-[var(--cta-bg)] overflow-hidden transition-colors duration-300">
         <div className="max-w-3xl mx-auto px-5 sm:px-6 space-y-6 sm:space-y-8">
-          <span className="cta-eyebrow text-xs font-mono tracking-widest text-[#a89f91] uppercase block">
+          <span className="cta-eyebrow text-xs font-mono tracking-widest text-[var(--cta-eyebrow)] uppercase block font-semibold">
             WE DON'T JUST PLAN YOUR TRIP. WE MANAGE IT.
           </span>
-          <h2 className="text-[clamp(2.1rem,4.8vw,3.75rem)] font-extrabold tracking-tighter text-white font-sans leading-tight">
+          <h2 className="text-[clamp(2.1rem,4.8vw,3.75rem)] font-extrabold tracking-tighter text-[var(--cta-title)] font-sans leading-tight">
             <span className="cta-title-line block">Wherever you go,</span>
             <span className="cta-title-line block">we've got you.</span>
           </h2>
-          <p className="cta-sub text-[#a89f91] text-sm sm:text-base max-w-md mx-auto font-mono">
+          <p className="cta-sub text-[var(--cta-sub)] text-sm sm:text-base max-w-md mx-auto font-mono">
             Plan. Personalize. Adapt.
           </p>
 
           <div className="cta-btn pt-2 sm:pt-4 flex items-center justify-center">
             <button
               onClick={() => setIsPlannerOpen(true)}
-              className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-xs uppercase tracking-wider bg-white text-[#181411] hover:bg-[#eae5d9] shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+              className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-xs uppercase tracking-wider bg-[var(--cta-btn-bg)] text-[var(--cta-btn-text)] hover:bg-[var(--cta-btn-hover)] shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
             >
               <span>START THE JOURNEY →</span>
             </button>
