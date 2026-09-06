@@ -57,10 +57,10 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-6 sm:px-10 lg:px-20 py-8 text-[11px] font-mono tracking-wider uppercase z-[100] pointer-events-none">
+      <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-4 sm:px-8 lg:px-16 py-4 sm:py-5 lg:py-6 text-[11px] font-mono tracking-wider uppercase z-[100] pointer-events-none">
 
-        {/* Desktop Left - Explore, My Trips, AI Agent */}
-        <div className="hidden lg:flex items-center gap-4 tracking-tight pointer-events-auto">
+        {/* Desktop & Tablet Left - Explore, My Trips, AI Agent */}
+        <div className="hidden md:flex items-center gap-2.5 lg:gap-4 tracking-tight pointer-events-auto">
           <NavItem
             text="Explore"
             active={activeView === "landing"}
@@ -79,11 +79,11 @@ export const Navbar = () => {
           />
         </div>
 
-        {/* Empty space in middle for the animated TRAVELFLOW logo to land */}
-        <div className="w-[180px] hidden lg:block" />
+        {/* Space in middle for the animated TRAVELFLOW logo to land */}
+        <div className="w-[120px] lg:w-[180px] hidden md:block" />
 
-        {/* Desktop Right - Notifications Bell */}
-        <div className="hidden lg:flex items-center justify-end gap-4 tracking-tight pointer-events-auto">
+        {/* Desktop & Tablet Right - Notifications Bell */}
+        <div className="hidden md:flex items-center justify-end gap-3 lg:gap-4 tracking-tight pointer-events-auto">
           <button
             type="button"
             onClick={() => setIsNotificationDrawerOpen(true)}
@@ -103,14 +103,18 @@ export const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile: Logo, Notifications & Menu button */}
-        <div className="lg:hidden flex w-full justify-between items-center pointer-events-auto">
-          <span
-            onClick={() => setActiveView("landing")}
-            className="text-xs font-bold font-sans tracking-widest text-white uppercase cursor-pointer"
-          >
-            TRAVELFLOW
-          </span>
+        {/* Mobile (< md): Logo (when not on landing to avoid duplicate hero logo), Notifications & Menu button */}
+        <div className="md:hidden flex w-full justify-between items-center pointer-events-auto">
+          {activeView !== "landing" ? (
+            <span
+              onClick={() => setActiveView("landing")}
+              className="text-xs font-bold font-sans tracking-widest text-white uppercase cursor-pointer"
+            >
+              TRAVELFLOW
+            </span>
+          ) : (
+            <div className="w-4" />
+          )}
 
           <div className="flex items-center gap-2">
             <button
@@ -128,6 +132,7 @@ export const Navbar = () => {
             <button
               onClick={() => setIsOpen(true)}
               className="text-white p-2 hover:bg-white/10 rounded-sm transition-all duration-300 cursor-pointer"
+              aria-label="Open navigation menu"
             >
               <Menu size={20} strokeWidth={1.5} />
             </button>
